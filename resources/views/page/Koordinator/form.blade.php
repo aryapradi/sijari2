@@ -70,7 +70,7 @@
 
         <div class="form-group mb-3">
             <label for="">Caleg</label>
-            <select class="form-control" name="caleg_id" id="caleg_id"  >
+            <select class="form-control" name="caleg_id" id="caleg_id"   >
             <option>Pilih Caleg</option>
             @foreach ($caleg as $cal)
             <option value="{{$cal->id}}">{{$cal->nama_caleg}}</option>
