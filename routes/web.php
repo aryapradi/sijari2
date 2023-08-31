@@ -38,15 +38,14 @@ Route::get('/hapus_caleg/{id}',[CalegController::class,'hapus_caleg'])->name('ha
 //Route Koordinator
 Route::get('/DataKoor',[KoordinatorController::class,'koordinator'])->name('koordinator');
 Route::get('/create_koordinator',[KoordinatorController::class,'create_koordinator'])->name('create_koordinator');
-Route::post('/store_koordinator',[KoordinatorController::class,'store_koordinator'])->name('store_koordinator');
-// Route::group(['prefix' => 'store_koordinator', 'as' => 'store_koordinator.'], function () {
+// Route::post('/store_koordinator',[KoordinatorController::class,'store_koordinator'])->name('store_koordinator');
 
-//     // Route untuk mengambil data provinsi, kabupaten, kecamatan, dan desa
-//     Route::get('/get-provinsi-options/{id}', 'KoordinatorController@getProvinsiOptions')->name('get-provinsi-options');
-//     Route::get('/get-kabupaten-options/{id_provinsi}', 'KoordinatorController@getKabupatenOptions')->name('get-kabupaten-options');
-//     Route::get('/get-kecamatan-options/{id_kabupaten}', 'KoordinatorController@getKecamatanOptions')->name('get-kecamatan-options');
-//     Route::get('/get-desa-options/{id_kecamatan}', 'KoordinatorController@getDesaOptions')->name('get-desa-options');
-// });
+Route::group(['prefix' => 'koordinator'], function () {
+    Route::get('/store_koordinator/get-locations', [KoordinatorController::class, 'getLocations']);
+     // Rute untuk menyimpan koordinator
+    Route::post('/store_koordinator', [KoordinatorController::class, 'store_koordinator']);
+});
+
 
 
 

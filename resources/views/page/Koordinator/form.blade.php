@@ -6,7 +6,7 @@
 
 <div class="container border rounded p-5" style="background-color:#ffffff">
     <h4 class="card-title mb-4" >Form Koordinator</h4>
-    <form action="/store_koordinatoor" method="POST">
+    <form action="/koordinator/store_koordinator" method="POST">
         @csrf
         {{-- <div class="form-group mb-3">
             <label for="id" class="text-dark">ID</label>
@@ -30,17 +30,17 @@
         
         <div class="form-group mb-3">
             <label for="">Provinsi</label>
-            <select class="form-control" name="provinsi" id="provinsi"  >
-            <option>-- Pilih Profinsi --</option>
-            @foreach ($provinsis as $prov)
-            <option value="{{$prov->id}}">{{$prov->name}}</option>
+            <select class="form-control" name="provinsi" id="provinceDropdown"  >
+            <option>-- Pilih Provinsi --</option>
+            @foreach ($provinsis as $provinceId => $provinceName)
+            <option value="{{ $provinceId }}">{{ $provinceName }}</option>
             @endforeach
            </select>
         </div>
 
         <div class="form-group mb-3">
             <label for="">Kabupaten/Kota</label>
-            <select class="form-control" name="kabupaten" id="kabuaten"  >
+            <select class="form-control" name="kabupaten" id="regencyDropdown"  >
             <option>-- Pilih Kabupaten/Kota --</option>
             @foreach ($kabupatens as $kab)
             <option value="{{$kab->id}}">{{$kab->name}}</option>
@@ -50,7 +50,7 @@
 
         <div class="form-group mb-3">
             <label for="">Kecamatan</label>
-            <select class="form-control" name="kecamatan" id="kecamatan"  >
+            <select class="form-control" name="kecamatan" id="districtDropdown"  >
             <option>-- Pilih kecamatan --</option>
             @foreach ($kecamatans as $kec)
             <option value="{{$kec->id}}">{{$kec->name}}</option>
@@ -60,7 +60,7 @@
         
         <div class="form-group mb-3">
             <label for="">Desa</label>
-            <select class="form-control" name="desa" id="desa">
+            <select class="form-control" name="desa" id="villageDropdown">
             <option>-- Pilih desa --</option>
             @foreach ($desas as $des)
             <option value="{{$des->id}}">{{$des->name}}</option>
@@ -80,68 +80,77 @@
 
         <div class="d-flex justify-content-between align-items-center">
             <a class="btn btn-secondary ml-auto" href="/DataCaleg">Cancel</a>
-            <button type="submit" class="btn btn-primary ml-auto">Submit</button>
+            <button type="submit"class="btn btn-primary ml-auto">Submit</button>
         </div>
     </form>
 </div>
 
-{{-- <!-- Load jQuery dan Script AJAX -->
+<!-- Load jQuery dan Script AJAX -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-$(document).ready(function() {
-    $('#provinsi').on('change', function() {
-        var id_provinsi = $(this).val();
+    $('#provinceDropdown').change(function () {
+        var selectedProvince = $(this).val();
 
-        // Ambil data kabupaten berdasarkan provinsi
-        $.get('{{ route("koordinator.get-kabupaten-options", ["id_provinsi" => ""]) }}/' + id_provinsi, function(data) {
-            var kabupatenOptions = '<option value="">Pilih Kabupaten/Kota</option>';
-            $.each(data, function(index, kabupaten) {
-                kabupatenOptions += '<option value="' + kabupaten.id + '">' + kabupaten.nama + '</option>';
-            });
-            $('#kabupaten').html(kabupatenOptions);
-            $('#kecamatan').html('<option value="">Pilih Kecamatan</option>'); // Reset pilihan kecamatan
-            $('#desa').html('<option value="">Pilih Desa</option>'); // Reset pilihan desa
+        $.ajax({
+            url: '/koordinator/store_koordinator/get-locations',
+            type: 'GET',
+            data: { province: selectedProvince },
+            success: function (data) {
+                  // Isi dropdown kabupaten
+                  var regencyOptions = '';
+                data.regencies.forEach(function (regency) {
+                    regencyOptions += '<option value="' + regency.id + '">' + regency.name + '</option>';
+                });
+                $('#regencyDropdown').html(regencyOptions);
+                
+                // Reset dropdown kecamatan dan desa
+                $('#districtDropdown').html('');
+                $('#villageDropdown').html('');
+            }
         });
     });
 
-    $('#kabupaten').on('change', function() {
-        var id_kabupaten = $(this).val();
+    $('#regencyDropdown').change(function () {
+        var selectedRegency = $(this).val();
 
-        // Ambil data kecamatan berdasarkan kabupaten
-        $.get('{{ route("koordinator.get-kecamatan-options", ["id_kabupaten" => ""]) }}/' + id_kabupaten, function(data) {
-            var kecamatanOptions = '<option value="">Pilih Kecamatan</option>';
-            $.each(data, function(index, kecamatan) {
-                kecamatanOptions += '<option value="' + kecamatan.id + '">' + kecamatan.nama + '</option>';
-            });
-            $('#kecamatan').html(kecamatanOptions);
-            $('#desa').html('<option value="">Pilih Desa</option>'); // Reset pilihan desa
+        $.ajax({
+            url: '/koordinator/store_koordinator/get-locations',
+            type: 'GET',
+            data: { regency: selectedRegency },
+            success: function (data) {
+                // Isi dropdown kecamatan
+                var districtOptions = '';
+                data.districts.forEach(function (district) {
+                    districtOptions += '<option value="' + district.id + '">' + district.name + '</option>';
+                });
+                $('#districtDropdown').html(districtOptions);
+                
+                // Reset dropdown desa
+                $('#villageDropdown').html('');
+            }
         });
     });
 
-    $('#kecamatan').on('change', function() {
-        var id_kecamatan = $(this).val();
+    $('#districtDropdown').change(function () {
+        var selectedDistrict = $(this).val();
 
-        // Ambil data desa berdasarkan kecamatan
-        $.get('{{ route("koordinator.get-desa-options", ["id_kecamatan" => ""]) }}/' + id_kecamatan, function(data) {
-            var desaOptions = '<option value="">Pilih Desa</option>';
-            $.each(data, function(index, desa) {
-                desaOptions += '<option value="' + desa.id + '">' + desa.nama + '</option>';
-            });
-            $('#desa').html(desaOptions);
+        $.ajax({
+            url: '/koordinator/store_koordinator/get-locations',
+            type: 'GET',
+            data: { district: selectedDistrict },
+            success: function (data) {
+                // Isi dropdown desa
+                var villageOptions = '';
+                data.villages.forEach(function (village) {
+                    villageOptions += '<option value="' + village.id + '">' + village.name + '</option>';
+                });
+                $('#villageDropdown').html(villageOptions);
+            }
         });
     });
 
-    // Ambil data provinsi saat halaman dimuat
-    $.get('{{ route("koordinator.get-provinsi-options") }}', function(data) {
-        var provinsiOptions = '<option value="">Pilih Provinsi</option>';
-        $.each(data, function(index, provinsi) {
-            provinsiOptions += '<option value="' + provinsi.id + '">' + provinsi.nama + '</option>';
-        });
-        $('#provinsi').html(provinsiOptions);
-    });
-});
-</script> --}}
 
+</script>
 
 
 @endsection

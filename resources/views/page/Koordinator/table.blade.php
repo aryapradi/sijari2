@@ -21,8 +21,9 @@
             <thead>
                 <tr>
                     <th scope="col">No</th>
-                    <th scope="col">Nama Koordinator</th>
+                    <th scope="col">Nama</th>
                     <th scope="col">Username</th>
+                    <th scope="col">Provinsi</th>
                     <th scope="col">Kabupaten/kota</th>
                     <th scope="col">Kecamatan</th>
                     <th scope="col">Desa</th>
@@ -34,9 +35,11 @@
             <?php $no=1; ?>
               @foreach ($data as $row)
               <tr>
+                <?php dd ($row->desa->name)?>
                 <th scope="row">{{ $no++ }}</th>
                 <td>{{ $row->nama_koordinator }}</td>
                 <td>{{ $row->username }}</td>
+                <td>{{ $row->provinsi->name }}</td>
                 <td>{{ $row->kabupaten }}</td>
                 <td>{{ $row->kecamatan }}</td>
                 <td>{{ $row->desa }}</td>

@@ -21,11 +21,12 @@ class KoordinatorController extends Controller
     public function create_koordinator()
     {
         $caleg = Caleg::all();
-        $provinsis = Province::all();
-        $kabupatens = Regency::all(); 
-        $kecamatans = District::all();
-        $desas = Village::all();
-        return view('page.Koordinator.form', compact('caleg','provinsis','kabupatens','kecamatans','desas'));
+        $provinsis =  Province::pluck('name', 'id');
+        $kabupatens = [];
+        $kecamatans = [];
+        $desas = [];
+    
+        return view('page.Koordinator.form', compact('caleg', 'provinsis', 'kabupatens', 'kecamatans', 'desas'));
     }
 
 
@@ -38,6 +39,10 @@ class KoordinatorController extends Controller
             'username' => 'required|string',
             'password' => 'required|string|min:8',
             'caleg_id' => 'required',
+            'province' => 'required|exists:provinces,id',
+            'regency' => 'required|exists:regencies,id',
+            'district' => 'required|exists:districts,id',
+            'village' => 'required|exists:villages,id',
         ]);
 
         // Simpan data koordinator ke database
@@ -49,34 +54,53 @@ class KoordinatorController extends Controller
 
         ]);
 
+          // Ambil data provinsi, kabupaten, kecamatan, dan desa berdasarkan ID
+          $province = Province::find($request->province);
+          $regency = Regency::find($request->regency);
+          $district = District::find($request->district);
+          $village = Village::find($request->village);
+          
+            // Hubungkan relasi antara koordinator dan lokasi (provinsi, kabupaten, kecamatan, desa)
+            $koordinator->province()->associate($province);
+            $koordinator->regency()->associate($regency);
+            $koordinator->district()->associate($district);
+            $koordinator->village()->associate($village);
+
+
+
         return redirect()->route('koordinator', [
             'koordinator' => $koordinator,
         ])->with('success', 'Data Berhasil Ditambah');
     }
 
-    // public function getProvinsiOptions()
-    // {
-    //     $provinsis = Province::all();
-    //     return response()->json($provinsis);
-    // }
-
-    // public function getKabupatenOptions($id_provinsi)
-    // {
-    //     $kabupatens = Regency::where('provinsi_id', $id_provinsi)->get();
-    //     return response()->json($kabupatens);
-    // }
-
-    // public function getKecamatanOptions($id_kabupaten)
-    // {
-    //     $kecamatans = District::where('kabupaten_id', $id_kabupaten)->get();
-    //     return response()->json($kecamatans);
-    // }
-
-    // public function getDesaOptions($id_kecamatan)
-    // {
-    //     $desas = Village::where('kecamatan_id', $id_kecamatan)->get();
-    //     return response()->json($desas);
-    // }
+    public function getLocations(Request $request)
+    {
+        $selectedProvinceId = $request->input('province');
+        $selectedRegencyId = $request->input('regency');
+        $selectedDistrictId = $request->input('district');
+    
+        $regencies = [];
+        $districts = [];
+        $villages = [];
+    
+        if ($selectedProvinceId) {
+            $regencies = Regency::where('province_id', $selectedProvinceId)->get();
+        }
+    
+        if ($selectedRegencyId) {
+            $districts = District::where('regency_id', $selectedRegencyId)->get();
+        }
+    
+        if ($selectedDistrictId) {
+            $villages = Village::where('district_id', $selectedDistrictId)->get();
+        }
+    
+        return response()->json([
+            'regencies' => $regencies,
+            'districts' => $districts,
+            'villages' => $villages
+        ]);
+    }
 
     public function edit_koordinator($id)   
     {
