@@ -16,16 +16,31 @@
         <div class="form-group mb-3">
             <label for="nama" class="text-dark">Nama</label>
             <input type="text" class="form-control" id="nama_koordinator" name="nama_koordinator"  placeholder="Enter Nama">
+            @error('nama_koordiantor')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
         </div>
 
         <div class="form-group mb-3">
             <label for="username" class="text-dark">Username</label>
             <input type="text" class="form-control" id="username" name="username"  placeholder="Enter Username">
+            @error('username')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
         </div>
 
         <div class="form-group mb-3">
             <label for="nama" class="text-dark">Password</label>
             <input type="password" class="form-control" id="password" name="password"  placeholder="Enter Password">
+            @error('password')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
         </div>
         
         <div class="form-group mb-3">
@@ -36,6 +51,11 @@
             <option value="{{ $provinceId }}">{{ $provinceName }}</option>
             @endforeach
            </select>
+           @error('provinsi')
+           <span class="invalid-feedback" role="alert">
+               <strong>{{ $message }}</strong>
+           </span>
+       @enderror
         </div>
 
         <div class="form-group mb-3">

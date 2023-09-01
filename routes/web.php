@@ -1,11 +1,13 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DptController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CalegController;
 use App\Http\Controllers\PartaiController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\KoordinatorController;
-use App\Http\Controllers\DptController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +20,7 @@ use App\Http\Controllers\DptController;
 |
 */
 
-Route::get('/', [HomeController::class,'home'])->name('dashboard');
+// Route::get('/', [HomeController::class,'home'])->name('dashboard');
 
 //Route Partai
 Route::get('/DataPartai', [PartaiController::class,'partai'])->name('partai');
@@ -68,3 +70,11 @@ Route::get('/detail_dpt/{id}', [DptController::class, 'detail_dpt'])->name('deta
 
 
 
+
+Auth::routes();
+Route::post('/admin/login',[LoginController::class,'adminLogin'])->name('admin.login');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();  
+
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');

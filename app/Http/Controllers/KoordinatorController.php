@@ -9,6 +9,7 @@ use App\Models\District;
 use App\Models\Province;
 use App\Models\Koordinator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -39,12 +40,31 @@ class KoordinatorController extends Controller
 
     public function store_koordinator(Request $request)
     {
-        $data = new Koordinator();
-        $data->nama_koordinator = $request->input('nama_koordinator'); // Isi kolom yang dibutuhkan
-        $data->username = $request->input('username');
-        $data->password = Hash::make($request->input('password'));
-
-        Koordinator::create($request->all());
+        $this->validate($request, [
+            'nama_koordinator'   => 'required',
+            'username'   => 'required',
+            'password'   => 'required|min:8',
+            'provinsi'   => 'required',
+            'kabupaten'   => 'required',
+            'kecamatan'   => 'required',
+            'kelurahan'   => 'required',
+            'caleg_id'   => 'required',
+            'admin_id'   => 'required',
+        ]);
+        $user = Auth::user()->id;
+        $password = Hash::make($request['password']);
+        Koordinator::create([
+            'nama_koordinator'     => $request-> nama_koordinator,
+            'username'     => $request->username,
+            'password'   => $password,
+            'NoTlpn'    => $request->NoTlpn,
+            'provinsi' => $request->provinsi,
+            'kabupaten' => $request->kabupaten,
+            'kecamatan' => $request->kecamatan,
+            'kelurahan' => $request->kelurahan,
+            'caleg_id' => $request->caleg_id,
+            'admin_id' => $user
+        ]);
         return redirect()->route('koordinator')->with('success', 'Data Berhasil Ditambah');
 
     }

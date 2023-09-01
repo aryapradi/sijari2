@@ -6,6 +6,7 @@ use App\Models\Dpt;
 use App\Exports\DptExport;
 use App\Imports\DptImport;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Session;
 
@@ -14,7 +15,7 @@ class DptController extends Controller
     public function dpt()
     {
         $data = Dpt::all();
-        return view('page.dpt.table', compact('data'));
+        return view('page.Dpt.table', compact('data'));
     }
 
     public function export_dpt()

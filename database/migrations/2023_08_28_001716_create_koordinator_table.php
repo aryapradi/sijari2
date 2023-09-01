@@ -24,9 +24,11 @@ class CreateKoordinatorTable extends Migration
             $table->char('kecamatan');
             $table->char('kelurahan');
             $table->unsignedBigInteger('caleg_id');
+            $table->unsignedBigInteger('admin_id');
             $table->timestamps();
 
             $table->foreign('caleg_id')->references('id')->on('caleg');
+            $table->foreign('admin_id')->references('id')->on('users');
             $table->foreign('provinsi')->references('id')->on('provinces');
             $table->foreign('kabupaten')->references('id')->on('regencies');
             $table->foreign('kecamatan')->references('id')->on('districts');
