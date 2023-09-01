@@ -48,6 +48,7 @@
                         class="table border table-striped table-bordered text-nowrap" style="width:100%">
                         <thead>
                             <tr>
+                                <th>No</th>
                                 <th>NAMA</th>
                                 <th>KECAMATAN</th>
                                 <th>KELURAHAN</th>
@@ -58,6 +59,7 @@
                             <!-- Data rows will go here -->
                             @foreach ( $data as $dpt )
                             <tr>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $dpt->nama}}</td>
                                 <td>{{ $dpt->kecamatan}}</td>
                                 <td>{{ $dpt->kelurahan}}</td>

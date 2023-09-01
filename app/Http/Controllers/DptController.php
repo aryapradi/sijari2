@@ -29,24 +29,35 @@ class DptController extends Controller
     return Excel::download(new DptExport, 'datadpt.xlsx');
 }
 
-
-    public function import_dpt(Request $request)
+public function import_dpt(Request $request)
 {
     $file = $request->file('file');
+    
+    if (!$file) {
+        Session::flash('error', 'Tidak ada file yang diunggah.');
+        return redirect()->back();
+    }
+    
     $namaFile = $file->getClientOriginalName();
     $file->move('datadptt', $namaFile);
 
     $filePath = public_path('datadptt/' . $namaFile);
 
-    Excel::import(new DptImport, $filePath, null, \Maatwebsite\Excel\Excel::XLSX, [
-        'headingRow' => 4 // Menandakan bahwa baris ke-3 berisi nama-nama kolom
-    ]);
+    try {
+        Excel::import(new DptImport, $filePath, null, \Maatwebsite\Excel\Excel::XLSX, [
+            'headingRow' => 4 // Menandakan bahwa baris ke-3 berisi nama-nama kolom
+        ]);
+    } catch (\Throwable $e) {
+        Session::flash('error', 'Terjadi kesalahan saat mengimpor file. Pastikan format file Excel sesuai dengan template.');
+        return redirect()->back();
+    }
 
     Session::flash('success', 'Data DPT Telah Di Import');
 
     return redirect('DataDPT');
 }
 
+    
     public function download_Template()
     {
         $templateFileName = 'template_import_soal.xlsx';
