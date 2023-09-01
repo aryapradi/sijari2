@@ -91,7 +91,7 @@
                 <form action="/import_dpt" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
-                        <input class="form-control" type="file" name="file">
+                        <input class="form-control" type="file" name="file" required>
                     </div>
                     <div class="modal-footer">
                         <a href="/download_Template" class="btn btn-primary">Unduh Template Excel</a>
