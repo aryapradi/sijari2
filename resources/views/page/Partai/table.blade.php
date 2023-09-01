@@ -3,13 +3,18 @@
 
 @section('content')
     
-<div class="card">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
     @if ($message = Session::get('success'))
-        <div class="alert alert-success">
-            <p>{{ $message }}</p>
-        </div>
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: '{{ $message }}',
+            showConfirmButton: false,
+            timer: 5000
+        });
     @endif
-    
+</script>
     <div class="card-body d-flex align-items-center">
         <h4 class="card-title" style="margin-right: auto;">Data Partai</h4>
         <a href="/create_partai" class="btn btn-primary btn-sm">Tambah Data</a>

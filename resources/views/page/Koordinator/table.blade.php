@@ -1,15 +1,18 @@
 @extends('layout.main')
 
-
 @section('content')
-
-
-<div class="card">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
     @if ($message = Session::get('success'))
-        <div class="alert alert-success">
-            <p>{{ $message }}</p>
-        </div>
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: '{{ $message }}',
+            showConfirmButton: false,
+            timer: 5000
+        });
     @endif
+</script>
 
 <div class="card">
     <div class="card-body" style="display: flex; align-items: center;">

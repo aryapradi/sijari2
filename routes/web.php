@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CalegController;
 use App\Http\Controllers\PartaiController;
 use App\Http\Controllers\KoordinatorController;
+use App\Http\Controllers\DptController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +47,22 @@ Route::group(['prefix' => 'store'], function () {
 Route::get('/edit_koordinator/{id}',[KoordinatorController::class,'edit_koordinator'])->name('edit_koordinator');
 Route::post('/update_koordinator/{id}',[KoordinatorController::class,'update_koordinator'])->name('update_koordinator');
 Route::get('/hapus_koordinator/{id}',[KoordinatorController::class,'hapus_koordinator'])->name('hapus_koordinator');
+
+
+
+
+// Route DPT
+Route::get('/DataDPT', [DptController::class, 'dpt'])->name('dpt');
+Route::get('/export_dpt', [DptController::class, 'export_dpt'])->name('export_dpt');
+Route::post('/import_dpt', [DptController::class, 'import_dpt'])->name('import_dpt');
+Route::get('/download_Template', [DptController::class, 'download_Template'])->name('download_Template');
+Route::get('/delete_all_data', [DptController::class, 'deleteAllData'])->name('delete_all_data');
+Route::get('/detail_dpt/{id}', [DptController::class, 'detail_dpt'])->name('detail_dpt');
+
+
+
+
+
 
 
 
