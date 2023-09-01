@@ -53,6 +53,7 @@
                                 <th>KECAMATAN</th>
                                 <th>KELURAHAN</th>
                                 <th>TPS</th>
+                                <th>Detail</th> <!-- Add this line -->
                             </tr>
                         </thead>
                         <tbody>
@@ -60,15 +61,20 @@
                             @foreach ( $data as $dpt )
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $dpt->nama}}</td>
-                                <td>{{ $dpt->kecamatan}}</td>
-                                <td>{{ $dpt->kelurahan}}</td>
-                                <td>{{ $dpt->tps}}</td>
+                                <td>{{ $dpt->nama }}</td>
+                                <td>{{ $dpt->kecamatan }}</td>
+                                <td>{{ $dpt->kelurahan }}</td>
+                                <td>{{ $dpt->tps }}</td>
+                                <td>
+                                    <a href="{{ route('detail_dpt', ['id' => $dpt->id]) }}" style="border-radius: 5px" class="btn btn-info btn-sm">Detail</a>
+
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
+                
             </div>
         </div>
     </div>

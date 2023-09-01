@@ -56,6 +56,8 @@ Route::get('/export_dpt', [DptController::class, 'export_dpt'])->name('export_dp
 Route::post('/import_dpt', [DptController::class, 'import_dpt'])->name('import_dpt');
 Route::get('/download_Template', [DptController::class, 'download_Template'])->name('download_Template');
 Route::get('/delete_all_data', [DptController::class, 'deleteAllData'])->name('delete_all_data');
+Route::get('/detail_dpt/{id}', [DptController::class, 'detail_dpt'])->name('detail_dpt');
+
 
 
 

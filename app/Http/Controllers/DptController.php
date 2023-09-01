@@ -85,6 +85,14 @@ public function import_dpt(Request $request)
 }
 
 
+    public function detail_dpt($id)
+    {
+    $data = Dpt::findOrFail($id);
+    return view('page.dpt.detail', compact('data'));
+    }
+
+
+
 
 
 }
