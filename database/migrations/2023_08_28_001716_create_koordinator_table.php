@@ -18,14 +18,19 @@ class CreateKoordinatorTable extends Migration
             $table->string('nama_koordinator');
             $table->string('username');
             $table->string('password');
-            $table->string('provinsi');
-            $table->string('kabupaten');
-            $table->string('kecamatan');
-            $table->string('desa');
+            $table->string('NoTlpn')->nullable();
+            $table->char('provinsi');
+            $table->char('kabupaten');
+            $table->char('kecamatan');
+            $table->char('kelurahan');
             $table->unsignedBigInteger('caleg_id');
             $table->timestamps();
 
             $table->foreign('caleg_id')->references('id')->on('caleg');
+            $table->foreign('provinsi')->references('id')->on('provinces');
+            $table->foreign('kabupaten')->references('id')->on('regencies');
+            $table->foreign('kecamatan')->references('id')->on('districts');
+            $table->foreign('kelurahan')->references('id')->on('villages');
         });
     }
 

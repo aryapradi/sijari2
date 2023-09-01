@@ -47,7 +47,8 @@ class Village extends Model
         return $this->belongsTo(District::class);
     }
 
-    public function koordinator() {
+    public function koordinator()
+    {
         return $this->hasMany(Koordinator::class);
     }
 }

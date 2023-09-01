@@ -18,27 +18,28 @@ class Koordinator extends Model
 
     protected $guarded = ['id'];
 
-    protected $fillable = ['nama_koordinator','username','password', 'caleg_id','provinsi','kabupaten','kecamatan','desa'];
-
-    public function provisi()
-    {   
-        return $this->belongsTo(Province::class, 'provinsi');
-    }
-
-    public function regency()
+    protected $fillable = ['nama_koordinator','username','password', 'caleg_id','provinsi','kabupaten','kecamatan','kelurahan'];
+  
+    public function provinces()
     {
-        return $this->belongsTo(Regency::class);
+        return $this->belongsTo(Province::class, 'provinsi'); // Ganti dengan kolom foreign key yang sesuai
     }
 
-    public function district()
+    public function regencies()
     {
-        return $this->belongsTo(District::class);
+        return $this->belongsTo(Regency::class, 'kabupaten'); // Ganti dengan kolom foreign key yang sesuai
     }
 
-    public function village()
+    public function districts()
     {
-        return $this->belongsTo(Village::class);
+        return $this->belongsTo(District::class, 'kecamatan'); // Ganti dengan kolom foreign key yang sesuai
     }
+    
+    public function villages()
+    {
+        return $this->belongsTo(Village::class, 'kelurahan'); // Ganti dengan kolom foreign key yang sesuai
+    }
+    
 
     //mendefinisikan relasi
     public function caleg()

@@ -3,19 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\Caleg;
-use App\Models\Province;
 use App\Models\Regency;
 use App\Models\Village;
 use App\Models\District;
+use App\Models\Province;
 use App\Models\Koordinator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class KoordinatorController extends Controller
 {
     public function koordinator()
     {
-        $data = Koordinator::all();
-        return view('page.Koordinator.table', compact('data'));
+        $data = Koordinator::with(['villages','districts','regencies','provinces', 'caleg'])->paginate();
+        $provinsis = Province::all(); // Mengambil semua data provinsi
+        $regencies = Regency::all();
+        $districts = District::all();
+        $villages = Village::all();
+
+       return view('page.Koordinator.table', compact('data','provinsis', 'regencies', 'districts', 'villages'));
     }
     
     public function create_koordinator()
@@ -32,45 +39,14 @@ class KoordinatorController extends Controller
 
     public function store_koordinator(Request $request)
     {
+        $data = new Koordinator();
+        $data->nama_koordinator = $request->input('nama_koordinator'); // Isi kolom yang dibutuhkan
+        $data->username = $request->input('username');
+        $data->password = Hash::make($request->input('password'));
+
         Koordinator::create($request->all());
-        // dd($request);
-        $request->validate([
-            'nama_koordinator' => 'required|string',
-            'username' => 'required|string',
-            'password' => 'required|string|min:8',
-            'caleg_id' => 'required',
-            'province' => 'required|exists:provinces,id',
-            'regency' => 'required|exists:regencies,id',
-            'district' => 'required|exists:districts,id',
-            'village' => 'required|exists:villages,id',
-        ]);
+        return redirect()->route('koordinator')->with('success', 'Data Berhasil Ditambah');
 
-        // Simpan data koordinator ke database
-        $koordinator = new Koordinator([
-            'nama_koordinator'=> $request->nama_koordinator,
-            'username' => $request->username,
-            'password' => $request->password, // Nilai plaintext
-            'caleg_id' => $request->caleg_id,
-
-        ]);
-
-          // Ambil data provinsi, kabupaten, kecamatan, dan desa berdasarkan ID
-          $province = Province::find($request->province);
-          $regency = Regency::find($request->regency);
-          $district = District::find($request->district);
-          $village = Village::find($request->village);
-          
-            // Hubungkan relasi antara koordinator dan lokasi (provinsi, kabupaten, kecamatan, desa)
-            $koordinator->province()->associate($province);
-            $koordinator->regency()->associate($regency);
-            $koordinator->district()->associate($district);
-            $koordinator->village()->associate($village);
-
-
-
-        return redirect()->route('koordinator', [
-            'koordinator' => $koordinator,
-        ])->with('success', 'Data Berhasil Ditambah');
     }
 
     public function getLocations(Request $request)
@@ -100,34 +76,36 @@ class KoordinatorController extends Controller
             'districts' => $districts,
             'villages' => $villages
         ]);
+
+        return redirect()->route('koordinator')->with('success', 'Data Berhasil Ditambah');
     }
 
     public function edit_koordinator($id)   
     {
         $data = Koordinator::findOrFail($id);
         $caleg = Caleg::all();
+        $provinsis = Province::all(); // Mengambil semua data provinsi
+        $regencies = Regency::all();
+        $districts = District::all();
+        $villages = Village::all();
         
-        return view('', compact('data', 'caleg'));
+        return view('page.Koordinator.edit', compact('data', 'caleg','provinsis', 'regencies', 'districts', 'villages'));
     }
 
-    public function update_Caleg(Request $request, $id)
+    public function update_koordinator(Request $request, $id)
     {
+        // dd($request);
         $data = Koordinator::findOrFail($id);
         $data->update($request->all());
-
-        return redirect()->route('koordinator')->with('success', 'Anda Berhasil Mengubah Pada Data  ' . $data->nama_caleg );
+        return redirect()->route('koordinator')->with('success', 'Data updated successfully.');
     }
 
-    public function hapus_Caleg($id)
+    public function hapus_koordinator($id)
     {
-        $data = Koordinator::find($id);
-        
-        if ($data) {
-            $namaKoor = $data->nama_koordinator;
-            $data->delete();
-            return redirect()->route('koordinator')->with('success', 'Data ' . $namaKoor . ' Berhasil dihapus');
-        } else {
-            return redirect()->route('koordinator')->with('error', 'Data Caleg tidak ditemukan.');
-        }  
+        $koordinator = Koordinator::findOrFail($id);
+        $koordinator->delete();
+    
+        return redirect()->route('koordinator')
+            ->with('success', 'Data Koordinator telah dihapus.');
     }
 }

@@ -38,13 +38,14 @@ Route::get('/hapus_caleg/{id}',[CalegController::class,'hapus_caleg'])->name('ha
 //Route Koordinator
 Route::get('/DataKoor',[KoordinatorController::class,'koordinator'])->name('koordinator');
 Route::get('/create_koordinator',[KoordinatorController::class,'create_koordinator'])->name('create_koordinator');
-// Route::post('/store_koordinator',[KoordinatorController::class,'store_koordinator'])->name('store_koordinator');
-
-Route::group(['prefix' => 'koordinator'], function () {
+Route::group(['prefix' => 'store'], function () {
     Route::get('/store_koordinator/get-locations', [KoordinatorController::class, 'getLocations']);
      // Rute untuk menyimpan koordinator
-    Route::post('/store_koordinator', [KoordinatorController::class, 'store_koordinator']);
+    Route::post('/store_koordinator', [KoordinatorController::class, 'store_koordinator'])->name('store_koordinator');
 });
+Route::get('/edit_koordinator/{id}',[KoordinatorController::class,'edit_koordinator'])->name('edit_koordinator');
+Route::post('/update_koordinator/{id}',[KoordinatorController::class,'update_koordinator'])->name('update_koordinator');
+Route::get('/hapus_koordinator/{id}',[KoordinatorController::class,'hapus_koordinator'])->name('hapus_koordinator');
 
 
 

@@ -6,7 +6,7 @@
 
 <div class="container border rounded p-5" style="background-color:#ffffff">
     <h4 class="card-title mb-4" >Form Koordinator</h4>
-    <form action="/store/store_koordinator" method="POST">
+    <form action="/update_koordinator/{{ $data->id }}" method="POST">
         @csrf
         {{-- <div class="form-group mb-3">
             <label for="id" class="text-dark">ID</label>
@@ -15,34 +15,34 @@
 
         <div class="form-group mb-3">
             <label for="nama" class="text-dark">Nama</label>
-            <input type="text" class="form-control" id="nama_koordinator" name="nama_koordinator"  placeholder="Enter Nama">
+            <input type="text" class="form-control" id="nama_koordinator" name="nama_koordinator" value="{{ $data->nama_koordinator }}">
         </div>
 
         <div class="form-group mb-3">
             <label for="username" class="text-dark">Username</label>
-            <input type="text" class="form-control" id="username" name="username"  placeholder="Enter Username">
+            <input type="text" class="form-control" id="username" name="username" value="{{ $data->username }}">
         </div>
 
         <div class="form-group mb-3">
             <label for="nama" class="text-dark">Password</label>
-            <input type="password" class="form-control" id="password" name="password"  placeholder="Enter Password">
+            <input type="password" class="form-control" id="password" name="password" value="{{ $data->password }}">
         </div>
         
         <div class="form-group mb-3">
             <label for="">Provinsi</label>
-            <select class="form-control" name="provinsi" id="provinceDropdown"  >
-            <option>-- Pilih Provinsi --</option>
-            @foreach ($provinsis as $provinceId => $provinceName)
-            <option value="{{ $provinceId }}">{{ $provinceName }}</option>
+            <select class="form-control"  name="provinsi" id="provinceDropdown" >
+            <option value="{{ $data->provinces->id }}" >{{ $data->provinces->name }}</option>
+            @foreach ($provinsis as $prov)
+            <option value="{{ $prov->id }}">{{ $prov->name }}</option>
             @endforeach
            </select>
         </div>
 
         <div class="form-group mb-3">
             <label for="">Kabupaten/Kota</label>
-            <select class="form-control" name="kabupaten" id="regencyDropdown"  >
-            <option>-- Pilih Kabupaten/Kota --</option>
-            @foreach ($kabupatens as $kab)
+            <select class="form-control" name="kabupaten" id="regencyDropdown" >
+            <option value="{{ $data->regencies->id }}">{{ $data->regencies->name }}</option>
+            @foreach ($regencies as $kab)
             <option value="{{$kab->id}}">{{$kab->name}}</option>
             @endforeach
            </select>
@@ -51,18 +51,18 @@
         <div class="form-group mb-3">
             <label for="">Kecamatan</label>
             <select class="form-control" name="kecamatan" id="districtDropdown"  >
-            <option>-- Pilih kecamatan --</option>
-            @foreach ($kecamatans as $kec)
+            <option value="{{ $data->districts->id }}">{{ $data->districts->name }}</option>
+            @foreach ($districts as $kec)
             <option value="{{$kec->id}}">{{$kec->name}}</option>
             @endforeach
            </select>
         </div>   
         
         <div class="form-group mb-3">
-            <label for="">Desa</label>
+            <label for="">kelurahan</label>
             <select class="form-control" name="kelurahan" id="villageDropdown">
-            <option>-- Pilih desa --</option>
-            @foreach ($desas as $des)
+            <option value="{{ $data->villages->id }}">{{ $data->villages->name }}</option>
+            @foreach ($villages as $des)
             <option value="{{$des->id}}">{{$des->name}}</option>
             @endforeach
            </select>
@@ -70,12 +70,9 @@
 
         <div class="form-group mb-3">
             <label for="">Caleg</label>
-            <select class="form-control" name="caleg_id" id="caleg_id"  >
-            <option>Pilih Caleg</option>
-            @foreach ($caleg as $cal)
-            <option value="{{$cal->id}}">{{$cal->nama_caleg}}</option>
-            @endforeach
-           </select>
+            <select class="form-control" name="caleg_id" id="caleg_id" >
+            <option value="{{ $data->caleg_id}}" >{{$data->caleg->nama_caleg}}</option>
+            </select>
         </div>
 
         <div class="d-flex justify-content-between align-items-center">

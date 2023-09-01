@@ -23,10 +23,8 @@
                     <th scope="col">No</th>
                     <th scope="col">Nama</th>
                     <th scope="col">Username</th>
-                    <th scope="col">Provinsi</th>
-                    <th scope="col">Kabupaten/kota</th>
                     <th scope="col">Kecamatan</th>
-                    <th scope="col">Desa</th>
+                    <th scope="col">kelurahan</th>
                     <th scope="col">Caleg</th>
                     <th scope="col">Aksi</th>
                 </tr>
@@ -35,19 +33,16 @@
             <?php $no=1; ?>
               @foreach ($data as $row)
               <tr>
-                <?php dd ($row->desa->name)?>
                 <th scope="row">{{ $no++ }}</th>
                 <td>{{ $row->nama_koordinator }}</td>
                 <td>{{ $row->username }}</td>
-                <td>{{ $row->provinsi->name }}</td>
-                <td>{{ $row->kabupaten }}</td>
-                <td>{{ $row->kecamatan }}</td>
-                <td>{{ $row->desa }}</td>
+                <td>{{ $row->districts->name }}</td>
+                <td>{{ $row->villages->name }}</td>
                 <td>{{ $row->caleg->nama_caleg }}</td>
                 <td>
                     <div class="btn-group">
-                        <a type="button" class="btn btn-success btn-sm mr-1" style="border-radius: 5px; font-size: 15px; margin-right: 20px;" href="/edit_caleg/{{ $row->id }}">Edit</a>
-                        <a type="button" class="btn btn-danger btn-sm" style="border-radius: 5px;" href="/hapus_caleg/{{ $row->id }}">Hapus</a>
+                        <a type="button" class="btn btn-success btn-sm mr-1" style="border-radius: 5px; font-size: 15px; margin-right: 20px;" href="/edit_koordinator/{{ $row->id }}">Edit</a>
+                        <a  type="button" class="btn btn-danger btn-sm mr-1" style="border-radius: 5px; font-size: 15px; margin-right: 20px;" href="{{ route('hapus_koordinator', [$row->id]) }}">Hapus</a>
                     </div>
                     
                 </td>
