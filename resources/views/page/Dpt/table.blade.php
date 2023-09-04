@@ -98,7 +98,7 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
                     <form action="{{ route('getsaksi') }}" method="POST">
                         @csrf
-                        <input type="hidden" id="saksiId" name="saksiId" value="">
+                        <input type="hidden" id="saksiId" name="saksiId" value="{{ $dpt->id }}">
                         <button type="submit" class="btn btn-primary">Ya</button>
                     </form>
                 </div>
