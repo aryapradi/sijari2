@@ -9,6 +9,8 @@ use App\Http\Controllers\PartaiController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\KoordinatorController;
 use App\Http\Controllers\KoordinatorTpsController;
+use App\Http\Controllers\SaksiController;
+use Illuminate\Routing\Router;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,17 +64,13 @@ Route::get('/download_Template', [DptController::class, 'download_Template'])->n
 Route::get('/delete_all_data', [DptController::class, 'deleteAllData'])->name('delete_all_data');
 Route::get('/detail_dpt/{id}', [DptController::class, 'detail_dpt'])->name('detail_dpt');
 
-
-// ROUTE KOORDINATOR TPS
-Route::get('/DataKoorTPS', [KoordinatorTpsController::class, 'koordinatortps'])->name('koordinatortps');
-
-
+// Saksi
+Route::get('/DataSaksi',[SaksiController::class,'saksi'])->name('saksi');
+Route::post('/GetSaksi', [SaksiController::class, 'jadikan_saksi'])->name('getsaksi');
 
 
-
-
-
-
+// ROUTE Koordinator tps
+Route::get('/DataKoorTPS',[KoordinatorTpsController::class,'koordinatortps'])->name('koordinatortps');
 
 
 

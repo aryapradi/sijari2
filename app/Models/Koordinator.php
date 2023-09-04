@@ -39,6 +39,11 @@ class Koordinator extends Model
     {
         return $this->belongsTo(Village::class, 'kelurahan'); // Ganti dengan kolom foreign key yang sesuai
     }
+
+    public function dpt()
+    {
+        return $this->belongsToMany(Dpt::class);
+    }
     
 
     //mendefinisikan relasi
