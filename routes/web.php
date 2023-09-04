@@ -25,6 +25,9 @@ use Illuminate\Routing\Router;
 
 // Route::get('/', [HomeController::class,'home'])->name('dashboard');
 
+// Route User
+Route::get('/DataUser', [UserController::class,'user'])->name('user');
+
 //Route Partai
 Route::get('/DataPartai', [PartaiController::class,'partai'])->name('partai');
 Route::get('/create_partai',[PartaiController::class,'create_partai'])->name('create_partai');

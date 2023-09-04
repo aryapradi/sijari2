@@ -19,12 +19,10 @@
 
         <div class="form-group mb-3">
             <label for="">Partai</label>
-            <select class="form-control" name="partai_id" id="partai_id" required>
-                <option value="" disabled selected>Pilih Partai</option>
-                @foreach ($partai as $par)
-                    <option value="{{$par->id}}">{{$par->nama_partai}}</option>
-                @endforeach
-            </select>
+            <select class="form-control" disabled  id="partai_id"  >
+            <option selected value="">{{$partai->nama_partai}}</option>
+        </select>
+        <input type="hidden" name="partai_id" value="{{$partai->id}}">
         </div>
         
 

@@ -13,6 +13,12 @@
                     <span class="hide-menu">Applications</span>
                 </li>
                 <li class="sidebar-item">
+                    <a class="sidebar-link" href="{{ route('user') }}" aria-expanded="false">
+                        <i data-feather="user" class="feather-icon"></i>
+                        <span class="hide-menu">User</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
                     <a class="sidebar-link" href="{{ route('partai') }}" aria-expanded="false">
                         <i data-feather="user" class="feather-icon"></i>
                         <span class="hide-menu">Partai</span>
@@ -27,7 +33,7 @@
                 <li class="sidebar-item">
                     <a class="sidebar-link sidebar-link" href="{{ route('koordinator') }}" aria-expanded="false">
                         <i data-feather="user" class="feather-icon"></i>
-                        <span class="hide-menu">Koordinator Kelurahan</span>
+                        <span class="hide-menu">Koor. Kelurahan</span>
                     </a>
                 </li>
                 <li class="sidebar-item">

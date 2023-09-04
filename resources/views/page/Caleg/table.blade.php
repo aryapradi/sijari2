@@ -19,7 +19,11 @@
 <div class="card">
     <div class="card-body" style="display: flex; align-items: center;">
         <h4 class="card-title" style="margin-right: auto;">Data Caleg</h4>
-        <a href="/create_caleg"  class="btn btn-outline-primary btn-sm" style="border-radius: 5px">Tambah Data</a>
+        @if (count($data) === 0)
+            <a href="/create_caleg" class="btn btn-primary btn-sm">Tambah Data</a>
+        @else
+            <button href="" disabled class="btn btn-primary btn-sm">Tambah Data</button>
+        @endif
     </div>    
     <div class="table-responsive">
         <table class="table">
@@ -41,7 +45,11 @@
                 <td>
                     <div class="btn-group">
                         <a type="button" class="btn btn-success btn-sm mr-1" style="border-radius: 5px; font-size: 15px; margin-right: 20px;" href="/edit_caleg/{{ $row->id }}">Edit</a>
-                    <a type="button" class="btn btn-danger btn-sm" style="border-radius: 5px;" href="/hapus_caleg/{{ $row->id }}">Hapus</a>
+                        @if (count($koordinator) === 0)
+                            <a type="button" class="btn btn-danger btn-sm" style="border-radius: 5px;" href="/hapus_caleg/{{ $row->id }}">Hapus</a>
+                        @else
+                            <button type="submit" disabled class="btn btn-danger btn-sm" style="border-radius:5px" title="hapus data caleg terlebih dahulu">Hapus</button>
+                        @endif 
                     </div>
                     
                 </td>

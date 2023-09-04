@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Caleg;
 use App\Models\Partai;
+use App\Models\Koordinator;
 use Illuminate\Http\Request;
 
 class CalegController extends Controller
@@ -11,12 +12,13 @@ class CalegController extends Controller
     public function caleg()
     {
         $data = Caleg::all();
-        return view('page.Caleg.table', compact('data'));
+        $koordinator = Koordinator::all();
+        return view('page.Caleg.table', compact('data','koordinator'));
     }
     
     public function create_Caleg()
     {
-        $partai = Partai::all();
+        $partai = Partai::first();
         return view('page.Caleg.form', compact('partai'));
     }
 
