@@ -9,7 +9,7 @@
 
         <div class="form-group mb-3">
             <label for="nama" class="text-dark">Nama</label>
-            <input type="text" class="form-control" id="nama_partai" name="nama_partai" placeholder="Masukkan Nama">
+            <input type="text" class="form-control" id="nama_partai" name="nama_partai" placeholder="Masukkan Nama" required>
         </div>
 
         <div class="d-flex justify-content-between align-items-center">

@@ -8,6 +8,7 @@ use App\Http\Controllers\CalegController;
 use App\Http\Controllers\PartaiController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\KoordinatorController;
+use App\Http\Controllers\KoordinatorTpsController;
 use App\Http\Controllers\SaksiController;
 use Illuminate\Routing\Router;
 
@@ -23,6 +24,9 @@ use Illuminate\Routing\Router;
 */
 
 // Route::get('/', [HomeController::class,'home'])->name('dashboard');
+
+// Route User
+Route::get('/DataUser', [UserController::class,'user'])->name('user');
 
 //Route Partai
 Route::get('/DataPartai', [PartaiController::class,'partai'])->name('partai');
@@ -66,6 +70,10 @@ Route::get('/detail_dpt/{id}', [DptController::class, 'detail_dpt'])->name('deta
 // Saksi
 Route::get('/DataSaksi',[SaksiController::class,'saksi'])->name('saksi');
 Route::post('/GetSaksi', [SaksiController::class, 'jadikan_saksi'])->name('getsaksi');
+
+
+// ROUTE Koordinator tps
+Route::get('/DataKoorTPS',[KoordinatorTpsController::class,'koordinatortps'])->name('koordinatortps');
 
 
 

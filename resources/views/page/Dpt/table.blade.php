@@ -78,7 +78,7 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
+                </div>     
             </div>
         </div>
     </div>
@@ -137,14 +137,17 @@
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Import Caleg Data</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="/import_dpt" method="post" enctype="multipart/form-data">
+                <form id="import-form" action="/import_dpt" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
+                        <div id="import-spinner" style="display: none;">
+                            <i class="fas fa-spinner fa-spin"></i> Importing...
+                        </div>
                         <input class="form-control" type="file" name="file" required>
                     </div>
                     <div class="modal-footer">
                         <a href="/download_Template" class="btn btn-primary">Unduh Template Excel</a>
-                        <button type="submit" class="btn btn-primary">Import</button>
+                        <button type="submit" class="btn btn-primary" id="ImportButton">Import</button>
                     </div>
                 </form>
             </div>
@@ -174,6 +177,13 @@
             </div>
         </div>
     </div>
+</div>
 
-    </div>
+<script>
+    function showLoadingSpinner() {
+        document.getElementById('import-spinner').style.display = 'block';
+        document.getElementById('ImportButton').setAttribute('disabled', 'disabled');
+    }
+</script>
+
 @endsection

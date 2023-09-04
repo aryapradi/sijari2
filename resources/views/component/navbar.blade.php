@@ -65,7 +65,7 @@
                     <img src="../assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle"
                         width="40">
                     <span class="ms-2 d-none d-lg-inline-block"><span>Hello,</span> <span
-                            class="text-dark">Jason Doe</span> <i data-feather="chevron-down"
+                            class="text-dark">{{Auth::user()->name}}</span> <i data-feather="chevron-down"
                             class="svg-icon"></i></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-right user-dd animated flipInY">
@@ -73,12 +73,30 @@
                             class="svg-icon me-2 ms-1"></i>
                         My Profile</a>
                     <div class="dropdown-divider"></div>
-                    <a href="{{ route('logout') }}" 
-                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="dropdown-item" href="javascript:void(0)"><i data-feather="power"
-                            class="svg-icon me-2 ms-1"></i>
-                        Logout</a>                      <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
+                    <a href="javascript:void(0)" onclick="confirmLogout()" class="dropdown-item">
+                        <i data-feather="power" class="svg-icon me-2 ms-1"></i> Logout
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                    
+                    <script>
+                        function confirmLogout() {
+                            Swal.fire({
+                                title: 'Konfirmasi Logout',
+                                text: 'Anda yakin ingin logout?',
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonText: 'Ya, Logout',
+                                cancelButtonText: 'Batal',
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    document.getElementById('logout-form').submit();
+                                }
+                            });
+                        }
+                    </script>
+                    
                     
                 </div>
             </li>

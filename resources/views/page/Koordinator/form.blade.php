@@ -15,7 +15,7 @@
 
         <div class="form-group mb-3">
             <label for="nama" class="text-dark">Nama</label>
-            <input type="text" class="form-control" id="nama_koordinator" name="nama_koordinator"  placeholder="Enter Nama">
+            <input type="text" class="form-control" id="nama_koordinator" name="nama_koordinator"  placeholder="Enter Nama" required>
             @error('nama_koordiantor')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -25,7 +25,7 @@
 
         <div class="form-group mb-3">
             <label for="username" class="text-dark">Username</label>
-            <input type="text" class="form-control" id="username" name="username"  placeholder="Enter Username">
+            <input type="text" class="form-control" id="username" name="username"  placeholder="Enter Username" required>
             @error('username')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -35,17 +35,32 @@
 
         <div class="form-group mb-3">
             <label for="nama" class="text-dark">Password</label>
-            <input type="password" class="form-control" id="password" name="password"  placeholder="Enter Password">
+            <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" required>
+            <input type="checkbox" id="showPassword"> Show Password
             @error('password')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
-        @enderror
+            @enderror
         </div>
+        
+        <script>
+            const passwordInput = document.getElementById("password");
+            const showPasswordCheckbox = document.getElementById("showPassword");
+        
+            showPasswordCheckbox.addEventListener("change", function () {
+                if (showPasswordCheckbox.checked) {
+                    passwordInput.type = "text";
+                } else {
+                    passwordInput.type = "password";
+                }
+            });
+        </script>
+        
         
         <div class="form-group mb-3">
             <label for="">Provinsi</label>
-            <select class="form-control" name="provinsi" id="provinceDropdown"  >
+            <select class="form-control" name="provinsi" id="provinceDropdown" required  >
             <option>-- Pilih Provinsi --</option>
             @foreach ($provinsis as $provinceId => $provinceName)
             <option value="{{ $provinceId }}">{{ $provinceName }}</option>
@@ -60,7 +75,7 @@
 
         <div class="form-group mb-3">
             <label for="">Kabupaten/Kota</label>
-            <select class="form-control" name="kabupaten" id="regencyDropdown"  >
+            <select class="form-control" name="kabupaten" id="regencyDropdown" required  >
             <option>-- Pilih Kabupaten/Kota --</option>
             @foreach ($kabupatens as $kab)
             <option value="{{$kab->id}}">{{$kab->name}}</option>
@@ -70,7 +85,7 @@
 
         <div class="form-group mb-3">
             <label for="">Kecamatan</label>
-            <select class="form-control" name="kecamatan" id="districtDropdown"  >
+            <select class="form-control" name="kecamatan" id="districtDropdown" required >
             <option>-- Pilih kecamatan --</option>
             @foreach ($kecamatans as $kec)
             <option value="{{$kec->id}}">{{$kec->name}}</option>
@@ -80,7 +95,7 @@
         
         <div class="form-group mb-3">
             <label for="">Desa</label>
-            <select class="form-control" name="kelurahan" id="villageDropdown">
+            <select class="form-control" name="kelurahan" id="villageDropdown" required>
             <option>-- Pilih desa --</option>
             @foreach ($desas as $des)
             <option value="{{$des->id}}">{{$des->name}}</option>

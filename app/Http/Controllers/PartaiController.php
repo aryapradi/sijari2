@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Partai;
+use App\Models\Caleg;
 use Illuminate\Http\Request;
 
 class PartaiController extends Controller
@@ -10,7 +11,8 @@ class PartaiController extends Controller
     public function partai()
     {
         $data = Partai::all();
-        return view('page.Partai.table', compact('data'));
+        $caleg = Caleg::all();
+        return view('page.Partai.table', compact('data','caleg'));
     }
 
     public function create_partai()

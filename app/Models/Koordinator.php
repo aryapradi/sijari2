@@ -18,7 +18,7 @@ class Koordinator extends Model
 
     protected $guarded = ['id'];
 
-    protected $fillable = ['nama_koordinator','username','password', 'caleg_id','provinsi','kabupaten','kecamatan','kelurahan','admin_id'];
+    protected $fillable = ['nama_koordinator','username','password', 'caleg_id','provinsi','kabupaten','kecamatan','kelurahan'];
   
     public function provinces()
     {
