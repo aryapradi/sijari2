@@ -15,9 +15,10 @@
         });
     @endif
 </script>
+<div class="card">
     <div class="card-body d-flex align-items-center">
         <h4 class="card-title" style="margin-right: auto;">Data Partai</h4>
-        <a href="/create_partai" class="btn btn-primary btn-sm">Tambah Data</a>
+        <a href="/create_partai" class="btn btn-outline-primary btn-sm" style="border-radius: 5px">Tambah Data</a>
     </div>
     
     <div class="table-responsive">
@@ -50,5 +51,6 @@
             </tbody>
         </table>
     </div>
+</div>
 </div>
 @endsection

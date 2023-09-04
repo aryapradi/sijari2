@@ -17,7 +17,7 @@
 <div class="card">
     <div class="card-body" style="display: flex; align-items: center;">
         <h4 class="card-title" style="margin-right: auto;">Data Koordinator</h4>
-        <a href="/create_koordinator" class="btn btn-primary btn-sm">Tambah Data</a>
+        <a href="/create_koordinator" class="btn btn-outline-primary btn-sm" style="border-radius: 5px">Tambah Data</a>
     </div>    
     <div class="table-responsive">
         <table class="table">

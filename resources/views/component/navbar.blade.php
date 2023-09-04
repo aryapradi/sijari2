@@ -73,12 +73,30 @@
                             class="svg-icon me-2 ms-1"></i>
                         My Profile</a>
                     <div class="dropdown-divider"></div>
-                    <a href="{{ route('logout') }}" 
-                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="dropdown-item" href="javascript:void(0)"><i data-feather="power"
-                            class="svg-icon me-2 ms-1"></i>
-                        Logout</a>                      <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
+                    <a href="javascript:void(0)" onclick="confirmLogout()" class="dropdown-item">
+                        <i data-feather="power" class="svg-icon me-2 ms-1"></i> Logout
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                    
+                    <script>
+                        function confirmLogout() {
+                            Swal.fire({
+                                title: 'Konfirmasi Logout',
+                                text: 'Anda yakin ingin logout?',
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonText: 'Ya, Logout',
+                                cancelButtonText: 'Batal',
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    document.getElementById('logout-form').submit();
+                                }
+                            });
+                        }
+                    </script>
+                    
                     
                 </div>
             </li>

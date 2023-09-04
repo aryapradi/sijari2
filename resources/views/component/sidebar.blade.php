@@ -27,13 +27,19 @@
                 <li class="sidebar-item">
                     <a class="sidebar-link sidebar-link" href="{{ route('koordinator') }}" aria-expanded="false">
                         <i data-feather="user" class="feather-icon"></i>
-                        <span class="hide-menu">Koordinator</span>
+                        <span class="hide-menu">Koordinator Kelurahan</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
                     <a class="sidebar-link sidebar-link" href="{{ route('dpt') }}" aria-expanded="false">
                         <i data-feather="user" class="feather-icon"></i>
                         <span class="hide-menu">DPT</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link sidebar-link" href="{{ route('koordinatortps') }}" aria-expanded="false">
+                        <i data-feather="user" class="feather-icon"></i>
+                        <span class="hide-menu">Koor Tps</span>
                     </a>
                 </li>
             </ul>

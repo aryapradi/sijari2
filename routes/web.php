@@ -8,6 +8,7 @@ use App\Http\Controllers\CalegController;
 use App\Http\Controllers\PartaiController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\KoordinatorController;
+use App\Http\Controllers\KoordinatorTpsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +61,12 @@ Route::post('/import_dpt', [DptController::class, 'import_dpt'])->name('import_d
 Route::get('/download_Template', [DptController::class, 'download_Template'])->name('download_Template');
 Route::get('/delete_all_data', [DptController::class, 'deleteAllData'])->name('delete_all_data');
 Route::get('/detail_dpt/{id}', [DptController::class, 'detail_dpt'])->name('detail_dpt');
+
+
+// ROUTE KOORDINATOR TPS
+Route::get('/DataKoorTPS', [KoordinatorTpsController::class, 'koordinatortps'])->name('koordinatortps');
+
+
 
 
 

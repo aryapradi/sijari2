@@ -1,5 +1,6 @@
 @extends('layout.main')
 
+
 @section('content')
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -25,11 +26,14 @@
     @endif
 </script>
 
+
+
+
 <div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Data DPT</h4>
+                <h4 class="card-title">Data Koordinator TPS</h4>
                 <div class="btn-group mb-3">
                     <button type="button" class="btn btn-outline-primary btn-sm dropdown-toggle"
                         style="width: 100px; border-radius:5px" data-bs-toggle="dropdown" aria-haspopup="true"
@@ -37,41 +41,39 @@
                         Aksi
                     </button>
                     <div class="dropdown-menu">
+                        <a class="dropdown-item" href="create_caleg">Input Manual</a>
                         <a class="dropdown-item" href="/export_dpt">Export</a>
                         <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#exampleModal">Import</a>
                         <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteAllDataModal">Delete All Data</button>
                     </div>
+                    
                 </div>
-                <div class="table-responsive">
-                    <table id="default_order"
-                        class="table border table-striped table-bordered text-nowrap" style="width:100%">
+                <div class="table-responsive">  
+                    <table id="zero_config" class="table border table-striped table-bordered text-nowrap">
                         <thead>
                             <tr>
-                                <th>No</th>
-                                <th>NAMA</th>
-                                <th>KECAMATAN</th>
-                                <th>KELURAHAN</th>
-                                <th>TPS</th>
-                                <th>Aksi</th>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Office</th>
+                                <th>Age</th>
+                                <th>Start date</th>
+                                <th>Salary</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ( $data as $dpt )
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $dpt->nama }}</td>
-                                <td>{{ $dpt->kecamatan }}</td>
-                                <td>{{ $dpt->kelurahan }}</td>
-                                <td>{{ $dpt->tps }}</td>
-                                <td>
-                                    <a href="{{ route('detail_dpt', ['id' => $dpt->id]) }}" style="border-radius: 5px" class="btn btn-info btn-sm">Detail</a>
-                                </td>
+                                <td>Badrul</td>
+                                <td>Boss</td>
+                                <td>Di Sini</td>
+                                <td>20 Tahun</td>
+                                <td>Now</td>
+                                <td>Mahal</td>
                             </tr>
-                            @endforeach
-                        </tbody>
+                        <tfoot>
+                            
+                        </tfoot>
                     </table>
                 </div>
-                
             </div>
         </div>
     </div>
@@ -85,17 +87,14 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
-                <form id="import-form" action="/import_dpt" method="post" enctype="multipart/form-data">
+                <form action="/import_dpt" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
-                        <div id="import-spinner" style="display: none;">
-                            <i class="fas fa-spinner fa-spin"></i> Importing...
-                        </div>
                         <input class="form-control" type="file" name="file" required>
                     </div>
                     <div class="modal-footer">
                         <a href="/download_Template" class="btn btn-primary">Unduh Template Excel</a>
-                        <button type="submit" class="btn btn-primary" id="ImportButton">Import</button>
+                        <button type="submit" class="btn btn-primary">Import</button>
                     </div>
                 </form>
             </div>
@@ -124,13 +123,16 @@
             </div>
         </div>
     </div>
+
+
 </div>
 
-<script>
-    function showLoadingSpinner() {
-        document.getElementById('import-spinner').style.display = 'block';
-        document.getElementById('ImportButton').setAttribute('disabled', 'disabled');
-    }
-</script>
+
+
+
+
+
+
+
 
 @endsection
