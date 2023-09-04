@@ -17,7 +17,13 @@ class KoordinatorController extends Controller
 {
     public function koordinator()
     {
-        $data = Koordinator::with(['villages','districts','regencies','provinces', 'caleg'])->paginate();
+        $user = Auth::user();
+        // dd($user->id);
+        if($user->role == 1){
+            $data = Koordinator::with(['villages','districts','regencies','provinces', 'caleg'])->paginate();
+        }else{
+            $data = Koordinator::where('admin_id', $user->id)->with(['villages','districts','regencies','provinces', 'caleg'])->paginate();
+        };
         $provinsis = Province::all(); // Mengambil semua data provinsi
         $regencies = Regency::all();
         $districts = District::all();
@@ -28,7 +34,7 @@ class KoordinatorController extends Controller
     
     public function create_koordinator()
     {
-        $caleg = Caleg::all();
+        $caleg = Caleg::first();
         $provinsis =  Province::pluck('name', 'id');
         $kabupatens = [];
         $kecamatans = [];
@@ -40,17 +46,18 @@ class KoordinatorController extends Controller
 
     public function store_koordinator(Request $request)
     {
-        $this->validate($request, [
-            'nama_koordinator'   => 'required',
-            'username'   => 'required',
-            'password'   => 'required|min:8',
-            'provinsi'   => 'required',
-            'kabupaten'   => 'required',
-            'kecamatan'   => 'required',
-            'kelurahan'   => 'required',
-            'caleg_id'   => 'required',
-            'admin_id'   => 'required',
-        ]);
+        // dd($request);
+        // $this->validate($request, [
+        //     'nama_koordinator'   => 'required',
+        //     'username'   => 'required',
+        //     'password'   => 'required|min:8',
+        //     'provinsi'   => 'required',
+        //     'kabupaten'   => 'required',
+        //     'kecamatan'   => 'required',
+        //     'kelurahan'   => 'required',
+        //     'caleg_id'   => 'required',
+        //     'admin_id'   => 'required',
+        // ]);
         $user = Auth::user()->id;
         $password = Hash::make($request['password']);
         Koordinator::create([

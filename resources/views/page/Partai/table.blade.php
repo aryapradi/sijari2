@@ -15,9 +15,14 @@
         });
     @endif
 </script>
+<div class="card">
     <div class="card-body d-flex align-items-center">
         <h4 class="card-title" style="margin-right: auto;">Data Partai</h4>
-        <a href="/create_partai" class="btn btn-primary btn-sm">Tambah Data</a>
+        @if (count($data) === 0)
+            <a href="/create_partai" class="btn btn-primary btn-sm">Tambah Data</a>
+        @else
+            <button href="" disabled class="btn btn-primary btn-sm">Tambah Data</button>
+        @endif
     </div>
     
     <div class="table-responsive">
@@ -38,11 +43,15 @@
                         <td>
                             <div class="btn-group" >
                                 <a href="/edit_partai/{{$row->id}}" class="btn btn-success btn-sm mr-1" style="font-size: 15px; margin-right: 20px; border-radius:5px ">Edit</a>
+                                @if(count($caleg) === 0)         
                                 <form action="{{ route('hapus_partai', ['id' => $row->id]) }}" method="post">
                                     @csrf
                                     @method('delete')
                                     <button type="submit" class="btn btn-danger btn-sm" style="border-radius:5px">Hapus</button>
                                 </form>
+                                @else
+                                <button type="submit" disabled class="btn btn-danger btn-sm" style="border-radius:5px" title="hapus data caleg terlebih dahulu">Hapus</button>
+                                @endif
                             </div>
                         </td>
                     </tr>
