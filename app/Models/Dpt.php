@@ -31,4 +31,9 @@ class Dpt extends Model
     ];
 
     // Tambahkan relasi atau method lain yang mungkin diperlukan di sini
+
+    public function koordinator()
+    {
+        return $this->belongsToMany(Koordinator::class);
+    }
 }
