@@ -92,7 +92,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Apakah Anda yakin ingin menjadikan <span id="saksiNama"></span> sebagai saksi?
+                    Apakah Anda yakin ingin menjadikan <span id="Nama"></span> sebagai saksi?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
@@ -125,7 +125,7 @@
                 $('#exampleModalSaksi form').attr('action', actionUrl);
 
                 // Mengisi nama dalam elemen modal
-                $('#saksiNama').text(nama);
+                $('#Nama').text(nama);
             });
         });
     </script>
