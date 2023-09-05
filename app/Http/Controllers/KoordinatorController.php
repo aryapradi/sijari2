@@ -24,6 +24,7 @@ class KoordinatorController extends Controller
         }else{
             $data = Koordinator::where('admin_id', $user->id)->with(['villages','districts','regencies','provinces', 'caleg'])->paginate();
         };
+        // dd($data);
         $provinsis = Province::all(); // Mengambil semua data provinsi
         $regencies = Regency::all();
         $districts = District::all();

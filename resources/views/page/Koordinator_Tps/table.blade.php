@@ -38,13 +38,11 @@
                     <button type="button" class="btn btn-outline-primary btn-sm dropdown-toggle"
                         style="width: 100px; border-radius:5px" data-bs-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false">
-                        Aksi
+                        Add Data
                     </button>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="create_caleg">Input Manual</a>
-                        <a class="dropdown-item" href="/export_dpt">Export</a>
-                        <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#exampleModal">Import</a>
-                        <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteAllDataModal">Delete All Data</button>
+                        <a class="dropdown-item" href="">Input Manual</a>
+                        <a class="dropdown-item" href="{{ route('dpt') }}">Input Dpt</a>
                     </div>
                     
                 </div>
@@ -52,25 +50,32 @@
                     <table id="zero_config" class="table border table-striped table-bordered text-nowrap">
                         <thead>
                             <tr>
+                                <th>No</th>
                                 <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
+                                <th>Kecamatan</th>
+                                <th>kelurahan</th>
+                                <th>TPS</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
+                            <?php $no=1; ?>
+                            @foreach ($saksiData as $saksi)
                             <tr>
-                                <td>Badrul</td>
-                                <td>Boss</td>
-                                <td>Di Sini</td>
-                                <td>20 Tahun</td>
-                                <td>Now</td>
-                                <td>Mahal</td>
+                                <td>{{ $no++ }}</td>
+                                <td>{{ $saksi->nama }}</td>
+                                <td>{{ $saksi->kecamatan }}</td>
+                                <td>{{ $saksi->kelurahan }}</td>
+                                <td>{{ $saksi->tps }}</td>
+                                <td>
+                                    <a href=""
+                                        style="border-radius: 5px" class="btn btn-info btn-sm">Edit</a>
+                                    <a  type="button" href="/hapus_koortps/{{ $saksi->id }}" style="border-radius: 5px" class="btn btn-danger btn-sm">Hapus</a>
+                                   
+                                </td>
                             </tr>
+                            @endforeach
                         <tfoot>
-                            
                         </tfoot>
                     </table>
                 </div>

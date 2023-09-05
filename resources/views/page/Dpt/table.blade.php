@@ -92,13 +92,41 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Apakah Anda yakin ingin menjadikan <span id="Nama"></span> sebagai saksi?
+                    Apakah Anda yakin ingin menjadikan <span id="nama"></span> sebagai saksi?
                 </div>
+                <div class="modal-body">
+                    <label for="recipient-name" class="col-form-label">Username</label>
+                    <input type="text" class="form-control" id="recipient-name">
+                </div>
+                <div class="modal-body">
+                    <label for="nama" class="text-dark">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" required>
+                    <input type="checkbox" id="showPassword"> Show Password
+                    @error('password')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
+                
+                <script>
+                    const passwordInput = document.getElementById("password");
+                    const showPasswordCheckbox = document.getElementById("showPassword");
+                
+                    showPasswordCheckbox.addEventListener("change", function () {
+                        if (showPasswordCheckbox.checked) {
+                            passwordInput.type = "text";
+                        } else {
+                            passwordInput.type = "password";
+                        }
+                    });
+                </script>
+                
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
                     <form action="{{ route('getsaksi') }}" method="POST">
                         @csrf
-                        <input type="hidden" id="saksiId" name="saksiId" value="{{ $dpt->id }}">
+                        <input type="hidden" id="saksiId" name="saksiId">
                         <button type="submit" class="btn btn-primary">Ya</button>
                     </form>
                 </div>
@@ -108,28 +136,24 @@
     {{-- Modal Add User To Saksi End --}}
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
     <script>
-        $(document).ready(function() {
-            // Menangani klik tombol "Saksi"
-            $('.btn-success').click(function() {
-                // Mengambil data ID dan nama dari atribut data-
-                var id = $(this).data('id');
-                var nama = $(this).data('nama');
-
-                // Mengisi nilai input tersembunyi dalam modal
-                $('#saksiId').val(id);
-
-                var actionUrl = "{{ route('getsaksi') }}"; // URL dasar
-                actionUrl = actionUrl.replace('[ID_PENGGUNA]', ''); // Menghapus kunci "id"
-                $('#exampleModalSaksi form').attr('action', actionUrl);
-
-                // Mengisi nama dalam elemen modal
-                $('#Nama').text(nama);
-            });
+        // Menangani klik tombol "Saksi" dengan event delegation
+        $(document).on('click', '.btn-success', function() {
+            // Mengambil data ID dan nama dari atribut data-
+            var id = $(this).data('id');
+            var nama = $(this).data('nama');
+    
+            // Mengisi nilai input tersembunyi dalam modal
+            $('#saksiId').val(id);
+    
+            var actionUrl = "{{ route('getsaksi') }}"; // URL dasar
+            actionUrl = actionUrl.replace('[ID_PENGGUNA]', ''); // Menghapus kunci "id"
+            $('#exampleModalSaksi form').attr('action', actionUrl);
+    
+            // Mengisi nama dalam elemen modal
+            $('#nama').text(nama);
         });
     </script>
-
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

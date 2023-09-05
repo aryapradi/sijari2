@@ -105,12 +105,10 @@
 
         <div class="form-group mb-3">
             <label for="">Caleg</label>
-            <select class="form-control" name="caleg_id" id="caleg_id"   >
-            <option>Pilih Caleg</option>
-            @foreach ($caleg as $cal)
-            <option value="{{$cal->id}}">{{$cal->nama_caleg}}</option>
-            @endforeach
-           </select>
+            <select class="form-control" disabled  id="partai_id"  >
+            <option selected value="">{{$caleg->nama_caleg}}</option>
+        </select>
+        <input type="hidden" name="caleg_id" value="{{$caleg->id}}">
         </div>
 
         <div class="d-flex justify-content-between align-items-center">
