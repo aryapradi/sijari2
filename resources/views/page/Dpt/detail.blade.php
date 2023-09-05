@@ -11,67 +11,67 @@
             <table class="table">
                 <tr>
                     <th>Nama:</th>
-                    <td>{{ $data->nama }}</td>
+                    <td>{{ $dpt->nama }}</td>
                 </tr>
                 <tr>
                     <th>NO KK:</th>
-                    <td>{{ $data->no_kk }}</td>
+                    <td>{{ $dpt->no_kk }}</td>
                 </tr>
                 <tr>
                     <th>NIK:</th>
-                    <td>{{ $data->nik }}</td>
+                    <td>{{ $dpt->nik }}</td>
                 </tr>
                 <tr>
                     <th>Tempat Lahir:</th>
-                    <td>{{ $data->tempat_lahir }}</td>
+                    <td>{{ $dpt->tempat_lahir }}</td>
                 </tr>
                 <tr>
                     <th>Tanggal Lahir:</th>
-                    <td>{{ $data->tanggal_lahir }}</td>
+                    <td>{{ $dpt->tanggal_lahir }}</td>
                 </tr>
                 <tr>
                     <th>Status Perkawinan:</th>
-                    <td>{{ $data->status_perkawinan }}</td>
+                    <td>{{ $dpt->status_perkawinan }}</td>
                 </tr>
                 <tr>
                     <th>Jenis Kelamin:</th>
-                    <td>{{ $data->jenis_kelamin }}</td>
+                    <td>{{ $dpt->jenis_kelamin }}</td>
                 </tr>
                 <tr>
                     <th>Jalan:</th>
-                    <td>{{ $data->jalan }}</td>
+                    <td>{{ $dpt->jalan }}</td>
                 </tr>
                 <tr>
                     <th>RT:</th>
-                    <td>{{ $data->rt }}</td>
+                    <td>{{ $dpt->rt }}</td>
                 </tr>
                 <tr>
                     <th>RW:</th>
-                    <td>{{ $data->rw }}</td>
+                    <td>{{ $dpt->rw }}</td>
                 </tr>
                 <tr>
                     <th>Disabilitas:</th>
-                    <td>{{ $data->disabilitas }}</td>
+                    <td>{{ $dpt->disabilitas }}</td>
                 </tr>
                 <tr>
                     <th>Kota:</th>
-                    <td>{{ $data->kota }}</td>
+                    <td>{{ $dpt->kota }}</td>
                 </tr>
                 <tr>
                     <th>Kelurahan:</th>
-                    <td>{{ $data->kelurahan }}</td>
+                    <td>{{ $dpt->kelurahan }}</td>
                 </tr>
                 <tr>
                     <th>Kecamatan:</th>
-                    <td>{{ $data->kecamatan }}</td>
+                    <td>{{ $dpt->kecamatan }}</td>
                 </tr>
                 <tr>
                     <th>TPS:</th>
-                    <td>{{ $data->tps }}</td>
+                    <td>{{ $dpt->tps }}</td>
                 </tr>
                 <tr>
                     <th>No Telepon:</th>
-                    <td>{{ $data->NoTlpn }}</td>
+                    <td>{{ $dpt->NoTlpn }}</td>
                 </tr>
             </table>
         </div>

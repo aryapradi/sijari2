@@ -2,6 +2,7 @@
 
 @section('content')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         @if ($message = Session::get('success'))
             Swal.fire({
@@ -57,19 +58,19 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($data as $dpt)
+                                @foreach ($dpt as $dptt)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $dpt->nama }}</td>
-                                        <td>{{ $dpt->kecamatan }}</td>
-                                        <td>{{ $dpt->kelurahan }}</td>
-                                        <td>{{ $dpt->tps }}</td>
+                                        <td>{{ $dptt->nama }}</td>
+                                        <td>{{ $dptt->kecamatan }}</td>
+                                        <td>{{ $dptt->kelurahan }}</td>
+                                        <td>{{ $dptt->tps }}</td>
                                         <td>
-                                            <a href="{{ route('detail_dpt', ['id' => $dpt->id]) }}"
+                                            <a href="{{ route('detail_dpt', ['id' => $dptt->id]) }}"
                                                 style="border-radius: 5px" class="btn btn-info btn-sm">Detail</a>
                                             <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
                                                 style="border-radius: 5px" data-bs-target="#exampleModalSaksi"
-                                                data-id="{{ $dpt->id }}" data-nama="{{ $dpt->nama }}">
+                                                data-id="{{ $dptt->id }}" data-nama="{{ $dptt->nama }}">
                                                 Saksi
                                             </button>
                                         </td>
@@ -78,7 +79,7 @@
                             </tbody>
                         </table>
                     </div>
-                </div>     
+                </div>
             </div>
         </div>
     </div>
@@ -135,6 +136,7 @@
     </div>
     {{-- Modal Add User To Saksi End --}}
 
+    {{-- Modal Import Start --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         // Menangani klik tombol "Saksi" dengan event delegation
@@ -164,7 +166,7 @@
                 <form id="import-form" action="/import_dpt" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
-                        <div id="import-spinner" style="display: none;">
+                        <div id="import-spinner" style="display: none; ">
                             <i class="fas fa-spinner fa-spin"></i> Importing...
                         </div>
                         <input class="form-control" type="file" name="file" required>
@@ -177,6 +179,7 @@
             </div>
         </div>
     </div>
+    {{-- Modal Import End --}}
 
     <!-- Delete All Data Modal -->
     <div class="modal fade" id="deleteAllDataModal" tabindex="-1" aria-labelledby="deleteAllDataModalLabel"
@@ -204,10 +207,35 @@
 </div>
 
 <script>
-    function showLoadingSpinner() {
-        document.getElementById('import-spinner').style.display = 'block';
-        document.getElementById('ImportButton').setAttribute('disabled', 'disabled');
-    }
-</script>
+    $(document).ready(function() {
+        // Menangani klik tombol "Saksi"
+        $('.btn-success').click(function() {
+            // Mengambil data ID dan nama dari atribut data-
+            var id = $(this).data('id');
+            var nama = $(this).data('nama');
 
+            // Mengisi nilai input tersembunyi dalam modal
+            $('#saksiId').val(id);
+
+            var actionUrl = "{{ route('getsaksi') }}"; // URL dasar
+            actionUrl = actionUrl.replace('[ID_PENGGUNA]', ''); // Menghapus kunci "id"
+            $('#exampleModalSaksi form').attr('action', actionUrl);
+
+            // Mengisi nama dalam elemen modal
+            $('#saksiNama').text(nama);
+        });
+
+        // Menangani klik tombol "Import"
+        $('#import-form').submit(function() {
+            // Menampilkan tampilan loading
+            $('#import-spinner').show();
+        });
+
+        // Menangani selesai import
+        $('#import-form').ajaxComplete(function() {
+            // Menyembunyikan tampilan loading
+            $('#import-spinner').hide();
+        });
+    });
+</script>
 @endsection

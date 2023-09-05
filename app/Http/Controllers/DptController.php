@@ -14,15 +14,15 @@ class DptController extends Controller
 {
     public function dpt()
     {
-        $data = Dpt::all();
-        return view('page.Dpt.table', compact('data'));
+        $dpt = Dpt::all();
+        return view('page.Dpt.table', compact('dpt'));
     }
 
     public function export_dpt()
 {
-    $data = Dpt::all();
+    $dpt = Dpt::all();
 
-    if ($data->isEmpty()) {
+    if ($dpt->isEmpty()) {
         Session::flash('error', 'Tidak ada data yang dapat diexport.');
         return redirect()->back();
     }
@@ -73,9 +73,9 @@ public function import_dpt(Request $request)
 
     public function deleteAllData()
 {
-    $dataCount = Dpt::count(); // Count the number of records in the Dpt table
+    $dptCount = Dpt::count(); // Count the number of records in the Dpt table
 
-    if ($dataCount === 0) {
+    if ($dptCount === 0) {
         return redirect()->back()->with('error', 'No data to delete.');
     }
 
@@ -88,8 +88,8 @@ public function import_dpt(Request $request)
 
     public function detail_dpt($id)
     {
-    $data = Dpt::findOrFail($id);
-    return view('page.Dpt.detail', compact('data'));
+    $dpt = Dpt::findOrFail($id);
+    return view('page.Dpt.detail', compact('dpt'));
     }
 
 

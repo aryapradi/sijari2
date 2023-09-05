@@ -21,14 +21,14 @@
                     <div class="d-flex align-items-center">
                         <div>
                             <div class="d-inline-flex align-items-center">
-                                <h2 class="text-dark mb-1 font-weight-medium">236</h2>
+                                <h2 class="text-dark mb-1 font-weight-medium">{{$data->count()}}</h2>
                                 
                             </div>
                             <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Data Partai
                             </h6>
                         </div>
                         <div class="ms-auto mt-md-3 mt-lg-0">
-                            <span class="opacity-7 text-muted"><i data-feather="user-plus"></i></span>
+                            <span class="opacity-7 text-muted"><i class="fas fa-flag"></i></span>
                         </div>
                     </div>
                 </div>
@@ -40,14 +40,14 @@
                     <div class="d-flex align-items-center">
                         <div>
                             <div class="d-inline-flex align-items-center">
-                                <h2 class="text-dark mb-1 font-weight-medium">236</h2>
+                                <h2 class="text-dark mb-1 font-weight-medium">{{$caleg->count()}}</h2>
                                 
                             </div>
-                            <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Data Partai
+                            <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Data Caleg
                             </h6>
                         </div>
                         <div class="ms-auto mt-md-3 mt-lg-0">
-                            <span class="opacity-7 text-muted"><i data-feather="user-plus"></i></span>
+                            <span class="opacity-7 text-muted"><i data-feather="user"></i></span>
                         </div>
                     </div>
                 </div>
@@ -59,10 +59,10 @@
                     <div class="d-flex align-items-center">
                         <div>
                             <div class="d-inline-flex align-items-center">
-                                <h2 class="text-dark mb-1 font-weight-medium">236</h2>
+                                <h2 class="text-dark mb-1 font-weight-medium">{{$dpt->count()}}</h2>
                                 
                             </div>
-                            <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Data Partai
+                            <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Data Dpt
                             </h6>
                         </div>
                         <div class="ms-auto mt-md-3 mt-lg-0">

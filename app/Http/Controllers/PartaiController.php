@@ -13,6 +13,7 @@ class PartaiController extends Controller
         $data = Partai::all();
         $caleg = Caleg::all();
         return view('page.Partai.table', compact('data','caleg'));
+        
     }
 
     public function create_partai()

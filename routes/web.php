@@ -69,11 +69,16 @@ Route::get('/delete_all_data', [DptController::class, 'deleteAllData'])->name('d
 Route::get('/detail_dpt/{id}', [DptController::class, 'detail_dpt'])->name('detail_dpt');
 
 // ROUTE Koordinator tps
+
 Route::get('/DataKoorTPS',[KoordinatorTpsController::class,'koordinatortps'])->name('saksi');
 Route::post('/GetSaksi',[KoordinatorTpsController::class,'jadikan_koorTps'])->name('getsaksi');
 Route::get('/hapus_koortps/{id}',[KoordinatorTpsController::class,'koortps'])->name('koortps');
+Route::get('/DataKoorTPS',[KoordinatorTpsController::class,'koordinatortps'])->name('koordinatortps');
+Route::get('/create_koortps',[KoordinatorTpsController::class,'create_koortps'])->name('create_koortps');
 
 
+
+    
 
 
 

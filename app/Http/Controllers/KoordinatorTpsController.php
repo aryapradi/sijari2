@@ -11,6 +11,7 @@ class KoordinatorTpsController extends Controller
 
     public function koordinatortps()
     {
+
         $saksiData = Saksi::all();
         return view('page.Koordinator_Tps.table',compact('saksiData'));
     }
@@ -51,5 +52,12 @@ class KoordinatorTpsController extends Controller
         $koorTps->delete();
     
         return redirect()->route('saksi');
+        
+        return view('page.KoorTps.table');
+    }
+
+    public function create_koortps()
+    {
+        return view('page.KoorTps.form');
     }
 }
