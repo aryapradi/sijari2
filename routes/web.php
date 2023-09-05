@@ -74,8 +74,10 @@ Route::post('/GetSaksi', [SaksiController::class, 'jadikan_saksi'])->name('getsa
 
 // ROUTE Koordinator tps
 Route::get('/DataKoorTPS',[KoordinatorTpsController::class,'koordinatortps'])->name('koordinatortps');
+Route::get('/create_koortps',[KoordinatorTpsController::class,'create_koortps'])->name('create_koortps');
 
 
+    
 
 
 

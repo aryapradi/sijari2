@@ -20,7 +20,7 @@
                 </li>
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="{{ route('partai') }}" aria-expanded="false">
-                        <i data-feather="user" class="feather-icon"></i>
+                        <i class="fas fa-flag"></i>
                         <span class="hide-menu">Partai</span>
                     </a>
                 </li>
@@ -32,13 +32,15 @@
                 </li>
                 <li class="sidebar-item">
                     <a class="sidebar-link sidebar-link" href="{{ route('koordinator') }}" aria-expanded="false">
-                        <i data-feather="user" class="feather-icon"></i>
+                        <i data-feather="users" class="feather-icon"></i>
+
                         <span class="hide-menu">Koor. Kelurahan</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
                     <a class="sidebar-link sidebar-link" href="{{ route('dpt') }}" aria-expanded="false">
-                        <i data-feather="user" class="feather-icon"></i>
+                        <i data-feather="users" class="feather-icon"></i>
+
                         <span class="hide-menu">DPT</span>
                     </a>
                 </li>

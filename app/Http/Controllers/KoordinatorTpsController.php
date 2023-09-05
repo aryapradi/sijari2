@@ -10,6 +10,11 @@ class KoordinatorTpsController extends Controller
     public function koordinatortps()
     {
         
-        return view('page.Koordinator Tps.table');
+        return view('page.KoorTps.table');
+    }
+
+    public function create_koortps()
+    {
+        return view('page.KoorTps.form');
     }
 }

@@ -64,7 +64,7 @@
                     aria-haspopup="true" aria-expanded="false">
                     <img src="../assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle"
                         width="40">
-                    <span class="ms-2 d-none d-lg-inline-block"><span>Hello,</span> <span
+                    <span class="ms-2 d-none d-lg-inline-block"><span></span> <span
                             class="text-dark">{{Auth::user()->name}}</span> <i data-feather="chevron-down"
                             class="svg-icon"></i></span>
                 </a>
@@ -82,9 +82,11 @@
                     
                     <script>
                         function confirmLogout() {
+                            var username = "{{ Auth::user()->name }}"; // Ambil nama pengguna dari Blade template
+                    
                             Swal.fire({
                                 title: 'Konfirmasi Logout',
-                                text: 'Anda yakin ingin logout?',
+                                text: 'Anda yakin ingin logout sebagai ' + username + '?', // Tambahkan nama pengguna ke dalam pesan
                                 icon: 'warning',
                                 showCancelButton: true,
                                 confirmButtonText: 'Ya, Logout',
@@ -96,6 +98,7 @@
                             });
                         }
                     </script>
+                    
                     
                     
                 </div>

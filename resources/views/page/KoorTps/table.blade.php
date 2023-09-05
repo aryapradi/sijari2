@@ -41,7 +41,7 @@
                         Aksi
                     </button>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="create_caleg">Input Manual</a>
+                        <a class="dropdown-item" href="/create_koortps">Input Manual</a>
                         <a class="dropdown-item" href="/export_dpt">Export</a>
                         <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#exampleModal">Import</a>
                         <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteAllDataModal">Delete All Data</button>
