@@ -8,6 +8,7 @@ use App\Http\Controllers\CalegController;
 use App\Http\Controllers\PartaiController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\KoordinatorController;
+use App\Http\Controllers\KoordinatorTps;
 use App\Http\Controllers\KoordinatorTpsController;
 use App\Http\Controllers\SaksiController;
 use Illuminate\Routing\Router;
@@ -44,7 +45,7 @@ Route::get('/edit_caleg/{id}',[CalegController::class,'edit_caleg'])->name('edit
 Route::post('/update_caleg/{id}',[CalegController::class,'update_caleg'])->name('update_caleg');
 Route::get('/hapus_caleg/{id}',[CalegController::class,'hapus_caleg'])->name('hapus_caleg');
 
-//Route Koordinator
+//Route Fassilitator
 Route::get('/DataKoor',[KoordinatorController::class,'koordinator'])->name('koordinator');
 Route::get('/create_koordinator',[KoordinatorController::class,'create_koordinator'])->name('create_koordinator');
 Route::group(['prefix' => 'store'], function () {
@@ -67,14 +68,14 @@ Route::get('/download_Template', [DptController::class, 'download_Template'])->n
 Route::get('/delete_all_data', [DptController::class, 'deleteAllData'])->name('delete_all_data');
 Route::get('/detail_dpt/{id}', [DptController::class, 'detail_dpt'])->name('detail_dpt');
 
-// Saksi
-Route::get('/DataSaksi',[SaksiController::class,'saksi'])->name('saksi');
-Route::post('/GetSaksi', [SaksiController::class, 'jadikan_saksi'])->name('getsaksi');
-
-
 // ROUTE Koordinator tps
+
+Route::get('/DataKoorTPS',[KoordinatorTpsController::class,'koordinatortps'])->name('saksi');
+Route::post('/GetSaksi',[KoordinatorTpsController::class,'jadikan_koorTps'])->name('getsaksi');
+Route::get('/hapus_koortps/{id}',[KoordinatorTpsController::class,'koortps'])->name('koortps');
 Route::get('/DataKoorTPS',[KoordinatorTpsController::class,'koordinatortps'])->name('koordinatortps');
 Route::get('/create_koortps',[KoordinatorTpsController::class,'create_koortps'])->name('create_koortps');
+
 
 
     

@@ -32,9 +32,9 @@
                 </li>
                 <li class="sidebar-item">
                     <a class="sidebar-link sidebar-link" href="{{ route('koordinator') }}" aria-expanded="false">
-                        <i data-feather="users" class="feather-icon"></i>
 
-                        <span class="hide-menu">Koor. Kelurahan</span>
+                        <i data-feather="user" class="feather-icon"></i>
+                        <span class="hide-menu">Fasilitator</span>                        
                     </a>
                 </li>
                 <li class="sidebar-item">
@@ -47,15 +47,15 @@
                 <li class="sidebar-item">
                     <a class="sidebar-link sidebar-link" href="{{ route('saksi') }}" aria-expanded="false">
                         <i data-feather="user" class="feather-icon"></i>
-                        <span class="hide-menu">Saksi</span>
+                        <span class="hide-menu">Koor.Tps</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
+                {{-- <li class="sidebar-item">
                     <a class="sidebar-link sidebar-link" href="{{ route('koordinatortps') }}" aria-expanded="false">
                         <i data-feather="user" class="feather-icon"></i>
                         <span class="hide-menu">Koor TPS</span>
                     </a>
-                </li>
+                </li> --}}
             </ul>
         </nav>
     </div>

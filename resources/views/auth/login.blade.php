@@ -46,7 +46,7 @@
         <div class="auth-wrapper d-flex no-block justify-content-center align-items-center position-relative">
             <div class="auth-box row" style="width:500px; border-radius:5px">
                 <div class="col-lg-7 col-md-5 modal-bg-img"
-                    style="background-image: url(../assets/images/big/depok.png); width:100%">
+                    style="background-image: url(../assets/images/big/Depok.png); width:100%">
                 </div>
                 <div class="col-lg-5 col-md-7 bg-white" style="width:500px ">
                     <div class="p-3">
