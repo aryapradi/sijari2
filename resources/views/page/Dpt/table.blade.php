@@ -93,13 +93,13 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Apakah Anda yakin ingin menjadikan <span id="saksiNama"></span> sebagai saksi?
+                    Apakah Anda yakin ingin menjadikan <span id="Nama"></span> sebagai saksi?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
                     <form action="{{ route('getsaksi') }}" method="POST">
                         @csrf
-                        <input type="hidden" id="saksiId" name="saksiId" value="">
+                        <input type="hidden" id="saksiId" name="saksiId" value="{{ $dpt->id }}">
                         <button type="submit" class="btn btn-primary">Ya</button>
                     </form>
                 </div>
@@ -109,6 +109,29 @@
     {{-- Modal Add User To Saksi End --}}
 
     {{-- Modal Import Start --}}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Menangani klik tombol "Saksi"
+            $('.btn-success').click(function() {
+                // Mengambil data ID dan nama dari atribut data-
+                var id = $(this).data('id');
+                var nama = $(this).data('nama');
+
+                // Mengisi nilai input tersembunyi dalam modal
+                $('#saksiId').val(id);
+
+                var actionUrl = "{{ route('getsaksi') }}"; // URL dasar
+                actionUrl = actionUrl.replace('[ID_PENGGUNA]', ''); // Menghapus kunci "id"
+                $('#exampleModalSaksi form').attr('action', actionUrl);
+
+                // Mengisi nama dalam elemen modal
+                $('#Nama').text(nama);
+            });
+        });
+    </script>
+
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
