@@ -5,13 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Dpt extends Model
+class Pemilih extends Model
 {
     use HasFactory;
 
-    protected $table = 'dpt'; 
+    protected $table = 'pemilih';
+
+    protected $guarded = ['id'];
     
     protected $fillable = [
+        'saksi_id',
+        'dpt_id',
+        'NoTlpn',
         'no_kk',
         'nik',
         'nama',
@@ -29,16 +34,4 @@ class Dpt extends Model
         'tps',
         'NoTlpn'
     ];
-
-    // Tambahkan relasi atau method lain yang mungkin diperlukan di sini
-
-    public function koordinator()
-    {
-        return $this->belongsToMany(Koordinator::class);
-    }
-
-    public function saksi()
-    {
-        return $this->belongsToMany(Saksi::class, 'saksi_dpt', 'dpt_id', 'saksi_id');
-    }
 }

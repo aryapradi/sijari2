@@ -66,12 +66,17 @@
                                         <td>{{ $dpt->tps }}</td>
                                         <td>
                                             <a href="{{ route('detail_dpt', ['id' => $dpt->id]) }}"
-                                                style="border-radius: 5px" class="btn btn-info btn-sm">Detail</a>
+                                                style="border-radius: 5px" class="btn btn-warning btn-sm">Detail</a>
                                             <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
                                                 style="border-radius: 5px" data-bs-target="#exampleModalSaksi"
                                                 data-id="{{ $dpt->id }}" data-nama="{{ $dpt->nama }}">
                                                 Saksi
                                             </button>
+                                            <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
+                                            style="border-radius: 5px" data-bs-target="#exampleModalPemilih"
+                                            data-id="{{ $dpt->id }}" data-nama="{{ $dpt->nama }}">
+                                              Pemilih
+                                           </button>                                    
                                         </td>
                                     </tr>
                                 @endforeach
@@ -88,15 +93,17 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Data Saksi</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Data Koordinator Tps</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Apakah Anda yakin ingin menjadikan <span id="nama"></span> sebagai saksi?
+                    Apakah Anda yakin ingin menjadikan <span id="nama"></span> sebagai Koordinator Tps?
                 </div>
+                <form action="{{ route('getsaksi') }}" method="POST">
+                    @csrf
                 <div class="modal-body">
                     <label for="recipient-name" class="col-form-label">Username</label>
-                    <input type="text" class="form-control" id="recipient-name">
+                    <input type="text" class="form-control" id="recipient-name" name="username">
                 </div>
                 <div class="modal-body">
                     <label for="nama" class="text-dark">Password</label>
@@ -121,11 +128,14 @@
                         }
                     });
                 </script>
+
+                <div class="modal-body">
+                    <label for="recipient-name" class="col-form-label">NoTlpn</label>
+                    <input type="number" class="form-control" id="recipient-name" name="NoTlpn">
+                </div>
                 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
-                    <form action="{{ route('getsaksi') }}" method="POST">
-                        @csrf
                         <input type="hidden" id="saksiId" name="saksiId">
                         <button type="submit" class="btn btn-primary">Ya</button>
                     </form>
@@ -135,6 +145,34 @@
     </div>
     {{-- Modal Add User To Saksi End --}}
 
+     {{-- Modal Add User To Pemilih Start --}}
+     <div class="modal fade" id="exampleModalPemilih" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Data Pemilih Potensial</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Apakah Anda yakin ingin menjadikan <span id="namaPemilih"></span> sebagai Pemilih Potensial?
+                </div>
+                <form action="{{ route('getpemilih') }}" method="POST">
+                    @csrf  
+                <div class="modal-body">
+                    <label for="recipient-name" class="col-form-label">NoTlpn</label>
+                    <input type="number" class="form-control" id="recipient-name" name="NoTlpn">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>  
+                        <input type="hidden" id="pemilihId" name="pemilihId">
+                        <button type="submit" class="btn btn-primary">Ya</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- Modal Add User To Pemilih End --}}
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         // Menangani klik tombol "Saksi" dengan event delegation
@@ -142,18 +180,36 @@
             // Mengambil data ID dan nama dari atribut data-
             var id = $(this).data('id');
             var nama = $(this).data('nama');
-    
+
             // Mengisi nilai input tersembunyi dalam modal
             $('#saksiId').val(id);
-    
+
             var actionUrl = "{{ route('getsaksi') }}"; // URL dasar
-            actionUrl = actionUrl.replace('[ID_PENGGUNA]', ''); // Menghapus kunci "id"
+            actionUrl = actionUrl.replace('[ID_PENGGUNA]', 'id'); // Menghapus kunci "id"
             $('#exampleModalSaksi form').attr('action', actionUrl);
-    
+
             // Mengisi nama dalam elemen modal
             $('#nama').text(nama);
         });
+
+         // Menangani klik tombol "Pemilih" dengan event delegation
+        $(document).on('click', '.btn-info', function() {
+        // Mengambil data ID dan nama dari atribut data-
+        var id = $(this).data('id');
+        var nama = $(this).data('nama');
+
+        // Mengisi nilai input tersembunyi dalam modal Pemilih
+        $('#pemilihId').val(id);
+
+        var actionUrl = "{{ route('getpemilih') }}"; // URL dasar
+        actionUrl = actionUrl.replace('[ID_PENGGUNA]', ''); // Menghapus kunci "id"
+        $('#exampleModalPemilih form').attr('action', actionUrl);
+
+        // Mengisi nama dalam elemen modal Pemilih
+        $('#namaPemilih').text(nama);
+    });
     </script>
+
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\KoordinatorController;
 use App\Http\Controllers\KoordinatorTps;
 use App\Http\Controllers\KoordinatorTpsController;
+use App\Http\Controllers\PemilihController;
 use App\Http\Controllers\SaksiController;
 use Illuminate\Routing\Router;
 
@@ -50,15 +51,11 @@ Route::get('/DataKoor',[KoordinatorController::class,'koordinator'])->name('koor
 Route::get('/create_koordinator',[KoordinatorController::class,'create_koordinator'])->name('create_koordinator');
 Route::group(['prefix' => 'store'], function () {
     Route::get('/store_koordinator/get-locations', [KoordinatorController::class, 'getLocations']);
-     // Rute untuk menyimpan koordinator
     Route::post('/store_koordinator', [KoordinatorController::class, 'store_koordinator'])->name('store_koordinator');
 });
 Route::get('/edit_koordinator/{id}',[KoordinatorController::class,'edit_koordinator'])->name('edit_koordinator');
 Route::post('/update_koordinator/{id}',[KoordinatorController::class,'update_koordinator'])->name('update_koordinator');
 Route::get('/hapus_koordinator/{id}',[KoordinatorController::class,'hapus_koordinator'])->name('hapus_koordinator');
-
-
-
 
 // Route DPT
 Route::get('/DataDPT', [DptController::class, 'dpt'])->name('dpt');
@@ -71,12 +68,16 @@ Route::get('/detail_dpt/{id}', [DptController::class, 'detail_dpt'])->name('deta
 // ROUTE Koordinator tps
 Route::get('/DataKoorTPS',[KoordinatorTpsController::class,'koordinatortps'])->name('saksi');
 Route::post('/GetSaksi',[KoordinatorTpsController::class,'jadikan_koorTps'])->name('getsaksi');
+Route::get('/edit_koortps/{id}',[KoordinatorTpsController::class,'edit_koortps'])->name('edit_koortps');
+Route::post('/update_koortps/{id}',[KoordinatorTpsController::class,'update_koortps'])->name('update_koortps');
 Route::get('/hapus_koortps/{id}',[KoordinatorTpsController::class,'koortps'])->name('koortps');
 
-
-    
-
-
+//Route Pemilih
+Route::get('/DataPemilih',[PemilihController::class,'pemilih'])->name('pemilih');
+Route::post('/GetPemilih',[PemilihController::class,'jadikan_pemilih'])->name('getpemilih');
+Route::get('/edit_pemilih/{id}',[PemilihController::class,'edit_pemilih'])->name('edit_pemilih');
+Route::post('/update_pemilih/{id}',[PemilihController::class,'update_pemilih'])->name('update_pemilih');
+Route::get('/hapus_pemilih/{id}',[PemilihController::class,'hapus_pemilih'])->name('hapus_pemilih');
 
 Auth::routes();
 Route::post('/admin/login',[LoginController::class,'adminLogin'])->name('admin.login');
