@@ -13,7 +13,7 @@ class KoordinatorTpsController extends Controller
     {
 
         $saksiData = Saksi::all();
-        return view('page.Koordinator_Tps.table',compact('saksiData'));
+        return view('page.KoorTps.table',compact('saksiData'));
     }
 
     public function jadikan_koorTps(Request $request)

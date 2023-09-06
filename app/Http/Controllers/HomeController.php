@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dpt;
+use App\Models\User;
 use App\Models\Caleg;
 use App\Models\Partai;
-use App\Models\Dpt;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -34,8 +35,9 @@ class HomeController extends Controller
         $data = Partai::all();
         $caleg = Caleg::all();
         $dpt = Dpt::all();
+        $user = User::all();
 
-        return view('home', compact('data','caleg','dpt'));
+        return view('home', compact('data','caleg','dpt','user'));
         
     }
 }

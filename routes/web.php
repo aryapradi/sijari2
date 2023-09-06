@@ -1,17 +1,19 @@
 <?php
 
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DptController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\KoordinatorTps;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\CalegController;
+use App\Http\Controllers\SaksiController;
 use App\Http\Controllers\PartaiController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\KoordinatorController;
-use App\Http\Controllers\KoordinatorTps;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\KoordinatorTpsController;
-use App\Http\Controllers\SaksiController;
-use Illuminate\Routing\Router;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +29,16 @@ use Illuminate\Routing\Router;
 // Route::get('/', [HomeController::class,'home'])->name('dashboard');
 
 // Route User
-Route::get('/DataUser', [UserController::class,'user'])->name('user');
+Route::get('/DataUser', [UserController::class, 'user'])->name('user');
+Route::get('/create_user', [UserController::class, 'create_user'])->name('create_user');
+Route::post('/store_user', [UserController::class, 'store'])->name('store_user');
+Route::post('/update_user/{id}', [UserController::class, 'update_user'])->name('update_user'); // Tambahkan route untuk update
+Route::get('/edit_user/{id}', [UserController::class, 'edit_user'])->name('edit_user');
+Route::delete('/hapus_user/{id}',[UserController::class,'hapus_user'])->name('hapus_user');
+Route::get('/detail_user/{id}', [UserController::class, 'detail_user'])->name('detail_user');
+
+
+
 
 //Route Partai
 Route::get('/DataPartai', [PartaiController::class,'partai'])->name('partai');
@@ -70,7 +81,7 @@ Route::get('/detail_dpt/{id}', [DptController::class, 'detail_dpt'])->name('deta
 
 // ROUTE Koordinator tps
 
-Route::get('/DataKoorTPS',[KoordinatorTpsController::class,'koordinatortps'])->name('saksi');
+
 Route::post('/GetSaksi',[KoordinatorTpsController::class,'jadikan_koorTps'])->name('getsaksi');
 Route::get('/hapus_koortps/{id}',[KoordinatorTpsController::class,'koortps'])->name('koortps');
 Route::get('/DataKoorTPS',[KoordinatorTpsController::class,'koordinatortps'])->name('koordinatortps');
