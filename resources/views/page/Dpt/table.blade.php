@@ -81,7 +81,7 @@
                                         <td>{{ $dptt->kelurahan }}</td>
                                         <td>{{ $dptt->tps }}</td>
                                         <td>
-                                            <a href="{{ route('detail_dpt', ['id' => $dpt->id]) }}"
+                                            <a href="{{ route('detail_dpt', ['id' => $dptt->id]) }}"
                                                 style="border-radius: 5px" class="btn btn-info btn-sm">Detail</a>
                                             <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
                                                 style="border-radius: 5px" data-bs-target="#exampleModalSaksi"
@@ -90,7 +90,7 @@
                                             </button>
                                             <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
                                             style="border-radius: 5px" data-bs-target="#exampleModalPemilih"
-                                            data-id="{{ $dpt->id }}" data-nama="{{ $dpt->nama }}">
+                                            data-id="{{ $dptt->id }}" data-nama="{{ $dptt->nama }}">
                                               Pemilih
                                            </button>                                    
                                         </td>
@@ -192,10 +192,10 @@
     <!-- Modal content goes here -->
 </div>
 
-<script>
-    $(document).ready(function() {
-        // Menangani klik tombol "Saksi"
-        $('.btn-success').click(function() {
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Menangani klik tombol "Saksi" dengan event delegation
+        $(document).on('click', '.btn-success', function() {
             // Mengambil data ID dan nama dari atribut data-
             var id = $(this).data('id');
             var nama = $(this).data('nama');
@@ -208,44 +208,24 @@
             $('#exampleModalSaksi form').attr('action', actionUrl);
 
             // Mengisi nama dalam elemen modal
-            $('#saksiNama').text(nama);
-        });
-    </script>
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Import Caleg Data</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form id="import-form" action="/import_dpt" method="post" enctype="multipart/form-data">
-                    @csrf
-                    <div class="modal-body">
-                        <div id="import-spinner" style="display: none;">
-                            <i class="fas fa-spinner fa-spin"></i> Importing...
-                        </div>
-                        <input class="form-control" type="file" name="file" required>
-                    </div>
-                    <div class="modal-footer">
-                        <a href="/download_Template" class="btn btn-primary">Unduh Template Excel</a>
-                        <button type="submit" class="btn btn-primary" id="ImportButton">Import</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-        // Menangani klik tombol "Import"
-        $('#import-form').submit(function() {
-            // Menampilkan tampilan loading
-            $('#import-spinner').show();
+            $('#nama').text(nama);
         });
 
-        // Menangani selesai import
-        $('#import-form').ajaxComplete(function() {
-            // Menyembunyikan tampilan loading
-            $('#import-spinner').hide();
-        });
+         // Menangani klik tombol "Pemilih" dengan event delegation
+        $(document).on('click', '.btn-info', function() {
+        // Mengambil data ID dan nama dari atribut data-
+        var id = $(this).data('id');
+        var nama = $(this).data('nama');
+
+        // Mengisi nilai input tersembunyi dalam modal Pemilih
+        $('#pemilihId').val(id);
+
+        var actionUrl = "{{ route('getpemilih') }}"; // URL dasar
+        actionUrl = actionUrl.replace('[ID_PENGGUNA]', ''); // Menghapus kunci "id"
+        $('#exampleModalPemilih form').attr('action', actionUrl);
+
+        // Mengisi nama dalam elemen modal Pemilih
+        $('#namaPemilih').text(nama);
     });
-</script>
+    </script>
 @endsection
