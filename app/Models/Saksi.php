@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Saksi extends Model
+class Saksi extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     protected $table = 'saksi';
 
@@ -34,6 +36,16 @@ class Saksi extends Model
         'NoTlpn'
     ];
 
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
+    
     public function dpt()
     {
         return $this->belongsToMany(Dpt::class, 'saksi_dpt', 'saksi_id', 'dpt_id');

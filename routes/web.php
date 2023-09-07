@@ -6,13 +6,11 @@ use App\Http\Controllers\DptController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CalegController;
 use App\Http\Controllers\PartaiController;
-use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\KoordinatorController;
 use App\Http\Controllers\KoordinatorTps;
 use App\Http\Controllers\KoordinatorTpsController;
 use App\Http\Controllers\PemilihController;
-use App\Http\Controllers\SaksiController;
-use Illuminate\Routing\Router;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +24,10 @@ use Illuminate\Routing\Router;
 */
 
 // Route::get('/', [HomeController::class,'home'])->name('dashboard');
+Route::get('/login',[LoginController::class,'login'])->name('login');
+Route::post('/postlogin',[LoginController::class,'postlogin'])->name('postlogin');
 
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
 // Route User
 Route::get('/DataUser', [UserController::class,'user'])->name('user');
 
@@ -79,10 +80,5 @@ Route::get('/edit_pemilih/{id}',[PemilihController::class,'edit_pemilih'])->name
 Route::post('/update_pemilih/{id}',[PemilihController::class,'update_pemilih'])->name('update_pemilih');
 Route::get('/hapus_pemilih/{id}',[PemilihController::class,'hapus_pemilih'])->name('hapus_pemilih');
 
-Auth::routes();
-Route::post('/admin/login',[LoginController::class,'adminLogin'])->name('admin.login');
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Auth::routes();  
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');

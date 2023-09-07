@@ -7,12 +7,15 @@ use App\Models\Regency;
 use App\Models\Village;
 use App\Models\District;
 use App\Models\Province;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class Koordinator extends Model
+class Koordinator extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory,Notifiable;
 
     protected $table = 'koordinator';
 
@@ -20,6 +23,18 @@ class Koordinator extends Model
 
     protected $fillable = ['nama_koordinator','username','password', 'caleg_id','provinsi','kabupaten','kecamatan','kelurahan','admin_id'];
   
+    
+        protected $hidden = [
+            'password',
+            'remember_token',
+        ];
+
+        
+        protected $casts = [
+            'email_verified_at' => 'datetime',
+        ];
+  
+
     public function provinces()
     {
         return $this->belongsTo(Province::class, 'provinsi'); // Ganti dengan kolom foreign key yang sesuai
