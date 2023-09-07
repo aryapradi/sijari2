@@ -12,40 +12,47 @@
                 timer: 5000
             });
         @endif
+        @if ($message = Session::get('error'))
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '{{ $message }}',
+            showConfirmButton: false,
+            timer: 5000
+        });
+        @endif
     </script>
-    <div class="card">
-        <div class="card-body d-flex align-items-center">
-            <h4 class="card-title" style="margin-right: auto;">Data Partai</h4>
-            <a href="/create_partai" class="btn btn-primary btn-sm">Tambah Data</a>
-        </div>
     
+    
+
+    <a href="/create_partai" class="btn btn-danger btn-sm" style="border-radius: 5px; margin-bottom:10px">Tambah Partai</a>
+    
+
+    <div class="card">
         <div class="table-responsive">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">No</th>
-                        <th scope="col">Nama Partai</th>
-                        <th scope="col">Aksi</th>
-                    </tr>
-                </thead>
+            <table class="table" style="background-color: #61677A; border-radius:10px">
                 <tbody>
                     <?php $no = 1; ?>
                     @foreach ($data as $row)
                         <tr>
-                            <td>{{ $no++ }}</td>
-                            <td>{{ $row->nama_partai }}</td>
                             <td>
-                                <div class="btn-group" >
-                                    <a href="/edit_partai/{{$row->id}}" class="btn btn-success btn-sm mr-1" style="font-size: 15px; margin-right: 20px; border-radius:5px ">Edit</a>
-                                    @if(count($caleg) === 0)         
-                                        <form action="{{ route('hapus_partai', ['id' => $row->id]) }}" method="post">
-                                            @csrf
-                                            @method('delete')
-                                            <button type="submit" class="btn btn-danger btn-sm" style="border-radius:5px">Hapus</button>
-                                        </form>
-                                    @else
-                                        <button type="submit" disabled class="btn btn-danger btn-sm" style="border-radius:5px" title="hapus data caleg terlebih dahulu">Hapus</button>
-                                    @endif
+                                <div class="circular-div" style="color: #F9F9F9">{{ $no++ }}</div>
+                            </td>
+                            <td>
+                                <div class="user-info" style="font-size: 16px; color: #F9F9F9">
+                                    <div>{{ $row->nama_partai }}</div>
+                                    <div class="role-separator"></div> <!-- Horizontal line -->
+                                </div>
+                            </td>
+                            
+                            <td>
+                                <div class="btn-group-vertical" role="group">
+                                    <a href="{{ route('edit_partai', ['id' => $row->id]) }}" class="btn btn-secondary btn-sm" style="border-radius: 5px; margin-bottom:10px; color:white">Edit</a>
+                                    <form action="{{ route('hapus_partai', ['id' => $row->id]) }}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class="btn btn-danger btn-sm" style="border-radius: 5px">Hapus</button>
+                                    </form>
                                 </div>
                             </td>
                         </tr>
@@ -54,4 +61,20 @@
             </table>
         </div>
     </div>
+    <style>
+        .role-separator {
+            border-top: 1px solid #e51414;
+            margin: 5px 0;
+            width: 100%; /* Adjust the width to your desired value */
+        }
+
+        .btn-container {
+            margin-bottom: 20px; /* Adjust the margin as needed */
+        }
+    </style>
+    
 @endsection
+
+
+
+

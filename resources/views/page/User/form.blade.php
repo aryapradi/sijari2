@@ -18,9 +18,10 @@
         <div class="form-group">
             <label class="form-label text-dark">Role</label>
             <select id="role" class="form-control @error('role') is-invalid @enderror" name="role" required>
-                <option value="1" {{ old('role') == '1' ? 'selected' : '' }}>Super Admin</option>
-                <option value="2" {{ old('role') == '2' ? 'selected' : '' }}>Admin</option>
-                <option value="3" {{ old('role') == '3' ? 'selected' : '' }}>Bebas</option>
+                <option value="1" {{ old('role') == '1' ? 'selected' : 'Super Admin' }}>Super Admin</option>
+                <option value="2" {{ old('role') == '2' ? 'selected' : 'Admin' }}>Admin</option>
+                <option value="3" {{ old('role') == '3' ? 'selected' : 'Fasilitator' }}>Fasilitator</option>
+                <option value="4" {{ old('role') == '4' ? 'selected' : 'Koor TPS' }}>Koor TPS</option>
             </select>
             @error('role')
                 <span class="invalid-feedback" role="alert">

@@ -27,11 +27,9 @@
             background-color: #ffffff;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 40px;
-            width: 700px;
-            max-width: 90%;
-            margin: 0 auto;
-            border-radius: 10px;
+            padding: 20px;
+            width: 90%;
+            max-width: 400px;
         }
 
         .auth-box h2 {
@@ -66,7 +64,6 @@
             margin-bottom: 20px;
         }
 
-        
         .auth-box form label {
             font-weight: bold;
         }
@@ -94,8 +91,6 @@
     <div class="main-wrapper">
         <div class="auth-box">
             <div class="text-center">
-                {{-- <img src="../assets/images/big/icon.png" alt="wrapkit"> --}}
-                {{-- nanti ganti aja foto nya  --}}
                 <!-- Your logo or image here -->
             </div>
             <h2 class="mt-3 text-center">Daftar</h2>
@@ -148,10 +143,10 @@
                     <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                 </div>
                 <div class="text-center">
-                    <button type="submit" class="btn w-100 btn-primary" style="border-radius: 5px">{{ __('Daftar') }}</button>
+                    <button type="submit" style="border-radius: 5px; width: 100%; height: 50px; background-color: #FF0000; color: white; border: none;">{{ __('Daftar') }}</button>
                 </div>
                 <div class="text-center mt-4">
-                    Sudah Punya Akun ? <a href="{{ route('login') }}" class="text-primary">Masuk</a>
+                    Sudah Punya Akun ? <a href="{{ route('login') }}" class="text-dark">Masuk</a>
                 </div>
             </form>
         </div>
@@ -164,38 +159,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
