@@ -26,14 +26,11 @@
     @endif
 </script>
 
-
-
-
 <div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Data Koordinator TPS</h4>
+                <h4 class="card-title">Data Pemilih Potensial</h4>
                 <div class="btn-group mb-3">
                     <button type="button" class="btn btn-outline-primary btn-sm dropdown-toggle"
                         style="width: 100px; border-radius:5px" data-bs-toggle="dropdown" aria-haspopup="true"
@@ -41,7 +38,7 @@
                         Add Data
                     </button>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="">Input Manual</a>
+                        {{-- <a class="dropdown-item" href="{{ route('koortpsmanual') }}">Input Manual</a> --}}
                         <a class="dropdown-item" href="{{ route('dpt') }}">Input Dpt</a>
                     </div>
                     
@@ -52,6 +49,7 @@
                             <tr>
                                 <th>No</th>
                                 <th>Name</th>
+                                <th>NoTlpn</th>
                                 <th>Kecamatan</th>
                                 <th>kelurahan</th>
                                 <th>TPS</th>
@@ -60,17 +58,17 @@
                         </thead>
                         <tbody>
                             <?php $no=1; ?>
-                            @foreach ($saksiData as $saksi)
+                            @foreach ($dataPemilih as $pemilih)
                             <tr>
                                 <td>{{ $no++ }}</td>
-                                <td>{{ $saksi->nama }}</td>
-                                <td>{{ $saksi->kecamatan }}</td>
-                                <td>{{ $saksi->kelurahan }}</td>
-                                <td>{{ $saksi->tps }}</td>
+                                <td>{{ $pemilih->nama }}</td>
+                                <td>{{ $pemilih->NoTlpn }}</td>
+                                <td>{{ $pemilih->kecamatan }}</td>
+                                <td>{{ $pemilih->kelurahan }}</td>
+                                <td>{{ $pemilih->tps }}</td>
                                 <td>
-                                    <a href=""
-                                        style="border-radius: 5px" class="btn btn-info btn-sm">Edit</a>
-                                    <a  type="button" href="/hapus_koortps/{{ $saksi->id }}" style="border-radius: 5px" class="btn btn-danger btn-sm">Hapus</a>
+                                    <a href="/edit_pemilih/{{ $pemilih->id }}" type="button" style="border-radius: 5px" class="btn btn-info btn-sm">Edit</a>
+                                    <a  type="button" href="/hapus_pemilih/{{ $pemilih->id }}" style="border-radius: 5px" class="btn btn-danger btn-sm">Hapus</a>
                                    
                                 </td>
                             </tr>

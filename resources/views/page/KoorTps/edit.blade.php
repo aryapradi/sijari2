@@ -6,11 +6,11 @@
 
 <div class="container border rounded p-5" style="background-color:#ffffff">
     <h4 class="card-title mb-4" >Form Koordinator</h4>
-    <form action="/store_koortpsmanual" method="POST">
+    <form action="/update_koortps/{{ $data->id }}" method="POST">
         @csrf
         <div class="form-group mb-3">
             <label for="nama" class="text-dark">Nama</label>
-            <input type="text" class="form-control" id="nama" name="nama" placeholder="Enter Nama" required>
+            <input type="text" class="form-control" id="nama" name="nama" value="{{ $data->nama}}" placeholder="Enter Nama" required>
             @error('nama_koordiantor')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -20,7 +20,7 @@
 
         <div class="form-group mb-3">
             <label for="username" class="text-dark">Username</label>
-            <input type="text" class="form-control" id="username" name="username" placeholder="Enter Username" required>
+            <input type="text" class="form-control" id="username" name="username" value="{{ $data->username }}" placeholder="Enter Username" required>
             @error('username')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -30,7 +30,7 @@
 
         <div class="form-group mb-3">
             <label for="nama" class="text-dark">Password</label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" required>
+            <input type="password" class="form-control" id="password" name="password" value="{{ $data->password }}" placeholder="Enter Password" required>
             <input type="checkbox" id="showPassword"> Show Password
             @error('password')
             <span class="invalid-feedback" role="alert">
@@ -54,7 +54,7 @@
 
             <div class="form-group mb-3">
                 <label for="NoTlpn" class="text-dark">NoTlpn</label>
-                <input type="number" class="form-control" id="NoTlpn" name="NoTlpn" placeholder="Enter your Telepon" required>
+                <input type="number" class="form-control" id="NoTlpn" name="NoTlpn" value="{{ $data->NoTlpn }}" placeholder="Enter your Telepon" required>
                 @error('Notlpn')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -64,7 +64,7 @@
 
             <div class="form-group mb-3">
                 <label for="kecamatan" class="text-dark">Kecamatan</label>
-                <input type="text" class="form-control" id="kecamatan" name="kecamatan" placeholder="Enter your Telepon" required>
+                <input type="text" class="form-control" id="kecamatan" name="kecamatan" value="{{ $data->kecamatan }}" placeholder="Enter your Telepon" required>
                 @error('kecamatan')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -74,7 +74,7 @@
 
             <div class="form-group mb-3">
                 <label for="kelurahan" class="text-dark">Kelurahan</label>
-                <input type="text" class="form-control" id="kelurahan" name="kelurahan"  placeholder="Enter your Telepon" required>
+                <input type="text" class="form-control" id="kelurahan" name="kelurahan" value="{{ $data->kelurahan }}" placeholder="Enter your Telepon" required>
                 @error('kelurahan')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>

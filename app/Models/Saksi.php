@@ -33,4 +33,11 @@ class Saksi extends Model
         'tps',
         'NoTlpn'
     ];
+
+    public function dpt()
+    {
+        return $this->belongsToMany(Dpt::class, 'saksi_dpt', 'saksi_id', 'dpt_id');
+    }
+
+    
 }
