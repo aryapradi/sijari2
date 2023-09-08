@@ -4,7 +4,7 @@
 
 <div class="container border rounded p-5" style="background-color:#ffffff">
     <h4 class="card-title mb-4">Form Edit Partai</h4>
-    <form action="/update_caleg/{{ $data->id }}" method="POST">
+    <form action="/update_caleg/{{ $data->id }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="form-group mb-3">
             <label class="text-dark">ID</label>
@@ -14,6 +14,11 @@
         <div class="form-group mb-3">
             <label for="nama" class="text-dark">Nama</label>
             <input type="text" class="form-control" id="nama_caleg" name="nama_caleg" value="{{ $data->nama_caleg }}" placeholder="Enter Nama">
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="image" class="text-dark">Gambar</label>
+            <input name='image' class="form-control" type="file" id="formFile">
         </div>
 
         <div class="form-group mb-3">

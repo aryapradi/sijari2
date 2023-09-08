@@ -16,6 +16,7 @@ class Caleg extends Model
     protected $fillable = [
         'nama_caleg',
         'partai_id',
+        'image',
     ];
 
     public function partai()

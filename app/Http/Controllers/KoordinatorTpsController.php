@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Dpt;
 use App\Models\Saksi;
+use App\Models\Koordinator;
 use Illuminate\Http\Request;
 
 class KoordinatorTpsController extends Controller
@@ -11,8 +12,13 @@ class KoordinatorTpsController extends Controller
 
     public function koordinatortps()
     {
-
-        $saksiData = Saksi::all();
+        $saksiData = Saksi::all(); 
+        if($user->role == 1){
+            $data = Koordinator::with(['villages','districts','regencies','provinces', 'caleg'])->paginate();
+        }else{
+            $data = Koordinator::where('admin_id', $user->id)->with(['villages','districts','regencies','provinces', 'caleg'])->paginate();
+        };
+        // d
         return view('page.KoorTps.table',compact('saksiData'));
     }
 

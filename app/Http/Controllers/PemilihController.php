@@ -16,7 +16,6 @@ class PemilihController extends Controller
 
     public function jadikan_pemilih(Request $request)
     {
-        
         // dd($request);
         $noTlpn = $request->NoTlpn;
         $dpt = Dpt::find($request->pemilihId);
