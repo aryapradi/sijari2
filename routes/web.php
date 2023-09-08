@@ -10,11 +10,14 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CalegController;
 use App\Http\Controllers\SaksiController;
 use App\Http\Controllers\PartaiController;
-use App\Http\Controllers\PemilihController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\KoordinatorController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\KoordinatorTpsController;
+use App\Http\Controllers\PemilihController;
+use App\Http\Controllers\SaksiController;
+use Illuminate\Routing\Router;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,7 +30,10 @@ use App\Http\Controllers\KoordinatorTpsController;
 */
 
 // Route::get('/', [HomeController::class,'home'])->name('dashboard');
+// Route::get('/login',[LoginController::class,'login'])->name('login');
+// Route::post('/postlogin',[LoginController::class,'postlogin'])->name('postlogin');
 
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
 // Route User
 
 
@@ -94,10 +100,5 @@ Route::get('/hapus_pemilih/{id}',[PemilihController::class,'hapus_pemilih'])->na
 
 
 
-Auth::routes();
-Route::post('/admin/login',[LoginController::class,'adminLogin'])->name('admin.login');
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Auth::routes();  
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');

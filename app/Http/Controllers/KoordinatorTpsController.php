@@ -21,6 +21,7 @@ class KoordinatorTpsController extends Controller
         // dd($request)/\;
         $username = $request->username;
         $password = $request->password;
+        $passwordHashed = bcrypt($password); // Menyimpan password yang telah di-hash
         $noTlpn = $request->NoTlpn;
         $dpt = Dpt::findOrFail($request->saksiId);
 
@@ -48,6 +49,7 @@ class KoordinatorTpsController extends Controller
         // Memanggil variabel $username, $password, dan $noTlpn
         $saksi->username = $username;
         $saksi->password = $password;
+        $saksi->password = $passwordHashed; // Mengisi kolom password dengan password yang telah di-hash
         $saksi->NoTlpn = $noTlpn;
         
 

@@ -46,6 +46,21 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+
+        'koordinator' => [
+            'driver' => 'session',
+            'provider' => 'koordinators',
+        ],
+
+        'saksi' => [
+            'driver' => 'session',
+            'provider' => 'saksis',
+        ],
+
+        'user' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
     ],
 
     /*
@@ -71,10 +86,15 @@ return [
             'model' => App\Models\User::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'koordinators' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Koordinator::class,
+        ],
+
+        'saksis' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Saksi::class,
+        ],
     ],
 
     /*

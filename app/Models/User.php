@@ -22,7 +22,6 @@ class User extends Authenticatable
         'role', // Menambahkan atribut 'role'
         'password',
     ];
-
     /**
      * The attributes that should be hidden for arrays.
      *
