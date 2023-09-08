@@ -1,63 +1,88 @@
+
+
+
+
 @extends('layout.main')
 
-
 @section('content')
-    
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-    @if ($message = Session::get('success'))
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        @if ($message = Session::get('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: '{{ $message }}',
+                showConfirmButton: false,
+                timer: 5000
+            });
+        @endif
+        @if ($message = Session::get('error'))
         Swal.fire({
-            icon: 'success',
-            title: 'Success',
+            icon: 'error',
+            title: 'Error',
             text: '{{ $message }}',
             showConfirmButton: false,
             timer: 5000
         });
-    @endif
-</script>
-
-<div class="card">
-    <div class="card-body" style="display: flex; align-items: center;">
-        <h4 class="card-title" style="margin-right: auto;">Data Caleg</h4>
-        @if (count($data) === 0)
+        @endif
+    </script>
+    
+    @if (count($data) === 0)
             <a href="/create_caleg" class="btn btn-primary btn-sm">Tambah Data</a>
         @else
             <button href="" disabled class="btn btn-primary btn-sm">Tambah Data</button>
         @endif
-    </div>    
-    <div class="table-responsive">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">No</th>
-                    <th scope="col">Nama Caleg</th>
-                    <th scope="col">Partai</th>
-                    <th scope="col">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-            <?php $no=1; ?>
-              @foreach ($data as $row)
-              <tr>
-                <th scope="row">{{ $no++ }}</th>
-                <td>{{ $row->nama_caleg }}</td>
-                <td>{{ $row->partai->nama_partai }}</td>
-                <td>
-                    <div class="btn-group">
-                        <a type="button" class="btn btn-success btn-sm mr-1" style="border-radius: 5px; font-size: 15px; margin-right: 20px;" href="/edit_caleg/{{ $row->id }}">Edit</a>
-                        @if (count($koordinator) === 0)
-                            <a type="button" class="btn btn-danger btn-sm" style="border-radius: 5px;" href="/hapus_caleg/{{ $row->id }}">Hapus</a>
-                        @else
-                            <button type="submit" disabled class="btn btn-danger btn-sm" style="border-radius:5px" title="hapus data caleg terlebih dahulu">Hapus</button>
-                        @endif 
-                    </div>
-                    
-                </td>
-            </tr>  
-              @endforeach
-            </tbody>
-        </table>
-    </div>
-</div>
+    
+    
+    
+    @foreach ($data as $row)
+        <div class="card" style="background-color: #F5F5F5; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+            <div class="table-responsive">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="circular-div" style="color: black">{{ $loop->index + 1 }}</div>
+                            </td>
+                            <td>
+                                <div class="user-info" style="font-size: 16px; margin-top:10px; color: black">
+                                    <div>{{ $row->nama_caleg }}</div>
+                                    <div class="role-separator"></div>
+                                    <div>{{ $row->partai->nama_partai }}</div>
+                                     <!-- Horizontal line -->
+                                   
+                                </div>
+                            </td>
+                            
+                            <td>
+                                <div class="btn-group-vertical" role="group">
+                                    <a href="{{ route('edit_caleg', ['id' => $row->id]) }}" class="btn btn-secondary btn-sm" style="border-radius: 5px; margin-bottom:10px; color:white">Edit</a>
+                                    <form action="{{ route('hapus_caleg', ['id' => $row->id]) }}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class="btn btn-danger btn-sm" style="border-radius: 5px">Hapus</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    @endforeach
 
+    <style>
+        .role-separator {
+            border-top: 1px solid #e51414;
+            margin: 5px 0;
+            width: 100%; /* Adjust the width to your desired value */
+        }
+
+        .btn-container {
+            margin-bottom: 20px; /* Adjust the margin as needed */
+        }
+    </style>
 @endsection
+
+
+

@@ -10,7 +10,9 @@ class PemilihController extends Controller
 {
     public function pemilih()
     {
-        $dataPemilih = Pemilih::all(); // Mengambil semua data dari tabel pemilih
+        // $dataPemilih = Pemilih::paginate(10);
+        // $dataPemilih = Pemilih::all(); // Mengambil semua data dari tabel pemilih
+        $dataPemilih = Pemilih::paginate(5);
         return view('page.Pemilih.table',compact('dataPemilih'));
     }
 
@@ -44,7 +46,7 @@ class PemilihController extends Controller
           $pemilih->save();
   
           // Redirect ke rute yang sesuai
-          return redirect()->route('pemilih');
+          return redirect()->route('pemilih')->with('success','Data Berhasil Di Tambah');;
     }
 
     public function edit_pemilih($id)
@@ -58,7 +60,7 @@ class PemilihController extends Controller
     {
         $data = Pemilih::findOrFail($id);
         $data->update($request->all());
-        return redirect()->route('pemilih')->with('success', 'Data updated successfully.');
+        return redirect()->route('pemilih')->with('success', 'Data berhasil di update');
     }
 
 
@@ -66,6 +68,6 @@ class PemilihController extends Controller
         $pemilih = Pemilih::findOrFail($id);
         $pemilih->delete();
     
-        return redirect()->route('pemilih');
+        return redirect()->route('pemilih')->with('success', 'Data berhasil di hapus.');
     }
 }

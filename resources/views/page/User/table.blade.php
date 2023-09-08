@@ -23,23 +23,22 @@
         @endif
     </script>
     
+    <a href="/create_user" class="btn btn-danger btn-sm" style="border-radius: 5px; margin-bottom:20px; box-shadow: 0 4px 8px rgba(202, 18, 18, 0.912);">Tambah Data User</a>
     
 
-    <a href="/create_user" class="btn btn-danger btn-sm" style="border-radius: 5px; margin-bottom:10px">Tambah Data User</a>
     
-
-    <div class="card">
-        <div class="table-responsive">
-            <table class="table" style="background-color: #61677A; border-radius:10px">
-                <tbody>
-                    <?php $no = 1; ?>
-                    @foreach ($data as $user)
+    
+    @foreach ($data as $user)
+        <div class="card" style="background-color: #F5F5F5; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+            <div class="table-responsive">
+                <table class="table">
+                    <tbody>
                         <tr>
                             <td>
-                                <div class="circular-div" style="color: #F9F9F9">{{ $no++ }}</div>
+                                <div class="circular-div" style="color: black">{{ $loop->index + 1 }}</div>
                             </td>
                             <td>
-                                <div class="user-info" style="font-size: 16px; color: #F9F9F9">
+                                <div class="user-info" style="font-size: 16px; margin-top:10px; color: black">
                                     <div>{{ $user->name }}</div>
                                     <div class="role-separator"></div> <!-- Horizontal line -->
                                     <div style="font-size: 12px; color:#000000">
@@ -70,11 +69,12 @@
                                 </div>
                             </td>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
+    @endforeach
+
     <style>
         .role-separator {
             border-top: 1px solid #e51414;
@@ -86,5 +86,4 @@
             margin-bottom: 20px; /* Adjust the margin as needed */
         }
     </style>
-    
 @endsection

@@ -98,4 +98,16 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         return view('page.user.detail', compact('user'));
     }
+
+    public function liveSearch(Request $request)
+    {
+        $query = $request->input('query');
+
+        // Perform a database query to search for users based on the $query
+        $results = User::where('name', 'LIKE', '%' . $query . '%')->get();
+
+        // You can also add more search criteria as needed
+
+        return response()->json($results);
+    }
 }

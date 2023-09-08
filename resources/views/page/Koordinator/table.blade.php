@@ -1,58 +1,95 @@
+
+
+
+
+
 @extends('layout.main')
 
 @section('content')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-    @if ($message = Session::get('success'))
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        @if ($message = Session::get('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: '{{ $message }}',
+                showConfirmButton: false,
+                timer: 5000
+            });
+        @endif
+        @if ($message = Session::get('error'))
         Swal.fire({
-            icon: 'success',
-            title: 'Success',
+            icon: 'error',
+            title: 'Error',
             text: '{{ $message }}',
             showConfirmButton: false,
             timer: 5000
         });
-    @endif
-</script>
+        @endif
+    </script>
+    
+    <a href="/create_koordinator" class="btn btn-danger btn-sm" style="border-radius: 5px; margin-bottom:20px; box-shadow: 0 4px 8px rgba(202, 18, 18, 0.912);">Tambah Fasilitator</a>
+    
 
-<div class="card">
-    <div class="card-body" style="display: flex; align-items: center;">
-        <h4 class="card-title" style="margin-right: auto;">Data Fasilitator</h4>
-        <a href="/create_koordinator" class="btn btn-outline-primary btn-sm" style="border-radius: 5px">Tambah Data</a>
-    </div>    
-    <div class="table-responsive">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">No</th>
-                    <th scope="col">Nama</th>
-                    <th scope="col">Username</th>
-                    <th scope="col">Kecamatan</th>
-                    <th scope="col">kelurahan</th>
-                    <th scope="col">Caleg</th>
-                    <th scope="col">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-            <?php $no=1; ?>
-              @foreach ($data as $row)
-              <tr>
-                <th scope="row">{{ $no++ }}</th>
-                <td>{{ $row->nama_koordinator }}</td>
-                <td>{{ $row->username }}</td>
-                <td>{{ $row->districts->name }}</td>
-                <td>{{ $row->villages->name }}</td>
-                <td>{{ $row->caleg->nama_caleg }}</td>
-                <td>
-                    <div class="btn-group">
-                        <a type="button" class="btn btn-success btn-sm mr-1" style="border-radius: 5px; font-size: 15px; margin-right: 20px;" href="/edit_koordinator/{{ $row->id }}">Edit</a>
-                        <a  type="button" class="btn btn-danger btn-sm mr-1" style="border-radius: 5px; font-size: 15px; margin-right: 20px;" href="{{ route('hapus_koordinator', [$row->id]) }}">Hapus</a>
-                    </div>
-                    
-                </td>
-            </tr>  
-              @endforeach
-            </tbody>
-        </table>
-    </div>
-</div>
+    
+    
+    @foreach ($data as $row)
+        <div class="card" style="background-color: #F5F5F5; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+            <div class="table-responsive">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="circular-div" style="color: black">{{ $loop->index + 1 }}</div>
+                            </td>
+                            <td>
+                                <div class="user-info" style="font-size: 16px; margin-top:10px; color: black">
+                                    <div style="font-size:12px">{{ $row->nama_koordinator }}</div>
+                                    <div class="role-separator"></div>
+                                    <div style="font-size: 8px">{{ $row->districts->name }}</div>
+                                    <div class="role-separator"></div>
+                                    <div style="font-size: 8px">{{ $row->villages->name }}</div>
+                                    <div class="role-separator"></div>
+                                    <div style="font-size: 12px">{{ $row->caleg->nama_caleg }}</div>
+                                    {{-- <td>{{ $row->username }}</td>
+                                    <div class="role-separator"></div>
+                                    <td>{{ $row->districts->name }}</td>
+                                    <div class="role-separator"></div>
+                                    <td>{{ $row->villages->name }}</td>
+                                    <div class="role-separator"></div>
+                                    <td>{{ $row->caleg->nama_caleg }}</td>
+                                    <div class="role-separator"></div> <!-- Horizontal line --> --}}
+                                </div>
+                            </td>
+                            
+                            <td>
+                                <div class="btn-group-vertical" role="group">
+                                    <a href="{{ route('edit_koordinator', ['id' => $row->id]) }}" class="btn btn-secondary btn-sm" style="border-radius: 5px; margin-bottom:10px; color:white">Edit</a>
+                                    <form action="{{ route('hapus_koordinator', ['id' => $row->id]) }}" method="get">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class="btn btn-danger btn-sm" style="border-radius: 5px">Hapus</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    @endforeach
+
+    <style>
+        .role-separator {
+            border-top: 1px solid #e51414;
+            margin: 5px 0;
+            width: 100%; /* Adjust the width to your desired value */
+        }
+
+        .btn-container {
+            margin-bottom: 20px; /* Adjust the margin as needed */
+        }
+    </style>
 @endsection
+
+
