@@ -5,7 +5,7 @@
 
 
 <div class="container border rounded p-5" style="background-color:#ffffff">
-    <h4 class="card-title mb-4" >Form Koordinator</h4>
+    <h4 class="card-title mb-4" >Form Fasilitator</h4>
     <form action="/store/store_koordinator" method="POST">
         @csrf
         {{-- <div class="form-group mb-3">

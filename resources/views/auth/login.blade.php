@@ -56,14 +56,14 @@
             </div>
             @endif
 
-            <form class="mt-4" method="POST" action="{{ route('login') }}">
+            <form class="mt-4" method="POST" action="{{ route('postlogin') }}">
                 @csrf
                 <div class="form-group">
-                    <label class="form-label text-dark" for="uname" style="margin-left: 20px;">Email</label>
-                    <input class="form-control" id="uname" type="text"
-                        style="border-radius: 25px; height: 50px; width: 100%;" name="email"
-                        value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Masukkan Email">
-                    @error('email')
+                    <label class="form-label text-dark" for="username" style="margin-left: 20px;">Username</label>
+                    <input class="form-control" id="username" type="text"
+                        style="border-radius: 25px; height: 50px; width: 100%;" name="username"
+                        value="{{ old('username') }}" required autocomplete="email" autofocus placeholder="Masukkan Username">
+                    @error('username')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
@@ -71,7 +71,7 @@
                 </div>
                 <div class="form-group" style="margin-bottom: 20px;">
                     <label class="form-label text-dark" for="pwd" style="margin-top: 20px; margin-left: 20px;">Password</label>
-                    <input class="form-control" id="pwd" type="password"
+                    <input class="form-control" id="password" type="password"
                         style="border-radius: 25px; height: 50px; width: 100%;" name="password" required
                         autocomplete="current-password" placeholder="Masukkan Password">
                     @error('password')
@@ -105,7 +105,7 @@
     </html>
 
     
-    <meta charset="UTF-8">
+    {{-- <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
     <style>
@@ -161,4 +161,4 @@
         </form>
     </div>
 </body>
-</html>
+</html> --}}

@@ -68,6 +68,6 @@ class PemilihController extends Controller
         $pemilih = Pemilih::findOrFail($id);
         $pemilih->delete();
     
-        return redirect()->route('pemilih')->with('success', 'Data berhasil di hapus.');
+        return redirect()->route('pemilih')->with('success', ' Data '.  $pemilih->nama . ' Berhasil Di hapus');
     }
 }

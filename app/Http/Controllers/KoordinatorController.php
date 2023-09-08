@@ -134,6 +134,6 @@ class KoordinatorController extends Controller
         $koordinator->delete();
     
         return redirect()->route('koordinator')
-            ->with('success', 'Data Fasilitator telah dihapus.');
+            ->with('success',  'Data ' . $koordinator . ' Berhasil dihapus');
     }
 }

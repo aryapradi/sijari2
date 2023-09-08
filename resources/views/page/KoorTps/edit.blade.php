@@ -53,7 +53,7 @@
         </script>
 
             <div class="form-group mb-3">
-                <label for="NoTlpn" class="text-dark">NoTlpn</label>
+                <label for="NoTlpn" class="text-dark">No Telepon</label>
                 <input type="number" class="form-control" id="NoTlpn" name="NoTlpn" value="{{ $data->NoTlpn }}" placeholder="Enter your Telepon" required>
                 @error('Notlpn')
                 <span class="invalid-feedback" role="alert">
@@ -83,8 +83,8 @@
             </div>
 
         <div class="d-flex justify-content-between align-items-center">
-            <a class="btn btn-secondary ml-auto" href="/DataKoor">Cancel</a>
-            <button type="submit"class="btn btn-primary ml-auto">Submit</button>
+            <a class="btn btn-secondary ml-auto" href="/DataKoorTPS">Cancel</a>
+            <button type="submit"class="btn btn-primary ml-auto"style="margin-left: 15px">Submit</button>
         </div>
     </form>
 </div>

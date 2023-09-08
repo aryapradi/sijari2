@@ -10,13 +10,12 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CalegController;
 use App\Http\Controllers\SaksiController;
 use App\Http\Controllers\PartaiController;
-use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\KoordinatorController;
-use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\KoordinatorTpsController;
 use App\Http\Controllers\PemilihController;
-use App\Http\Controllers\SaksiController;
-use Illuminate\Routing\Router;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -30,8 +29,8 @@ use Illuminate\Routing\Router;
 */
 
 // Route::get('/', [HomeController::class,'home'])->name('dashboard');
-// Route::get('/login',[LoginController::class,'login'])->name('login');
-// Route::post('/postlogin',[LoginController::class,'postlogin'])->name('postlogin');
+Route::get('/login',[LoginController::class,'login'])->name('login');
+Route::post('/postlogin',[LoginController::class,'postlogin'])->name('postlogin');
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
 // Route User
@@ -85,13 +84,19 @@ Route::get('/delete_all_data', [DptController::class, 'deleteAllData'])->name('d
 Route::get('/detail_dpt/{id}', [DptController::class, 'detail_dpt'])->name('detail_dpt');
 
 // ROUTE Koordinator tps
+Route::get('/DataKoorTPS',[KoordinatorTpsController::class,'koordinatortps'])->name('saksi');
 Route::post('/GetSaksi',[KoordinatorTpsController::class,'jadikan_koorTps'])->name('getsaksi');
 Route::get('/edit_koortps/{id}',[KoordinatorTpsController::class,'edit_koortps'])->name('edit_koortps');
 Route::post('/update_koortps/{id}',[KoordinatorTpsController::class,'update_koortps'])->name('update_koortps');
-Route::get('/hapus_koortps/{id}',[KoordinatorTpsController::class,'koortps'])->name('koortps');
+Route::get('/hapus_koortps/{id}',[KoordinatorTpsController::class,'hapus_koortps'])->name('koortps');
 Route::get('/DataKoorTPS',[KoordinatorTpsController::class,'koordinatortps'])->name('koordinatortps');
 Route::get('/create_koortps',[KoordinatorTpsController::class,'create_koortps'])->name('create_koortps');
 
+
+
+
+
+// ROUTE PEMILIH 
 Route::get('/DataPemilih',[PemilihController::class,'pemilih'])->name('pemilih');
 Route::post('/GetPemilih',[PemilihController::class,'jadikan_pemilih'])->name('getpemilih');
 Route::get('/edit_pemilih/{id}',[PemilihController::class,'edit_pemilih'])->name('edit_pemilih');

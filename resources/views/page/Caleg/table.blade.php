@@ -57,7 +57,7 @@
                             <td>
                                 <div class="btn-group-vertical" role="group">
                                     <a href="{{ route('edit_caleg', ['id' => $row->id]) }}" class="btn btn-secondary btn-sm" style="border-radius: 5px; margin-bottom:10px; color:white">Edit</a>
-                                    <form action="{{ route('hapus_caleg', ['id' => $row->id]) }}" method="post">
+                                    <form action="{{ route('hapus_caleg', ['id' => $row->id]) }}" method="get">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="btn btn-danger btn-sm" style="border-radius: 5px">Hapus</button>

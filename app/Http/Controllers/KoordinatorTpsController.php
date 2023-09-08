@@ -56,7 +56,7 @@ class KoordinatorTpsController extends Controller
         $saksi->save();
 
         // Redirect ke rute yang sesuai
-        return redirect()->route('saksi');
+        return redirect('/DataKoorTPS')->with('success', 'Data berhasil di tambah.');
     }
 
     // public function koortpsmanual()
@@ -85,14 +85,14 @@ class KoordinatorTpsController extends Controller
     {
         $data = Saksi::findOrFail($id);
         
-        return view('page.Koordinator_Tps.edit', compact('data'));
+        return view('page.KoorTps.edit', compact('data'));
     }
 
     public function update_koortps(Request $request, $id)
     {
         $data = Saksi::findOrFail($id);
         $data->update($request->all());
-        return redirect()->route('saksi')->with('success', 'Data updated successfully.');
+        return redirect('/DataKoorTPS')->with('success', 'Data Berhasil Di Ubah.');
     }
 
     public function koortps($id){
@@ -108,6 +108,15 @@ class KoordinatorTpsController extends Controller
     {
         return view('page.KoorTps.form');
     }
+
+    public function hapus_koortps($id){
+        $koorTps = Saksi::findOrFail($id);
+        $koorTps->delete();
+    
+        return redirect('/DataKoorTPS   ')->with('success', 'Data berhasil di hapus.');
+    }
+
+
 
     
 }

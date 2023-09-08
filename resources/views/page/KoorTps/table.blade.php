@@ -22,35 +22,16 @@
             timer: 5000
         });
     @endif
-
-    // Fungsi untuk menampilkan SweetAlert konfirmasi penghapusan data
-    function confirmDelete(saksiId) {
-        Swal.fire({
-            title: 'Konfirmasi',
-            text: 'Anda yakin ingin menghapus data ini?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Ya, Hapus!',
-            cancelButtonText: 'Batal'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Redirect ke halaman penghapusan jika pengguna mengonfirmasi penghapusan
-                window.location.href = "/hapus_koortps/" + saksiId;
-            }
-        });
-    }
 </script>
 
-<div class="row">
+{{-- <div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Data Koordinator TPS</h4>
                 <div class="btn-group mb-3">
                     <button type="button" class="btn btn-outline-primary btn-sm dropdown-toggle"
-                        style="width: 100px; border-radius:5px" data-bs-toggle="dropdown" aria-haspopup="true"
+                        style="border-radius: 5px" data-bs-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false">
                         Add Data
                     </button>
@@ -62,42 +43,40 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
-@foreach ($saksiData as $saksi)
+
 <div class="row">
     <div class="col-12">
-        <div class="card">
+        <div class="card mb-3">
             <div class="card-body">
-                <table class="table border table-striped table-bordered text-nowrap">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Name</th>
-                            <th>Kecamatan</th>
-                            <th>Kelurahan</th>
-                            <th>TPS</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $saksi->nama }}</td>
-                            <td>{{ $saksi->kecamatan }}</td>
-                            <td>{{ $saksi->kelurahan }}</td>
-                            <td>{{ $saksi->tps }}</td>
-                            <td>
-                                <a href="#" style="border-radius: 5px" class="btn btn-info btn-sm">Edit</a>
-                                <a href="/hapus_koortps/{{ $saksi->id }}" style="border-radius: 5px" class="btn btn-danger btn-sm" onclick="confirmDelete('{{ $saksi->id }}')">Hapus</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <h4 class="card-title">Data Koordinator TPS</h4>
+            </div>
+            <div class="card-footer">
+                <a class="btn btn-success btn-sm" style="border-radius: 5px" href="{{ route('dpt') }}">Tambah Data Koor TPS</a>
             </div>
         </div>
     </div>
 </div>
-@endforeach
 
+<div class="row">
+    @foreach ($saksiData as$index  =>$saksi)
+    <div class="col-lg-4 col-md-6 col-sm-12 ">
+        <div class="card" style="border-radius: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+            <div class="card-body">
+                <h5 class="card-title"> {{ $index + 1 }}</h5>
+                <p class="card-text">Nama: {{ $saksi->nama }}</p>
+                <p class="card-text">No Telepon: {{ $saksi->NoTlpn }}</p>
+                <p class="card-text">Kecamatan: {{ $saksi->kecamatan }}</p>
+                <p class="card-text">Kelurahan: {{ $saksi->kelurahan }}</p>
+                <p class="card-text">TPS: {{ $saksi->tps }}</p>
+            </div>
+            <div class="card-footer">
+                <a href="/edit_koortps/{{ $saksi->id }}" type="button" style="border-radius: 5px; margin-left:90px;" class="btn btn-info btn-sm">Edit</a>
+                <a type="button" href="/hapus_koortps/{{ $saksi->id }}" style="border-radius: 5px" class="btn btn-danger btn-sm" onclick="confirmDelete('{{ $saksi->id }}')">Hapus</a>
+            </div>
+        </div>
+    </div>
+    @endforeach
+</div>
 @endsection
