@@ -24,8 +24,8 @@ use App\Http\Controllers\PemilihController;
 */
 
 // Route::get('/', [HomeController::class,'home'])->name('dashboard');
-Route::get('/login',[LoginController::class,'login'])->name('login');
-Route::post('/postlogin',[LoginController::class,'postlogin'])->name('postlogin');
+// Route::get('/login',[LoginController::class,'login'])->name('login');
+// Route::post('/postlogin',[LoginController::class,'postlogin'])->name('postlogin');
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
 // Route User

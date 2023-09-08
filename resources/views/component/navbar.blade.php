@@ -64,7 +64,13 @@
                     aria-haspopup="true" aria-expanded="false">
                     <img src="../assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle"
                         width="40">
-                    <span class="ms-2 d-none d-lg-inline-block"><span>Hello,</span> <span
+                    <span class="ms-2 d-none d-lg-inline-block"><span>Hello,</span> 
+                     @if( Str::length(Auth::guard('koordinator')->user())>0)
+                     <a href="#">{{ Auth::guard('koordinator')->user()->username }}</a>
+                     @elseif( Str::length(Auth::guard('saksi')->user())>0)
+                    <a href="#">{{ Auth::guard('saksi')->user()->username }}</a>
+                     @endif
+                    <span
                             class="text-dark"></span> <i data-feather="chevron-down"
                             class="svg-icon"></i></span>
                 </a>
