@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Saksi;
 
 class Pemilih extends Model
 {
@@ -34,4 +35,9 @@ class Pemilih extends Model
         'tps',
         'NoTlpn'
     ];
+
+    public function saksi()
+    {
+        return $this->belongsTo(Saksi::class, 'saksi_id');
+    }
 }

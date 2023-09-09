@@ -64,9 +64,16 @@
                     aria-haspopup="true" aria-expanded="false">
                     <img src="../assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle"
                         width="40">
-                    <span class="ms-2 d-none d-lg-inline-block"><span></span> <span
-                            class="text-dark">{{Auth::user()->name}}</span> <i data-feather="chevron-down"
-                            class="svg-icon"></i></span>
+                    <span class="ms-2 d-none d-lg-inline-block"><span></span> 
+                    <span class="text-dark">
+                        @if(Auth::guard('user')->check())
+                            {{ Auth::guard('user')->user()->name }}
+                        @elseif(Auth::guard('koordinator')->check())
+                            {{ Auth::guard('koordinator')->user()->username }}
+                        @elseif(Auth::guard('saksi')->check())
+                            {{ Auth::guard('saksi')->user()->username }}
+                        @endif
+                    <i data-feather="chevron-down"class="svg-icon"></i></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-right user-dd animated flipInY">
                     <a class="dropdown-item" href="javascript:void(0)"><i data-feather="user"
@@ -82,7 +89,7 @@
                     
                     <script>
                         function confirmLogout() {
-                            var username = "{{ Auth::user()->name }}"; // Ambil nama pengguna dari Blade template
+                            var username = ""; // Ambil nama pengguna dari Blade template
                     
                             Swal.fire({
                                 title: 'Konfirmasi Logout',

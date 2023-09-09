@@ -2,8 +2,7 @@
 
 @section('content')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
+    <script>
         @if ($message = Session::get('success'))
             Swal.fire({
                 icon: 'success',
@@ -23,22 +22,7 @@
                 timer: 5000
             });
         @endif
-
-        @media (max-width: 768px) {
-            .btn-group.mb-3 {
-                text-align: center;
-            }
-
-            .btn-group.mb-3 .btn {
-                width: 100%;
-                margin: 5px 0;
-            }
-
-            .btn-group.mb-3 .dropdown-menu {
-                text-align: center;
-            }
-        }
-    </style>
+    </script>
 
     <div class="row">
         <div class="col-12">
@@ -82,8 +66,8 @@
                                         <td>{{ $dptt->tps }}</td>
                                         <td>
                                             <a href="{{ route('detail_dpt', ['id' => $dptt->id]) }}"
-                                                style="border-radius: 5px" class="btn btn-info btn-sm">Detail</a>
-                                            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
+                                                style="border-radius: 5px" class="btn text-white btn-warning btn-sm">Detail</a>
+                                            <!-- <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
                                                 style="border-radius: 5px" data-bs-target="#exampleModalSaksi"
                                                 data-id="{{ $dptt->id }}" data-nama="{{ $dptt->nama }}">
                                                 Saksi
@@ -92,14 +76,14 @@
                                             style="border-radius: 5px" data-bs-target="#exampleModalPemilih"
                                             data-id="{{ $dptt->id }}" data-nama="{{ $dptt->nama }}">
                                               Pemilih
-                                           </button>                                    
+                                           </button>                                     -->
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
-                </div>
+                </div>     
             </div>
         </div>
     </div>
@@ -109,15 +93,17 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Data Saksi</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Data Koordinator Tps</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Apakah Anda yakin ingin menjadikan <span id="nama"></span> sebagai saksi?
+                    Apakah Anda yakin ingin menjadikan <span id="nama"></span> sebagai Koordinator Tps?
                 </div>
+                <form action="{{ route('getsaksi') }}" method="POST">
+                    @csrf
                 <div class="modal-body">
                     <label for="recipient-name" class="col-form-label">Username</label>
-                    <input type="text" class="form-control" id="recipient-name">
+                    <input type="text" class="form-control" id="recipient-name" name="username">
                 </div>
                 <div class="modal-body">
                     <label for="nama" class="text-dark">Password</label>
@@ -142,11 +128,14 @@
                         }
                     });
                 </script>
+
+                <div class="modal-body">
+                    <label for="recipient-name" class="col-form-label">NoTlpn</label>
+                    <input type="number" class="form-control" id="recipient-name" name="NoTlpn">
+                </div>
                 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
-                    <form action="{{ route('getsaksi') }}" method="POST">
-                        @csrf
                         <input type="hidden" id="saksiId" name="saksiId">
                         <button type="submit" class="btn btn-primary">Ya</button>
                     </form>
@@ -184,15 +173,7 @@
     </div>
     {{-- Modal Add User To Pemilih End --}}
 
-    {{-- Modal Import Start --}}
-    <!-- Modal content goes here -->
-    {{-- Modal Import End --}}
-
-    <!-- Delete All Data Modal -->
-    <!-- Modal content goes here -->
-</div>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         // Menangani klik tombol "Saksi" dengan event delegation
         $(document).on('click', '.btn-success', function() {
@@ -228,4 +209,40 @@
         $('#namaPemilih').text(nama);
     });
     </script>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Import Caleg Data</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="import-form" action="/import_dpt" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div id="import-spinner" style="display: none;">
+                            <i class="fas fa-spinner fa-spin"></i> Importing...
+                        </div>
+                        <input class="form-control" type="file" name="file" required>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="/download_Template" class="btn btn-primary">Unduh Template Excel</a>
+                        <button type="submit" class="btn btn-primary" id="ImportButton">Import</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete All Data Modal -->
+    
+</div>
+
+<script>
+    function showLoadingSpinner() {
+        document.getElementById('import-spinner').style.display = 'block';
+        document.getElementById('ImportButton').setAttribute('disabled', 'disabled');
+    }
+</script>
+
 @endsection

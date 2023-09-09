@@ -30,13 +30,38 @@
             @enderror
         </div>
         
-        <div class="form-group">
+        {{-- <div class="form-group">
             <label class="form-label text-dark" for="password">{{ __('Password') }}</label>
             <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
             @error('password')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
+            @enderror
+        </div>
+        
+        <script>
+            const passwordInput = document.getElementById("password");
+            const showPasswordCheckbox = document.getElementById("showPassword");
+        
+            showPasswordCheckbox.addEventListener("change", function () {
+                if (showPasswordCheckbox.checked) {
+                    passwordInput.type = "text";
+                } else {
+                    passwordInput.type = "password";
+                }
+            });
+        </script> --}}
+
+
+        <div class="form-group mb-3">
+            <label for="nama" class="text-dark">Password</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" required>
+            <input type="checkbox" id="showPassword"> Show Password
+            @error('password')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
             @enderror
         </div>
         

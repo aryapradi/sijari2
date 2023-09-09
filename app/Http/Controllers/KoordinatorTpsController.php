@@ -6,32 +6,45 @@ use App\Models\Dpt;
 use App\Models\Saksi;
 use App\Models\Koordinator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class KoordinatorTpsController extends Controller
 {
 
+    public function front_koordinatortps()
+    {
+        $idkoor = Auth::guard('koordinator')->user()->id;
+        $saksiData = Saksi::where('koor_id', $idkoor)->paginate(6);
+        return view('frontpage.KoorTps.table',compact('saksiData'));
+    }
+
     public function koordinatortps()
     {
-        $saksiData = Saksi::all(); 
-        if($user->role == 1){
-            $data = Koordinator::with(['villages','districts','regencies','provinces', 'caleg'])->paginate();
-        }else{
-            $data = Koordinator::where('admin_id', $user->id)->with(['villages','districts','regencies','provinces', 'caleg'])->paginate();
-        };
-        // d
+        $saksi = Saksi::first();
+        $idadmin = Auth::guard('user')->user();
+        if ($saksi == null) {
+            $saksiData = Saksi::paginate(6);
+        } else {
+            $saksiData = Saksi::whereHas('koordinator.admin', function ($query) use ($idadmin) {
+                $query->where('id', $idadmin->id);
+            })->paginate(6);
+        }
         return view('page.KoorTps.table',compact('saksiData'));
     }
 
     public function jadikan_koorTps(Request $request)
     {
         // dd($request)/\;
+        $idkoor = Auth::guard('koordinator')->user()->id;
         $username = $request->username;
-        $password = $request->password;
+        $password = Hash::make($request->input('password'));
         $noTlpn = $request->NoTlpn;
         $dpt = Dpt::findOrFail($request->saksiId);
 
         // Membuat entri baru dalam tabel saksi dengan data dari DPT
         $saksi = new Saksi();
+        $saksi->koor_id = $idkoor;
         $saksi->no_kk = $dpt->no_kk;
         $saksi->nik = $dpt->nik;
         $saksi->nama = $dpt->nama;
@@ -60,7 +73,7 @@ class KoordinatorTpsController extends Controller
         $saksi->save();
 
         // Redirect ke rute yang sesuai
-        return redirect()->route('saksi');
+        return redirect('/KoorTPS');
     }
 
     // public function koortpsmanual()
@@ -89,14 +102,22 @@ class KoordinatorTpsController extends Controller
     {
         $data = Saksi::findOrFail($id);
         
-        return view('page.Koordinator_Tps.edit', compact('data'));
+        return view('frontpage.KoorTps.edit', compact('data'));
     }
 
     public function update_koortps(Request $request, $id)
     {
         $data = Saksi::findOrFail($id);
         $data->update($request->all());
-        return redirect()->route('saksi')->with('success', 'Data updated successfully.');
+        return redirect('/KoorTps')->with('success', 'Data updated successfully.');
+    }
+
+    public function hapus_koortps($id)
+    {
+        $data = Saksi::findOrFail($id);
+        $data->delete();
+    
+        return redirect('/KoorTPS')->with('success',  'Data ' . $data->nama. ' Berhasil dihapus');
     }
 
     public function koortps($id){

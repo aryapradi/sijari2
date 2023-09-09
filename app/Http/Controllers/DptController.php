@@ -18,6 +18,12 @@ class DptController extends Controller
         return view('page.Dpt.table', compact('dpt'));
     }
 
+    public function front_listdpt()
+    {
+        $dpt = Dpt::paginate(6);
+        return view('frontpage.Dpt.table', compact('dpt'));
+    }
+
     public function export_dpt()
 {
     $dpt = Dpt::all();

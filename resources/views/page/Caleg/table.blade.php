@@ -32,7 +32,6 @@
                     <th scope="col">No</th>
                     <th scope="col">Nama Caleg</th>
                     <th scope="col">Partai</th>
-                    <th scope="col">Gambar</th>
                     <th scope="col">Aksi</th>
                 </tr>
             </thead>
@@ -43,8 +42,6 @@
                 <th scope="row">{{ $no++ }}</th>
                 <td>{{ $row->nama_caleg }}</td>
                 <td>{{ $row->partai->nama_partai }}</td>
-                <td>
-                    <img src="{{ Storage::url('caleg/').$row->image }}" style="width: 100px"></td>
                 <td>
                     <div class="btn-group">
                         <a type="button" class="btn btn-success btn-sm mr-1" style="border-radius: 5px; font-size: 15px; margin-right: 20px;" href="/edit_caleg/{{ $row->id }}">Edit</a>

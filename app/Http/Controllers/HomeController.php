@@ -40,4 +40,9 @@ class HomeController extends Controller
         return view('home', compact('data','caleg','dpt','user'));
         
     }
+
+    public function adminHome()
+    {
+        return view('adminHome');
+    }
 }

@@ -18,7 +18,7 @@ class KoordinatorController extends Controller
     public function koordinator()
     {
         $user = Auth::user();
-        // dd($user->id);
+
         if($user->role == 1){
             $data = Koordinator::with(['villages','districts','regencies','provinces', 'caleg'])->paginate();
         }else{
@@ -134,6 +134,6 @@ class KoordinatorController extends Controller
         $koordinator->delete();
     
         return redirect()->route('koordinator')
-            ->with('success', 'Data Koordinator telah dihapus.');
+            ->with('success',  'Data ' . $koordinator . ' Berhasil dihapus');
     }
 }
