@@ -17,46 +17,71 @@ class KoordinatorTpsController extends Controller
 
     public function jadikan_koorTps(Request $request)
     {
-        // dd($request)/\;
         $username = $request->username;
         $password = $request->password;
         $passwordHashed = bcrypt($password); // Menyimpan password yang telah di-hash
         $noTlpn = $request->NoTlpn;
         $dpt = Dpt::findOrFail($request->saksiId);
-
-        // Membuat entri baru dalam tabel saksi dengan data dari DPT
-        $saksi = new Saksi();
-        $saksi->no_kk = $dpt->no_kk;
-        $saksi->nik = $dpt->nik;
-        $saksi->nama = $dpt->nama;
-        $saksi->tempat_lahir = $dpt->tempat_lahir;
-        $saksi->tanggal_lahir = $dpt->tanggal_lahir;
-        $saksi->status_perkawinan = $dpt->status_perkawinan;
-        $saksi->jenis_kelamin = $dpt->jenis_kelamin;
-        $saksi->jalan = $dpt->jalan;
-        $saksi->rt = $dpt->rt;
-        $saksi->rw = $dpt->rw;
-        $saksi->disabilitas = $dpt->disabilitas;
-        $saksi->kota = $dpt->kota;
-        $saksi->kelurahan = $dpt->kelurahan;
-        $saksi->kecamatan = $dpt->kecamatan;
-        $saksi->tps = $dpt->tps;
- 
-         // Mengisi kolom username, password, dan NoTlpn
-
-        $saksi->dpt_id = $dpt->id; // Gantilah $dptId dengan ID DPT yang sesuai
-        // Memanggil variabel $username, $password, dan $noTlpn
-        $saksi->username = $username;
-        $saksi->password = $password;
-        $saksi->password = $passwordHashed; // Mengisi kolom password dengan password yang telah di-hash
-        $saksi->NoTlpn = $noTlpn;
         
+        // Pengecekan nomor telepon
+        $token = "W1bYeUWDezeDR5lFYGtPY2wF0iTsesHYIfRQqmUPvvk5wU8g1mJaiwnrypBn6oaL"; // Ganti dengan token yang sesuai
+        $phone = $noTlpn;
+    
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_HTTPHEADER, [
+            "Authorization: $token",
+            "url: https://pati.wablas.com",
+        ]);
+        curl_setopt($curl, CURLOPT_URL,  "https://phone.wablas.com/check-phone-number?phones=". urlencode($phone));
+        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+    
+        $result = curl_exec($curl);
+        curl_close($curl);
+    
+        $response = json_decode($result, true);
 
-        $saksi->save();
+        dd($result);
+    
+        if ($response['status'] === 'success' && $response['data'][0]['status'] === 'online') {
+            // Nomor valid dan aktif, lanjutkan menyimpan data saksi
+            $saksi = new Saksi();
+            $saksi->no_kk = $dpt->no_kk;
+            $saksi->nik = $dpt->nik;
+            $saksi->nama = $dpt->nama;
+            $saksi->tempat_lahir = $dpt->tempat_lahir;
+            $saksi->tanggal_lahir = $dpt->tanggal_lahir;
+            $saksi->status_perkawinan = $dpt->status_perkawinan;
+            $saksi->jenis_kelamin = $dpt->jenis_kelamin;
+            $saksi->jalan = $dpt->jalan;
+            $saksi->rt = $dpt->rt;
+            $saksi->rw = $dpt->rw;
+            $saksi->disabilitas = $dpt->disabilitas;
+            $saksi->kota = $dpt->kota;
+            $saksi->kelurahan = $dpt->kelurahan;
+            $saksi->kecamatan = $dpt->kecamatan;
+            $saksi->tps = $dpt->tps;
+ 
+            // Mengisi kolom username, password, dan NoTlpn
 
-        // Redirect ke rute yang sesuai
-        return redirect()->route('saksi');
+            $saksi->dpt_id = $dpt->id; // Gantilah $dptId dengan ID DPT yang sesuai
+            // Memanggil variabel $username, $password, dan $noTlpn
+            $saksi->username = $username;
+            $saksi->password = $passwordHashed; // Mengisi kolom password dengan password yang telah di-hash
+            $saksi->NoTlpn = $phone;
+                
+        
+            $saksi->save();
+            
+            return redirect()->route('saksi')->with('success', 'Nomor WhatsApp valid.');
+        } else {
+            // Nomor tidak valid atau tidak aktif, kembali dengan pesan kesalahan
+            return redirect()->back()->withErrors(['NoTlpn' => 'Nomor WhatsApp tidak valid atau tidak aktif.']);
+        }
     }
+    
 
     // public function koortpsmanual()
     // {
