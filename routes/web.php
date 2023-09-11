@@ -17,6 +17,7 @@ use App\Http\Controllers\PemilihController;
 use App\Http\Controllers\DashboardController;
 
 
+use App\Http\Controllers\TokenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -122,6 +123,12 @@ Route::middleware((['auth:user,koordinator,saksi']))->group(function () {
 
 
 
+
+
+//Route Token 
+Route::get('/DataToken',[TokenController::class,'token'])->name('token');
+Route::get('/ubah_token/{id}',[TokenController::class,'ubah_token'])->name('ubah_token');
+Route::post('/update_token/{id}',[TokenController::class,'update_token'])->name('update_token');
 
 
 

@@ -5,6 +5,27 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+
+@if (session('success'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: '{{ session('No wa ini valid') }}',
+            showConfirmButton: false,
+            timer: 5000
+        });
+    @endif
+
+    @if (session('error'))
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '{{ session('No wa ini tidak valid') }}',
+            showConfirmButton: false,
+            timer: 5000
+        });
+    @endif
+
     @if ($message = Session::get('success'))
         Swal.fire({
             icon: 'success',
@@ -52,6 +73,8 @@
                             <tr>
                                 <th>No</th>
                                 <th>Name</th>
+                                <th>Username</th>
+                                <th>No WhatsApp</th>
                                 <th>Kecamatan</th>
                                 <th>kelurahan</th>
                                 <th>TPS</th>

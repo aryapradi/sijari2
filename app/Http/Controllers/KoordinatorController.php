@@ -59,7 +59,7 @@ class KoordinatorController extends Controller
         //     'caleg_id'   => 'required',
         //     'admin_id'   => 'required',
         // ]);
-        $user = Auth::user()->id;
+        // $user = Auth::user()->id;
         $password = Hash::make($request['password']);
         Koordinator::create([
             'nama_koordinator'     => $request-> nama_koordinator,
@@ -71,7 +71,7 @@ class KoordinatorController extends Controller
             'kecamatan' => $request->kecamatan,
             'kelurahan' => $request->kelurahan,
             'caleg_id' => $request->caleg_id,
-            'admin_id' => $user
+            // 'admin_id' => $user
         ]);
         return redirect()->route('koordinator')->with('success', 'Data Berhasil Ditambah');
 

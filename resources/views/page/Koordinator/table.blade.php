@@ -26,6 +26,7 @@
                     <th scope="col">No</th>
                     <th scope="col">Nama</th>
                     <th scope="col">Username</th>
+                    <th scope="col">No WhatsApp</th>
                     <th scope="col">Kecamatan</th>
                     <th scope="col">kelurahan</th>
                     <th scope="col">Caleg</th>
@@ -39,6 +40,7 @@
                 <th scope="row">{{ $no++ }}</th>
                 <td>{{ $row->nama_koordinator }}</td>
                 <td>{{ $row->username }}</td>
+                <td>{{ $row->NoTlpn }}</td>
                 <td>{{ $row->districts->name }}</td>
                 <td>{{ $row->villages->name }}</td>
                 <td>{{ $row->caleg->nama_caleg }}</td>

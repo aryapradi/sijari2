@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Dpt;
 use App\Models\Saksi;
 use App\Models\Koordinator;
+use App\Models\Token;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -53,71 +54,73 @@ class KoordinatorTpsController extends Controller
 
     public function jadikan_koorTps(Request $request)
     {
-        // dd($request)/\;
         $idkoor = Auth::guard('koordinator')->user()->id;
         $username = $request->username;
         $password = Hash::make($request->input('password'));
         $noTlpn = $request->NoTlpn;
         $dpt = Dpt::findOrFail($request->saksiId);
-
-        // Membuat entri baru dalam tabel saksi dengan data dari DPT
-        $saksi = new Saksi();
-        $saksi->koor_id = $idkoor;
-        $saksi->no_kk = $dpt->no_kk;
-        $saksi->nik = $dpt->nik;
-        $saksi->nama = $dpt->nama;
-        $saksi->tempat_lahir = $dpt->tempat_lahir;
-        $saksi->tanggal_lahir = $dpt->tanggal_lahir;
-        $saksi->status_perkawinan = $dpt->status_perkawinan;
-        $saksi->jenis_kelamin = $dpt->jenis_kelamin;
-        $saksi->jalan = $dpt->jalan;
-        $saksi->rt = $dpt->rt;
-        $saksi->rw = $dpt->rw;
-        $saksi->disabilitas = $dpt->disabilitas;
-        $saksi->kota = $dpt->kota;
-        $saksi->kelurahan = $dpt->kelurahan;
-        $saksi->kecamatan = $dpt->kecamatan;
-        $saksi->tps = $dpt->tps;
- 
-         // Mengisi kolom username, password, dan NoTlpn
-
-        $saksi->dpt_id = $dpt->id; // Gantilah $dptId dengan ID DPT yang sesuai
-        // Memanggil variabel $username, $password, dan $noTlpn
-        $saksi->username = $username;
-        $saksi->password = $password;
-        $saksi->NoTlpn = $noTlpn;
         
+        // Pengecekan nomor telepon
+        $token = Token::first()->token; // Ganti dengan token yang sesuai
+        $phone = $noTlpn;
+    
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_HTTPHEADER, [
+            "Authorization: $token",
+            "url: https://pati.wablas.com",
+        ]);
+        curl_setopt($curl, CURLOPT_URL,  "https://phone.wablas.com/check-phone-number?phones=". urlencode($phone));
+        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+    
+        $result = curl_exec($curl);
+        curl_close($curl);
+    
+        $response = json_decode($result, true);
 
-        $saksi->save();
+        // dd($result);
+    
+        if ($response['status'] === 'success' && $response['data'][0]['status'] === 'online') {
+            // Nomor valid dan aktif, lanjutkan menyimpan data saksi
+            $saksi = new Saksi();
+            $saksi->no_kk = $dpt->no_kk;
+            $saksi->nik = $dpt->nik;
+            $saksi->nama = $dpt->nama;
+            $saksi->tempat_lahir = $dpt->tempat_lahir;
+            $saksi->tanggal_lahir = $dpt->tanggal_lahir;
+            $saksi->status_perkawinan = $dpt->status_perkawinan;
+            $saksi->jenis_kelamin = $dpt->jenis_kelamin;
+            $saksi->jalan = $dpt->jalan;
+            $saksi->rt = $dpt->rt;
+            $saksi->rw = $dpt->rw;
+            $saksi->disabilitas = $dpt->disabilitas;
+            $saksi->kota = $dpt->kota;
+            $saksi->kelurahan = $dpt->kelurahan;
+            $saksi->kecamatan = $dpt->kecamatan;
+            $saksi->tps = $dpt->tps;
+ 
+            // Mengisi kolom username, password, dan NoTlpn
 
-        // Redirect ke rute yang sesuai
-        return redirect('/KoorTPS');
+            $saksi->dpt_id = $dpt->id; // Gantilah $dptId dengan ID DPT yang sesuai
+            // Memanggil variabel $username, $password, dan $noTlpn
+            $saksi->username = $username;
+            $saksi->password = $password; // Mengisi kolom password dengan password yang telah di-hash
+            $saksi->NoTlpn = $phone;
+                
+        
+            $saksi->save();
+            
+            return redirect()->route('saksi')->with('success', 'Nomor WhatsApp valid.');
+        } else {
+            // Nomor tidak valid atau tidak aktif, kembali dengan pesan kesalahan
+            return redirect()->route('saksi')->with('error','Nomor berikut tidak terdaftar Pada WhatsApp.');
+        }
     }
 
-    // public function koortpsmanual()
-    // {
-    //     return view('page.Koordinator_Tps.form');
-    // }
-
-    // public function store_koortpsmanual(Request $request)
-    // {
-    //     $koortps = $request->validate([
-    //         'username' => 'required',
-    //         'password' => 'required',
-    //         'NoTlpn' => 'required',       
-    //         // Anda bisa menambahkan aturan validasi lainnya jika diperlukan
-    //     ]);
-
-    //     // dd($koortps);
-    
-    //     // Buat objek Saksi dengan data yang telah divalidasi.
-    //     Saksi::create($koortps);
-    
-    //     return redirect()->route('saksi')->with('success', ' Data Berhasil Di Tambah ');
-    // }
-
     public function edit_koortps($id)
-    {
+    {   
         $data = Saksi::findOrFail($id);
         
         return view('frontpage.KoorTps.edit', compact('data'));
@@ -128,15 +131,45 @@ class KoordinatorTpsController extends Controller
         $data = Saksi::findOrFail($id);
         $data->update($request->all());
         return redirect('/KoorTps')->with('success', 'Data updated successfully.');
-    }
 
-    public function hapus_koortps($id)
-    {
-        $data = Saksi::findOrFail($id);
-        $data->delete();
-    
-        return redirect('/KoorTPS')->with('success',  'Data ' . $data->nama. ' Berhasil dihapus');
-    }
+        // Pengecekan nomor telepon
+        $token = Token::first()->token; // Ganti dengan token yang sesuai
+        $phone = $request->NoTlpn;
+
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_HTTPHEADER, [
+            "Authorization: $token",
+            "url: https://pati.wablas.com",
+        ]);
+        curl_setopt($curl, CURLOPT_URL,  "https://phone.wablas.com/check-phone-number?phones=". urlencode($phone));
+        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+
+        $result = curl_exec($curl);
+        curl_close($curl);
+
+        $response = json_decode($result, true);
+
+        if ($response['status'] === 'success' && $response['data'][0]['status'] === 'online') {
+            // Nomor valid dan aktif, lanjutkan memperbarui data saksi
+            $data->update($request->all());
+
+            return redirect()->route('saksi')->with('success', 'No WhatsApp updated successfully.');
+        } else {
+            // Nomor tidak valid atau tidak aktif, kembali dengan pesan kesalahan
+            return redirect()->route('saksi')->with('error', 'Nomor WhatsApp tidak valid atau tidak aktif.');
+        }
+   }
+
+   public function hapus_koortps($id)
+   {
+       $data = Saksi::findOrFail($id);
+       $data->delete();
+   
+       return redirect('/KoorTPS')->with('success',  'Data ' . $data->nama. ' Berhasil dihapus');
+   }
 
     public function koortps($id){
         $koorTps = Saksi::findOrFail($id);
