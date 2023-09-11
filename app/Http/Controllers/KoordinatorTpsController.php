@@ -12,17 +12,6 @@ use Illuminate\Support\Facades\Auth;
 class KoordinatorTpsController extends Controller
 {
 
-    public function koordinatortps(Request $request)
-    {
-        $search = $request->input('search');
-        if(!empty($search)) {
-            $saksiData = Saksi::where('nama','like','%' . $search . '%')
-            ->orWhere('tps', 'like', '%' . $search . '%')
-            ->paginate(5);
-        }else{
-            $saksiData = Saksi::paginate(5);
-        }
-
         
     public function front_koordinatortps()
     {
@@ -31,17 +20,32 @@ class KoordinatorTpsController extends Controller
         return view('frontpage.KoorTps.table',compact('saksiData'));
     }
 
-    public function koordinatortps()
+    public function koordinatortps(Request $request)
     {
+        $search = $request->input('search');
         $saksi = Saksi::first();
         $idadmin = Auth::guard('user')->user();
         if ($saksi == null) {
-            $saksiData = Saksi::paginate(6);
+            if(!empty($search)) {
+                $saksiData = Saksi::where('nama','like','%' . $search . '%')
+                ->orWhere('tps', 'like', '%' . $search . '%')
+                ->paginate(5);
+            }else{
+                $saksiData = Saksi::paginate(5);
+            }
         } else {
-            $saksiData = Saksi::whereHas('koordinator.admin', function ($query) use ($idadmin) {
-                $query->where('id', $idadmin->id);
-            })->paginate(6);
+            if(!empty($search)) {
+                $saksiData = Saksi::where('nama','like','%' . $search . '%')
+                ->orWhere('tps', 'like', '%' . $search . '%')->whereHas('koordinator.admin', function ($query) use ($idadmin) {
+                    $query->where('id', $idadmin->id);
+                })->paginate(6);
+            }else{
+                $saksiData = Saksi::whereHas('koordinator.admin', function ($query) use ($idadmin) {
+                    $query->where('id', $idadmin->id);
+                })->paginate(6);
+            }
         }
+        // dd($saksiData);
         return view('page.KoorTps.table',compact('saksiData'));
     }
 

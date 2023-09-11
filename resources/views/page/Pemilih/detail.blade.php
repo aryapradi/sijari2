@@ -1,4 +1,4 @@
-@extends('layout.main')
+@extends('layout.frontmain')
 
 @section('content')
     <div class="container mt-4">
@@ -22,7 +22,7 @@
                     </div>
                     <div class="form-group mt-4">
                         <div class="d-flex justify-content-between align-items-center">
-                            <a href="{{ route('pemilih') }}" class="btn btn-secondary">Kembali</a>
+                            <a href="{{ route('listpemilih') }}" class="btn btn-secondary">Kembali</a>
                         </div>
                     </div>
                 </div>

@@ -14,7 +14,7 @@ class AddStatusToPemilih extends Migration
     public function up()
 {
     Schema::table('pemilih', function (Blueprint $table) {
-        $table->enum('status', ['Active', 'Inactive'])->default('Inactive');
+        $table->enum('status', ['valid', 'tidak valid'])->default('tidak valid');
     });
 }
 

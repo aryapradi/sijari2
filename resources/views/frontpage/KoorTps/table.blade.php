@@ -70,8 +70,8 @@
     <div class="col-lg-4 col-md-6 col-sm-12 ">
         <div class="card" style="border-radius: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
             <div class="card-body">
-                <h5 class="card-title"> {{ $index + $saksiData->firstItem() }}</h5>
                 <p class="card-text">Nama: {{ $saksi->nama }}</p>
+                <p class="card-text">Username: {{ $saksi->username }}</p>
                 <p class="card-text">No Telepon: {{ $saksi->NoTlpn }}</p>
                 <p class="card-text">Kecamatan: {{ $saksi->kecamatan }}</p>
                 <p class="card-text">Kelurahan: {{ $saksi->kelurahan }}</p>

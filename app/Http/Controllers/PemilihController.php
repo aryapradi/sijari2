@@ -5,27 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Dpt;
 use App\Models\Pemilih;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage; // Import class Storage
-
-class PemilihController extends Controller
-{
-    public function pemilih(Request $request)
-    {
-        $search = $request->input('search');
-
-        if (!empty($search)) {
-            // Menggunakan where untuk mencari data dengan nama atau tps yang cocok
-            $dataPemilih = Pemilih::where('nama', 'like', '%' . $search . '%')
-                ->orWhere('tps', 'like', '%' . $search . '%')
-                ->paginate(5);
-        } else {
-            // Jika tidak ada parameter pencarian, tampilkan semua data
-            $dataPemilih = Pemilih::paginate(5);
-        }
-
-        return view('page.Pemilih.table', compact('dataPemilih'));
+use Illuminate\Support\Facades\Storage; 
 use Illuminate\Support\Facades\Auth;
-
 class PemilihController extends Controller
 {
     public function frontpemilih()
@@ -67,16 +48,31 @@ class PemilihController extends Controller
         return view('frontpage.Pemilih.table',compact('dataPemilih'));
     }
 
-    public function pemilih()
+    public function pemilih(Request $request)
     {
+        $search = $request->input('search');
         $pemilih = Pemilih::first();
         $idadmin = Auth::guard('user')->user();
         if ($pemilih == null) {
-            $dataPemilih = Pemilih::paginate(6);
+            if (!empty($search)) {
+                // Menggunakan where untuk mencari data dengan nama atau tps yang cocok
+                $dataPemilih = Pemilih::where('nama', 'like', '%' . $search . '%')
+                    ->orWhere('tps', 'like', '%' . $search . '%')
+                    ->paginate(6);
+            } else {
+                // Jika tidak ada parameter pencarian, tampilkan semua data
+                $dataPemilih = Pemilih::paginate(6);
+            }
         } else {
-            $dataPemilih = Pemilih::whereHas('saksi.koordinator.admin', function ($query) use ($idadmin) {
-                $query->where('id', $idadmin->id);
-            })->paginate(6);
+            if (!empty($search)) {
+                // Menggunakan where untuk mencari data dengan nama atau tps yang cocok
+                $dataPemilih = Pemilih::where('nama', 'like', '%' . $search . '%')->orWhere('tps', 'like', '%' . $search . '%')->whereHas('saksi.koordinator.admin', function ($query) use ($idadmin) {$query->where('id', $idadmin->id);
+                })->paginate(6);
+            } else {
+                // Jika tidak ada parameter pencarian, tampilkan semua data
+                $dataPemilih = Pemilih::orWhere('tps', 'like', '%' . $search . '%')->whereHas('saksi.koordinator.admin', function ($query) use ($idadmin) {$query->where('id', $idadmin->id);
+                })->paginate(6);
+            }
         }
 
         return view('page.Pemilih.table',compact('dataPemilih'));
@@ -198,6 +194,6 @@ class PemilihController extends Controller
         // Contoh validasi sederhana: cek apakah file gambar tersedia
         return Storage::disk('public')->exists($photoPath);
     
-        return redirect()->route('listpemilih')->with('success', ' Data '.  $pemilih->nama . ' Berhasil Di hapus');
+        return redirect()->route('listpemilih')->with('success', ' Data Berhasil Di hapus');
     }
 }

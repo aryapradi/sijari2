@@ -22,13 +22,13 @@ class LoginController extends Controller
       // dd($request);
       // dd(Auth::guard('saksi')->attempt(['username'=>$request->email, 'password' => $request->password]));
       if(Auth::guard('user')->attempt(['email'=>$request->email, 'password' => $request->password])){
-        return redirect('/DataDPT');
+        return redirect('/');
       }elseif(Auth::guard('koordinator')->attempt(['username'=>$request->email, 'password' => $request->password])){
         return redirect('/ListDPT');
       }elseif(Auth::guard('saksi')->attempt(['username'=>$request->email,'password' => $request->password])) {
         return redirect('/ListPemilih');
       }
-      return redirect('/login');
+      return redirect()->back();
     }
 
     public function logout()
@@ -41,14 +41,5 @@ class LoginController extends Controller
         Auth::guard('saksi')->logout();
       }
       return redirect('/login');
-        return redirect('/admin_login');
-      }elseif(Auth::guard('koordinator')->check()){
-        Auth::guard('koordinator')->logout();
-        return redirect('/login');
-      }elseif(Auth::guard('saksi')->check()){
-        Auth::guard('saksi')->logout();
-        return redirect('/login');
-      }
-      
     }
 }

@@ -40,15 +40,10 @@ Route::post('/logout',[LoginController::class, 'logout'])->name('logout');
 
 // routes/web.php
 
-
-
-Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-
-
-
 // Route User
 
 Route::middleware(['auth:user'])->group(function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     // Route User
     Route::get('/DataUser', [UserController::class, 'user'])->name('user');
     Route::get('/create_user', [UserController::class, 'create_user'])->name('create_user');
@@ -87,6 +82,9 @@ Route::middleware(['auth:koordinator,saksi'])->group(function () {
     Route::get('/ListDPT',[DptController::class,'front_listdpt'])->name('listdpt');
     Route::get('/ListPemilih',[PemilihController::class,'frontpemilih'])->name('listpemilih');
     Route::get('/KoorTPS',[KoordinatorTpsController::class,'front_koordinatortps'])->name('koortps');
+
+    Route::get('/upload_foto/{id}', [PemilihController::class, 'formUnggahFoto'])->name('unggah_foto.form');
+    Route::post('/unggah_foto/{id}', [PemilihController::class, 'unggahFoto'])->name('unggah_foto.unggah');
 });
 
 Route::middleware((['auth:user,koordinator,saksi']))->group(function () {
@@ -99,12 +97,11 @@ Route::middleware((['auth:user,koordinator,saksi']))->group(function () {
     Route::get('/detail_dpt/{id}', [DptController::class, 'detail_dpt'])->name('detail_dpt');
 
     // ROUTE Koordinator tps
-    Route::get('/DataKoorTPS',[KoordinatorTpsController::class,'koordinatortps'])->name('saksi');
+    Route::get('/DataKoorTPS',[KoordinatorTpsController::class,'koordinatortps'])->name('saksi');               
     Route::post('/GetSaksi',[KoordinatorTpsController::class,'jadikan_koorTps'])->name('getsaksi');
     Route::get('/edit_koortps/{id}',[KoordinatorTpsController::class,'edit_koortps'])->name('edit_koortps');
     Route::post('/update_koortps/{id}',[KoordinatorTpsController::class,'update_koortps'])->name('update_koortps');
     Route::get('/hapus_koortps/{id}',[KoordinatorTpsController::class,'hapus_koortps'])->name('hapuskoortps');
-    Route::get('/DataKoorTPS',[KoordinatorTpsController::class,'koordinatortps'])->name('koordinatortps');
     Route::get('/create_koortps',[KoordinatorTpsController::class,'create_koortps'])->name('create_koortps');
 
     // ROUTE PEMILIH 
@@ -113,31 +110,8 @@ Route::middleware((['auth:user,koordinator,saksi']))->group(function () {
     Route::get('/edit_pemilih/{id}',[PemilihController::class,'edit_pemilih'])->name('edit_pemilih');
     Route::post('/update_pemilih/{id}',[PemilihController::class,'update_pemilih'])->name('update_pemilih');
     Route::get('/hapus_pemilih/{id}',[PemilihController::class,'hapus_pemilih'])->name('hapus_pemilih');
+    Route::get('/detail_foto/{id}', [PemilihController::class,'detailFoto'])->name('detail_foto');
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// ROUTE PEMILIH 
-Route::get('/DataPemilih',[PemilihController::class,'pemilih'])->name('pemilih');
-Route::post('/GetPemilih',[PemilihController::class,'jadikan_pemilih'])->name('getpemilih');
-Route::get('/edit_pemilih/{id}',[PemilihController::class,'edit_pemilih'])->name('edit_pemilih');
-Route::post('/update_pemilih/{id}',[PemilihController::class,'update_pemilih'])->name('update_pemilih');
-Route::get('/hapus_pemilih/{id}',[PemilihController::class,'hapus_pemilih'])->name('hapus_pemilih');
-Route::get('/detail_foto/{id}', [PemilihController::class,'detailFoto'])->name('detail_foto');
-
-
 
 // Route::get('/upload_foto/{id}',[PemilihController::class,'formUnggahFoto'])->name('unggah_foto.form');
 // Route::put('/unggah_foto/{id}',[PemilihController::class,'unggahFoto'])->name('unggah_foto.unggah');
@@ -145,8 +119,7 @@ Route::get('/detail_foto/{id}', [PemilihController::class,'detailFoto'])->name('
 
 // web.php
 
-Route::get('/upload_foto/{id}', [PemilihController::class, 'formUnggahFoto'])->name('unggah_foto.form');
-Route::post('/unggah_foto/{id}', [PemilihController::class, 'unggahFoto'])->name('unggah_foto.unggah');
+
 
 
 
