@@ -16,6 +16,7 @@ class CreateCalegTable extends Migration
         Schema::create('caleg', function (Blueprint $table) {
             $table->id();
             $table->string('nama_caleg');
+            $table->string('image');
             $table->unsignedBigInteger('partai_id');
             $table->timestamps();
 

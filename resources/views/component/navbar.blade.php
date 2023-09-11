@@ -60,30 +60,56 @@
             <!-- User profile and search -->
             <!-- ============================================================== -->
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="../assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle" width="40">
-                    <span class="ms-2 d-none d-lg-inline-block">
-                        
-                        @if(Auth::guard('koordinator')->check())
-                            <a href="#">{{ Auth::guard('koordinator')->user()->username }}</a>
+                <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-bs-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <img src="../assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle"
+                        width="40">
+                    <span class="ms-2 d-none d-lg-inline-block"><span></span> 
+                    <span class="text-dark">
+                        @if(Auth::guard('user')->check())
+                            {{ Auth::guard('user')->user()->name }}
+                        @elseif(Auth::guard('koordinator')->check())
+                            {{ Auth::guard('koordinator')->user()->username }}
                         @elseif(Auth::guard('saksi')->check())
-                            <a href="#">{{ Auth::guard('saksi')->user()->username }}</a>
+                            {{ Auth::guard('saksi')->user()->username }}
                         @endif
-                        <span class="text-dark"></span> <i data-feather="chevron-down" class="svg-icon"></i>
-                    </span>
+                    <i data-feather="chevron-down"class="svg-icon"></i></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-right user-dd animated flipInY">
-                    <a class="dropdown-item" href="javascript:void(0)">
-                        <i data-feather="user" class="svg-icon me-2 ms-1"></i>
-                        My Profile
-                    </a>
+                    <a class="dropdown-item" href="javascript:void(0)"><i data-feather="user"
+                            class="svg-icon me-2 ms-1"></i>
+                        My Profile</a>
                     <div class="dropdown-divider"></div>
                     <a href="javascript:void(0)" onclick="confirmLogout()" class="dropdown-item">
                         <i data-feather="power" class="svg-icon me-2 ms-1"></i> Logout
                     </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                    
+                    <script>
+                        function confirmLogout() {
+                            var username = ""; // Ambil nama pengguna dari Blade template
+                    
+                            Swal.fire({
+                                title: 'Konfirmasi Logout',
+                                text: 'Anda yakin ingin logout sebagai ' + username + '?', // Tambahkan nama pengguna ke dalam pesan
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonText: 'Ya, Logout',
+                                cancelButtonText: 'Batal',
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    document.getElementById('logout-form').submit();
+                                }
+                            });
+                        }
+                    </script>
+                    
+                    
+                    
                 </div>
             </li>
-            
             <!-- ============================================================== -->
             <!-- User profile and search -->
             <!-- ============================================================== -->

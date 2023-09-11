@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Koordinator;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -49,6 +50,10 @@ class Saksi extends Authenticatable
     public function dpt()
     {
         return $this->belongsToMany(Dpt::class, 'saksi_dpt', 'saksi_id', 'dpt_id');
+    }
+    public function koordinator()
+    {
+        return $this->belongsTo(Koordinator::class, 'koor_id');
     }
 
     

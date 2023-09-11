@@ -12,50 +12,40 @@
                 timer: 5000
             });
         @endif
-        @if ($message = Session::get('error'))
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: '{{ $message }}',
-                showConfirmButton: false,
-                timer: 5000
-            });
-        @endif
     </script>
+    <div class="card">
+        <div class="card-body d-flex align-items-center">
+            <h4 class="card-title" style="margin-right: auto;">Data Partai</h4>
+            @if (count($data) === 0)
+                <a href="/create_partai" class="btn btn-primary btn-sm">Tambah Data</a>
+            @else
+                <button href="" disabled class="btn btn-primary btn-sm">Tambah Data</button>
+            @endif
+        </div>
     
-    {{-- <a href="{{ route('create_partai') }}" class="btn btn-danger btn-sm" style="border-radius: 5px; box-shadow: 0 4px 8px rgba(202, 18, 18, 0.912); margin-bottom: 20px">Tambah Partai</a> --}}
-    
-    @if (count($data) === 0)
-            <a href="/create_partai"class="btn btn-danger btn-sm" style="border-radius: 5px; box-shadow: 0 4px 8px rgba(202, 18, 18, 0.912); margin-bottom: 20px">Tambah Data</a>
-        @else
-            <button href="" disabled class="btn btn-danger btn-sm" style="border-radius: 5px; box-shadow: 0 4px 8px rgba(202, 18, 18, 0.912); margin-bootom: 20px">Tambah Data</button>
-        @endif
-
-
-
-    @foreach ($data as $row)
-        <div class="card" style="background-color: #F5F5F5; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
-            <div class="table-responsive">
-                <table class="table">
-                    <tbody>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">Nama Partai</th>
+                        <th scope="col">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php $no = 1; ?>
+                    @foreach ($data as $row)
                         <tr>
+                            <td>{{ $no++ }}</td>
+                            <td>{{ $row->nama_partai }}</td>
                             <td>
-                                <div class="circular-div" style="color: black">{{ $loop->index + 1 }}</div>
-                            </td>
-                            <td>
-                                <div class="user-info" style="font-size: 16px; color: black">
-                                    <div>{{ $row->nama_partai }}</div>
-                                    <div class="role-separator"></div> <!-- Horizontal line -->
-                                </div>
-                            </td>
-                            <td>
-                                <div class="btn-group-vertical" role="group" >
-                                    <a href="/edit_partai/{{$row->id}}"class="btn btn-secondary btn-sm" style="border-radius: 5px; margin-bottom:10px; color:white">Edit</a>
+                                <div class="btn-group" >
+                                    <a href="/edit_partai/{{$row->id}}" class="btn btn-success btn-sm mr-1" style="font-size: 15px; margin-right: 20px; border-radius:5px ">Edit</a>
                                     @if(count($caleg) === 0)         
                                         <form action="{{ route('hapus_partai', ['id' => $row->id]) }}" method="post">
                                             @csrf
                                             @method('delete')
-                                            <button type="submit" class="btn btn-danger btn-sm" style="border-radius:5px; margin-top:10px;">Hapus</button>
+                                            <button type="submit" class="btn btn-danger btn-sm" style="border-radius:5px">Hapus</button>
                                         </form>
                                     @else
                                         <button type="submit" disabled class="btn btn-danger btn-sm" style="border-radius:5px" title="hapus data caleg terlebih dahulu">Hapus</button>
@@ -63,21 +53,9 @@
                                 </div>
                             </td>
                         </tr>
-                    </tbody>
-                </table>
-            </div>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
-    @endforeach
-
-    <style>
-        .role-separator {
-            border-top: 1px solid #e51414;
-            margin: 5px 0;
-            width: 100%; /* Sesuaikan lebar sesuai kebutuhan Anda */
-        }
-
-        .btn-container {
-            margin-bottom: 20px; /* Sesuaikan margin sesuai kebutuhan Anda */
-        }
-    </style>
+    </div>
 @endsection

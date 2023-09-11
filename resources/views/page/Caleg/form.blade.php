@@ -5,16 +5,16 @@
 
 <div class="container border rounded p-5" style="background-color:#ffffff">
     <h4 class="card-title mb-4" >Form Caleg</h4>
-    <form action="/store_caleg" method="POST">
+    <form action="/store_caleg" method="POST" enctype="multipart/form-data">
         @csrf
-        {{-- <div class="form-group mb-3">
-            <label for="id" class="text-dark">ID</label>
-            <input type="text" class="form-control" id="id"  name="id"  placeholder="Enter ID">
-        </div> --}}
-
         <div class="form-group mb-3">
             <label for="nama" class="text-dark">Nama</label>
             <input type="text" class="form-control" id="nama_caleg" name="nama_caleg"  placeholder="Enter Nama" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="image" class="text-dark">Gambar</label>
+            <input name='image' class="form-control" type="file" id="formFile" required>
         </div>
 
         <div class="form-group mb-3">

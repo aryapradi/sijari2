@@ -10,13 +10,17 @@
                 </li>
                 <li class="list-divider"></li>
                 <li class="nav-small-cap">
-                    <span class="hide-menu">Applications</span>
+                    <span class="hide-menu">Utility</span>
                 </li>
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="{{ route('user') }}" aria-expanded="false">
                         <i data-feather="user" class="feather-icon"></i>
                         <span class="hide-menu">User</span>
                     </a>
+                </li>
+                <li class="list-divider"></li>
+                <li class="nav-small-cap">
+                    <span class="hide-menu">Applications</span>
                 </li>
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="{{ route('partai') }}" aria-expanded="false">
@@ -56,12 +60,6 @@
                         <span class="hide-menu">Pemilih</span>
                     </a>
                 </li>
-                {{-- <li class="sidebar-item">
-                    <a class="sidebar-link sidebar-link" href="{{ route('koordinatortps') }}" aria-expanded="false">
-                        <i data-feather="user" class="feather-icon"></i>
-                        <span class="hide-menu">Koor TPS</span>
-                    </a>
-                </li> --}}
             </ul>
         </nav>
     </div>

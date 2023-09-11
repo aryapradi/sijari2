@@ -55,6 +55,11 @@ class Koordinator extends Authenticatable
         return $this->belongsTo(Village::class, 'kelurahan'); // Ganti dengan kolom foreign key yang sesuai
     }
 
+    public function admin()
+    {
+        return $this->belongsTo(User::class, 'admin_id');
+    }
+
     public function dpt()
     {
         return $this->belongsToMany(Dpt::class);

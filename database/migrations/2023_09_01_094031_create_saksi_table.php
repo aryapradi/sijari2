@@ -16,6 +16,7 @@ class CreateSaksiTable extends Migration
         Schema::create('saksi', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('dpt_id');
+            $table->unsignedBigInteger('koor_id');
             $table->string('username')->nullable();
             $table->string('password')->nullable();
             $table->string('NoTlpn')->nullable();
@@ -37,6 +38,7 @@ class CreateSaksiTable extends Migration
             $table->timestamps();
 
             $table->foreign('dpt_id')->references('id')->on('dpt');
+            $table->foreign('koor_id')->references('id')->on('koordinator');
         });
     }
 

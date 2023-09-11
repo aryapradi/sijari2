@@ -18,12 +18,12 @@ class KoordinatorController extends Controller
     public function koordinator()
     {
         $user = Auth::user();
-        // dd($user->id);
-        // if($user->role == 1){
+
+        if($user->role == 1){
             $data = Koordinator::with(['villages','districts','regencies','provinces', 'caleg'])->paginate();
-        // }else{
-        //     $data = Koordinator::where('admin_id', $user->id)->with(['villages','districts','regencies','provinces', 'caleg'])->paginate();
-        // };
+        }else{
+            $data = Koordinator::where('admin_id', $user->id)->with(['villages','districts','regencies','provinces', 'caleg'])->paginate();
+        };
         // dd($data);
         $provinsis = Province::all(); // Mengambil semua data provinsi
         $regencies = Regency::all();
