@@ -27,6 +27,7 @@ class Pemilih extends Model
         'jalan',
         'rt',
         'rw',
+        'foto_path',
         'disabilitas',
         'kota',
         'kelurahan',

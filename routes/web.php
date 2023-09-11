@@ -4,7 +4,7 @@ use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DptController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RumahController;
 use App\Http\Controllers\KoordinatorTps;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CalegController;
@@ -14,6 +14,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\KoordinatorController;
 use App\Http\Controllers\KoordinatorTpsController;
 use App\Http\Controllers\PemilihController;
+use App\Http\Controllers\DashboardController;
 
 
 
@@ -32,7 +33,16 @@ use App\Http\Controllers\PemilihController;
 Route::get('/login',[LoginController::class,'login'])->name('login');
 Route::post('/postlogin',[LoginController::class,'postlogin'])->name('postlogin');
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
+// Route::get('/Dashboard', [RumahController::class, 'index'])->name('dashboard');
+
+// routes/web.php
+
+
+
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+
+
 // Route User
 
 
@@ -102,6 +112,19 @@ Route::post('/GetPemilih',[PemilihController::class,'jadikan_pemilih'])->name('g
 Route::get('/edit_pemilih/{id}',[PemilihController::class,'edit_pemilih'])->name('edit_pemilih');
 Route::post('/update_pemilih/{id}',[PemilihController::class,'update_pemilih'])->name('update_pemilih');
 Route::get('/hapus_pemilih/{id}',[PemilihController::class,'hapus_pemilih'])->name('hapus_pemilih');
+Route::get('/detail_foto/{id}', [PemilihController::class,'detailFoto'])->name('detail_foto');
+
+
+
+// Route::get('/upload_foto/{id}',[PemilihController::class,'formUnggahFoto'])->name('unggah_foto.form');
+// Route::put('/unggah_foto/{id}',[PemilihController::class,'unggahFoto'])->name('unggah_foto.unggah');
+
+
+// web.php
+
+Route::get('/upload_foto/{id}', [PemilihController::class, 'formUnggahFoto'])->name('unggah_foto.form');
+Route::post('/unggah_foto/{id}', [PemilihController::class, 'unggahFoto'])->name('unggah_foto.unggah');
+
 
 
 

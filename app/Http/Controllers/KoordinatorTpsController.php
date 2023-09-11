@@ -9,12 +9,22 @@ use Illuminate\Http\Request;
 class KoordinatorTpsController extends Controller
 {
 
-    public function koordinatortps()
+    public function koordinatortps(Request $request)
     {
+        $search = $request->input('search');
+        if(!empty($search)) {
+            $saksiData = Saksi::where('nama','like','%' . $search . '%')
+            ->orWhere('tps', 'like', '%' . $search . '%')
+            ->paginate(5);
+        }else{
+            $saksiData = Saksi::paginate(5);
+        }
 
-        $saksiData = Saksi::all();
+        
         return view('page.KoorTps.table',compact('saksiData'));
     }
+
+
 
     public function jadikan_koorTps(Request $request)
     {

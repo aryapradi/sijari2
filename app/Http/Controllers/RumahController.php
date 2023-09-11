@@ -8,7 +8,7 @@ use App\Models\Caleg;
 use App\Models\Partai;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class RumahController extends Controller
 {
     /**
      * Create a new controller instance.

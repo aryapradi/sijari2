@@ -12,53 +12,65 @@ use Illuminate\Support\Facades\Session;
 
 class DptController extends Controller
 {
-    public function dpt()
+    public function dpt(Request $request)
     {
-        $dpt = Dpt::all();
-        return view('page.Dpt.table', compact('dpt'));
+        $search = $request->input('search');
+
+        if (!empty($search)) {
+            $dpt = Dpt::where('nama', 'like', '%' . $search . '%')
+                ->orWhere('tps', 'like', '%' . $search . '%')
+                ->paginate(10);
+        } else {
+            $dpt = Dpt::paginate(5);
+        }
+        // $startIndex = ($dpt->currentPage() - 1) * $dpt->perPage() + 1;
+        $startIndex = ($dpt->currentPage() - 1) * $dpt->perPage(); // Menghitung nomor awal
+ // Menghitung nomor awal
+        $totalData = Dpt::count(); // Menghitung total data
+
+        return view('page.Dpt.table', compact('dpt','startIndex', 'totalData')); // Mengirimkan total data ke tampilan
     }
 
     public function export_dpt()
-{
-    $dpt = Dpt::all();
+    {
+        $dpt = Dpt::all();
 
-    if ($dpt->isEmpty()) {
-        Session::flash('error', 'Tidak ada data yang dapat diexport.');
-        return redirect()->back();
+        if ($dpt->isEmpty()) {
+            Session::flash('error', 'Tidak ada data yang dapat diexport.');
+            return redirect()->back();
+        }
+
+        return Excel::download(new DptExport, 'datadpt.xlsx');
     }
 
-    return Excel::download(new DptExport, 'datadpt.xlsx');
-}
+    public function import_dpt(Request $request)
+    {
+        $file = $request->file('file');
 
-public function import_dpt(Request $request)
-{
-    $file = $request->file('file');
-    
-    if (!$file) {
-        Session::flash('error', 'Tidak ada file yang diunggah.');
-        return redirect()->back();
+        if (!$file) {
+            Session::flash('error', 'Tidak ada file yang diunggah.');
+            return redirect()->back();
+        }
+
+        $namaFile = $file->getClientOriginalName();
+        $file->move('datadptt', $namaFile);
+
+        $filePath = public_path('datadptt/' . $namaFile);
+
+        try {
+            Excel::import(new DptImport, $filePath, null, \Maatwebsite\Excel\Excel::XLSX, [
+                'headingRow' => 4 // Menandakan bahwa baris ke-3 berisi nama-nama kolom
+            ]);
+        } catch (\Throwable $e) {
+            Session::flash('error', 'Terjadi kesalahan saat mengimpor file. Pastikan format file Excel sesuai dengan template.');
+            return redirect()->back();
+        }
+
+        Session::flash('success', 'Data DPT Telah Di Import');
+
+        return redirect('DataDPT');
     }
-    
-    $namaFile = $file->getClientOriginalName();
-    $file->move('datadptt', $namaFile);
 
-    $filePath = public_path('datadptt/' . $namaFile);
-
-    try {
-        Excel::import(new DptImport, $filePath, null, \Maatwebsite\Excel\Excel::XLSX, [
-            'headingRow' => 4 // Menandakan bahwa baris ke-3 berisi nama-nama kolom
-        ]);
-    } catch (\Throwable $e) {
-        Session::flash('error', 'Terjadi kesalahan saat mengimpor file. Pastikan format file Excel sesuai dengan template.');
-        return redirect()->back();
-    }
-
-    Session::flash('success', 'Data DPT Telah Di Import');
-
-    return redirect('DataDPT');
-}
-
-    
     public function download_Template()
     {
         $templateFileName = 'template_import_soal.xlsx';
@@ -70,30 +82,22 @@ public function import_dpt(Request $request)
         return response()->download($templateFilePath, $templateFileName);
     }
 
-
     public function deleteAllData()
-{
-    $dptCount = Dpt::count(); // Count the number of records in the Dpt table
+    {
+        $dptCount = Dpt::count();
 
-    if ($dptCount === 0) {
-        return redirect()->back()->with('error', 'No data to delete.');
+        if ($dptCount === 0) {
+            return redirect()->back()->with('error', 'No data to delete.');
+        }
+
+        Dpt::truncate();
+
+        return redirect()->back()->with('success', 'All data deleted successfully.');
     }
-
-    // Perform deletion logic here
-    Dpt::truncate(); // This will delete all records from the Dpt table
-
-    return redirect()->back()->with('success', 'All data deleted successfully.');
-}
-
 
     public function detail_dpt($id)
     {
-    $dpt = Dpt::findOrFail($id);
-    return view('page.Dpt.detail', compact('dpt'));
+        $dpt = Dpt::findOrFail($id);
+        return view('page.Dpt.detail', compact('dpt'));
     }
-
-
-
-
-
 }

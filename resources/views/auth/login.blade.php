@@ -59,11 +59,11 @@
             <form class="mt-4" method="POST" action="{{ route('postlogin') }}">
                 @csrf
                 <div class="form-group">
-                    <label class="form-label text-dark" for="username" style="margin-left: 20px;">Username</label>
-                    <input class="form-control" id="username" type="text"
-                        style="border-radius: 25px; height: 50px; width: 100%;" name="username"
-                        value="{{ old('username') }}" required autocomplete="email" autofocus placeholder="Masukkan Username">
-                    @error('username')
+                    <label class="form-label text-dark" for="email" style="margin-left: 20px;">email</label>
+                    <input class="form-control" id="email" type="text"
+                        style="border-radius: 25px; height: 50px; width: 100%;" name="email"
+                        value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Masukkan email">
+                    @error('email')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
