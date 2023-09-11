@@ -79,7 +79,7 @@ class DptController extends Controller
 
     public function download_Template()
     {
-        $templateFileName = 'template_import_soal.xlsx';
+        $templateFileName = 'template_data_dpt.xlsx';
 
         // Menggunakan storage_path untuk mengakses direktori storage
         $templateFilePath = storage_path('app/public/templates/' . $templateFileName);
