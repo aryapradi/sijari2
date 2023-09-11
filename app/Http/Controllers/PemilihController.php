@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dpt;
+use App\Models\Token;
 use App\Models\Pemilih;
 use Illuminate\Http\Request;
 
@@ -20,12 +21,12 @@ class PemilihController extends Controller
           $noTlpn = $request->NoTlpn;
           $dpt = Dpt::findOrFail($request->pemilihId);
 
-          $token = "W1bYeUWDezeDR5lFYGtPY2wF0iTsesHYIfRQqmUPvvk5wU8g1mJaiwnrypBn6oaL"; // Ganti dengan token yang sesuai
+          $token = Token::first()->token; // Ganti dengan token yang sesuai
           $phone = $noTlpn;
       
           $curl = curl_init();
           curl_setopt($curl, CURLOPT_HTTPHEADER, [
-              "Authorization: $token",
+              "Authorization: $token",  
               "url: https://pati.wablas.com",
           ]);
           curl_setopt($curl, CURLOPT_URL,  "https://phone.wablas.com/check-phone-number?phones=". urlencode($phone));
@@ -85,7 +86,7 @@ class PemilihController extends Controller
         $data = Pemilih::findOrFail($id);
 
         // Pengecekan nomor telepon
-        $token = "W1bYeUWDezeDR5lFYGtPY2wF0iTsesHYIfRQqmUPvvk5wU8g1mJaiwnrypBn6oaL"; // Ganti dengan token yang sesuai
+        $token = Token::first()->token; // Ganti dengan token yang sesuai
         $phone = $request->NoTlpn;
 
         $curl = curl_init();

@@ -11,6 +11,7 @@ use App\Http\Controllers\KoordinatorController;
 use App\Http\Controllers\KoordinatorTps;
 use App\Http\Controllers\KoordinatorTpsController;
 use App\Http\Controllers\PemilihController;
+use App\Http\Controllers\TokenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,6 +80,12 @@ Route::post('/GetPemilih',[PemilihController::class,'jadikan_pemilih'])->name('g
 Route::get('/edit_pemilih/{id}',[PemilihController::class,'edit_pemilih'])->name('edit_pemilih');
 Route::post('/update_pemilih/{id}',[PemilihController::class,'update_pemilih'])->name('update_pemilih');
 Route::get('/hapus_pemilih/{id}',[PemilihController::class,'hapus_pemilih'])->name('hapus_pemilih');
+
+//Route Token 
+Route::get('/DataToken',[TokenController::class,'token'])->name('token');
+Route::get('/ubah_token/{id}',[TokenController::class,'ubah_token'])->name('ubah_token');
+Route::post('/update_token/{id}',[TokenController::class,'update_token'])->name('update_token');
+
 
 
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Dpt;
 use App\Models\Saksi;
+use App\Models\Token;
 use Illuminate\Http\Request;
 
 class KoordinatorTpsController extends Controller
@@ -24,7 +25,7 @@ class KoordinatorTpsController extends Controller
         $dpt = Dpt::findOrFail($request->saksiId);
         
         // Pengecekan nomor telepon
-        $token = "W1bYeUWDezeDR5lFYGtPY2wF0iTsesHYIfRQqmUPvvk5wU8g1mJaiwnrypBn6oaL"; // Ganti dengan token yang sesuai
+        $token = Token::first()->token; // Ganti dengan token yang sesuai
         $phone = $noTlpn;
     
         $curl = curl_init();
@@ -94,7 +95,7 @@ class KoordinatorTpsController extends Controller
         $data = Saksi::findOrFail($id);
 
         // Pengecekan nomor telepon
-        $token = "W1bYeUWDezeDR5lFYGtPY2wF0iTsesHYIfRQqmUPvvk5wU8g1mJaiwnrypBn6oaL"; // Ganti dengan token yang sesuai
+        $token = Token::first()->token; // Ganti dengan token yang sesuai
         $phone = $request->NoTlpn;
 
         $curl = curl_init();
