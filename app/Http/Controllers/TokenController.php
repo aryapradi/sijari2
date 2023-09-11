@@ -16,7 +16,7 @@ class TokenController extends Controller
     public function ubah_token($id)
     {
         $data = Token::find($id);
-        return view('page.Token_wa.form', compact('data'));
+        return view('page.Token_wa.form', compact('data')); 
     }
 
     public function update_token(Request $request, $id)
