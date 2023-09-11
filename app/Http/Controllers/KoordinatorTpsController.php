@@ -43,7 +43,7 @@ class KoordinatorTpsController extends Controller
     
         $response = json_decode($result, true);
 
-        dd($result);
+        // dd($result);
     
         if ($response['status'] === 'success' && $response['data'][0]['status'] === 'online') {
             // Nomor valid dan aktif, lanjutkan menyimpan data saksi
@@ -78,35 +78,12 @@ class KoordinatorTpsController extends Controller
             return redirect()->route('saksi')->with('success', 'Nomor WhatsApp valid.');
         } else {
             // Nomor tidak valid atau tidak aktif, kembali dengan pesan kesalahan
-            return redirect()->back()->withErrors(['NoTlpn' => 'Nomor WhatsApp tidak valid atau tidak aktif.']);
+            return redirect()->route('saksi')->with('error','Nomor berikut tidak terdaftar Pada WhatsApp.');
         }
     }
-    
-
-    // public function koortpsmanual()
-    // {
-    //     return view('page.Koordinator_Tps.form');
-    // }
-
-    // public function store_koortpsmanual(Request $request)
-    // {
-    //     $koortps = $request->validate([
-    //         'username' => 'required',
-    //         'password' => 'required',
-    //         'NoTlpn' => 'required',       
-    //         // Anda bisa menambahkan aturan validasi lainnya jika diperlukan
-    //     ]);
-
-    //     // dd($koortps);
-    
-    //     // Buat objek Saksi dengan data yang telah divalidasi.
-    //     Saksi::create($koortps);
-    
-    //     return redirect()->route('saksi')->with('success', ' Data Berhasil Di Tambah ');
-    // }
 
     public function edit_koortps($id)
-    {
+    {   
         $data = Saksi::findOrFail($id);
         
         return view('page.Koordinator_Tps.edit', compact('data'));
@@ -115,9 +92,37 @@ class KoordinatorTpsController extends Controller
     public function update_koortps(Request $request, $id)
     {
         $data = Saksi::findOrFail($id);
-        $data->update($request->all());
-        return redirect()->route('saksi')->with('success', 'Data updated successfully.');
-    }
+
+        // Pengecekan nomor telepon
+        $token = "W1bYeUWDezeDR5lFYGtPY2wF0iTsesHYIfRQqmUPvvk5wU8g1mJaiwnrypBn6oaL"; // Ganti dengan token yang sesuai
+        $phone = $request->NoTlpn;
+
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_HTTPHEADER, [
+            "Authorization: $token",
+            "url: https://pati.wablas.com",
+        ]);
+        curl_setopt($curl, CURLOPT_URL,  "https://phone.wablas.com/check-phone-number?phones=". urlencode($phone));
+        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+
+        $result = curl_exec($curl);
+        curl_close($curl);
+
+        $response = json_decode($result, true);
+
+        if ($response['status'] === 'success' && $response['data'][0]['status'] === 'online') {
+            // Nomor valid dan aktif, lanjutkan memperbarui data saksi
+            $data->update($request->all());
+
+            return redirect()->route('saksi')->with('success', 'No WhatsApp updated successfully.');
+        } else {
+            // Nomor tidak valid atau tidak aktif, kembali dengan pesan kesalahan
+            return redirect()->route('saksi')->with('error', 'Nomor WhatsApp tidak valid atau tidak aktif.');
+        }
+   }
 
     public function koortps($id){
         $koorTps = Saksi::findOrFail($id);

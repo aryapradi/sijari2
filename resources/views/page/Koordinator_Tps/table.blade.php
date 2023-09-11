@@ -71,7 +71,7 @@
                                 <th>No</th>
                                 <th>Name</th>
                                 <th>Username</th>
-                                <th>NoTlpn</th>
+                                <th>No WhatsApp</th>
                                 <th>Kecamatan</th>
                                 <th>kelurahan</th>
                                 <th>TPS</th>

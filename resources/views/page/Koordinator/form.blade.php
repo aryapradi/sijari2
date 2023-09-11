@@ -59,6 +59,16 @@
         
         
         <div class="form-group mb-3">
+            <label for="nama" class="text-dark">NoTlpn</label>
+            <input type="number" class="form-control" id="NoTlpn" name="NoTlpn"  placeholder="Enter NoWa" required>
+            @error('NoTlpn')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
+        </div>
+
+        <div class="form-group mb-3">
             <label for="">Provinsi</label>
             <select class="form-control" name="provinsi" id="provinceDropdown" required  >
             <option>-- Pilih Provinsi --</option>
@@ -72,6 +82,7 @@
            </span>
        @enderror
         </div>
+
 
         <div class="form-group mb-3">
             <label for="">Kabupaten/Kota</label>
@@ -94,9 +105,9 @@
         </div>   
         
         <div class="form-group mb-3">
-            <label for="">Desa</label>
+            <label for="">Kelurahan</label>
             <select class="form-control" name="kelurahan" id="villageDropdown" required>
-            <option>-- Pilih desa --</option>
+            <option>-- Pilih Kelurahan --</option>
             @foreach ($desas as $des)
             <option value="{{$des->id}}">{{$des->name}}</option>
             @endforeach

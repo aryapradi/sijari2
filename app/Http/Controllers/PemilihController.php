@@ -19,6 +19,30 @@ class PemilihController extends Controller
 
           $noTlpn = $request->NoTlpn;
           $dpt = Dpt::findOrFail($request->pemilihId);
+
+          $token = "W1bYeUWDezeDR5lFYGtPY2wF0iTsesHYIfRQqmUPvvk5wU8g1mJaiwnrypBn6oaL"; // Ganti dengan token yang sesuai
+          $phone = $noTlpn;
+      
+          $curl = curl_init();
+          curl_setopt($curl, CURLOPT_HTTPHEADER, [
+              "Authorization: $token",
+              "url: https://pati.wablas.com",
+          ]);
+          curl_setopt($curl, CURLOPT_URL,  "https://phone.wablas.com/check-phone-number?phones=". urlencode($phone));
+          curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
+          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+          curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+          curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+      
+          $result = curl_exec($curl);
+          curl_close($curl);
+      
+          $response = json_decode($result, true);
+  
+          // dd($result);
+      
+          if ($response['status'] === 'success' && $response['data'][0]['status'] === 'online') {
+              // Nomor valid dan aktif, lanjutkan menyimpan data saksi
           // Membuat entri baru dalam tabel saksi dengan data dari DPT
           $pemilih = new Pemilih();
           $pemilih->no_kk = $dpt->no_kk;
@@ -41,9 +65,12 @@ class PemilihController extends Controller
           $pemilih->NoTlpn = $noTlpn;
 
           $pemilih->save();
-  
-          // Redirect ke rute yang sesuai
-          return redirect()->route('pemilih');
+
+          return redirect()->route('pemilih')->with('success', 'Nomor WhatsApp valid.');
+        } else {
+            // Nomor tidak valid atau tidak aktif, kembali dengan pesan kesalahan
+            return redirect()->route('pemilih')->with('error','Nomor berikut tidak terdaftar Pada WhatsApp.');
+        }
     }
 
     public function edit_pemilih($id)
@@ -56,8 +83,36 @@ class PemilihController extends Controller
     public function update_pemilih(Request $request, $id)
     {
         $data = Pemilih::findOrFail($id);
-        $data->update($request->all());
-        return redirect()->route('pemilih')->with('success', 'Data updated successfully.');
+
+        // Pengecekan nomor telepon
+        $token = "W1bYeUWDezeDR5lFYGtPY2wF0iTsesHYIfRQqmUPvvk5wU8g1mJaiwnrypBn6oaL"; // Ganti dengan token yang sesuai
+        $phone = $request->NoTlpn;
+
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_HTTPHEADER, [
+            "Authorization: $token",
+            "url: https://pati.wablas.com",
+        ]);
+        curl_setopt($curl, CURLOPT_URL,  "https://phone.wablas.com/check-phone-number?phones=". urlencode($phone));
+        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+
+        $result = curl_exec($curl);
+        curl_close($curl);
+
+        $response = json_decode($result, true);
+
+        if ($response['status'] === 'success' && $response['data'][0]['status'] === 'online') {
+            // Nomor valid dan aktif, lanjutkan memperbarui data saksi
+            $data->update($request->all());
+
+            return redirect()->route('pemilih')->with('success', 'No WhatsApp updated successfully.');
+        } else {
+            // Nomor tidak valid atau tidak aktif, kembali dengan pesan kesalahan
+            return redirect()->route('pemilih')->with('error', 'Nomor WhatsApp tidak valid atau tidak aktif.');
+        }
     }
 
 
