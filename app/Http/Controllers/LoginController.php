@@ -35,6 +35,12 @@ class LoginController extends Controller
     {
       if(Auth::guard('user')->check()){
         Auth::guard('user')->logout();
+      }elseif(Auth::guard('koordinator')->check()){
+        Auth::guard('koordinator')->logout();
+      }elseif(Auth::guard('saksi')->check()){
+        Auth::guard('saksi')->logout();
+      }
+      return redirect('/login');
         return redirect('/admin_login');
       }elseif(Auth::guard('koordinator')->check()){
         Auth::guard('koordinator')->logout();

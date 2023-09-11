@@ -12,6 +12,18 @@ use Illuminate\Support\Facades\Auth;
 class KoordinatorTpsController extends Controller
 {
 
+    public function koordinatortps(Request $request)
+    {
+        $search = $request->input('search');
+        if(!empty($search)) {
+            $saksiData = Saksi::where('nama','like','%' . $search . '%')
+            ->orWhere('tps', 'like', '%' . $search . '%')
+            ->paginate(5);
+        }else{
+            $saksiData = Saksi::paginate(5);
+        }
+
+        
     public function front_koordinatortps()
     {
         $idkoor = Auth::guard('koordinator')->user()->id;
